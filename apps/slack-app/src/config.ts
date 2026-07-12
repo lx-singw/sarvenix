@@ -14,8 +14,8 @@ export const config = {
   },
   gemini: {
     apiKey: process.env.GEMINI_API_KEY || '',
-    modelSynthesis: process.env.GEMINI_MODEL_SYNTHESIS || 'gemini-2.5-pro',
-    modelCritic: process.env.GEMINI_MODEL_CRITIC || 'gemini-2.5-flash',
+    modelSynthesis: process.env.GEMINI_MODEL_SYNTHESIS || 'gemini-3.5-flash',
+    modelCritic: process.env.GEMINI_MODEL_CRITIC || 'gemini-3.5-flash',
   },
   serveMode: {
     rateLimitPerChannelPerDay: parseInt(process.env.SERVE_MODE_RATE_LIMIT_PER_CHANNEL_PER_DAY || '5', 10),

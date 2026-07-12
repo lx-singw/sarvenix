@@ -29,7 +29,7 @@ export async function initializeVectorIndex() {
       CREATE VECTOR INDEX decision_embeddings IF NOT EXISTS
       FOR (d:Decision) ON (d.embedding)
       OPTIONS {indexConfig: {
-        \`vector.dimensions\`: 768,
+        \`vector.dimensions\`: 3072,
         \`vector.similarity_function\`: 'cosine'
       }}
     `);

@@ -21,7 +21,7 @@ async function getEmbedding(text: string): Promise<number[]> {
   if (geminiApiKey) {
     try {
       const ai = new GoogleGenerativeAI(geminiApiKey);
-      const model = ai.getGenerativeModel({ model: 'text-embedding-004' });
+      const model = ai.getGenerativeModel({ model: 'gemini-embedding-2' });
       const result = await model.embedContent(text);
       if (result.embedding && result.embedding.values) {
         return result.embedding.values;
@@ -31,14 +31,14 @@ async function getEmbedding(text: string): Promise<number[]> {
     }
   }
 
-  // Fallback: Generate deterministic pseudo-random embedding of 768 dimensions
+  // Fallback: Generate deterministic pseudo-random embedding of 3072 dimensions
   console.log(`Generating mock embedding for: "${text}"`);
   const values: number[] = [];
   let seed = 0;
   for (let i = 0; i < text.length; i++) {
     seed += text.charCodeAt(i);
   }
-  for (let i = 0; i < 768; i++) {
+  for (let i = 0; i < 3072; i++) {
     const x = Math.sin(seed + i) * 10000;
     values.push(x - Math.floor(x));
   }
