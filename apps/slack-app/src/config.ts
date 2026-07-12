@@ -11,6 +11,7 @@ export const config = {
     botToken: process.env.SLACK_BOT_TOKEN || '',
     signingSecret: process.env.SLACK_SIGNING_SECRET || '',
     appToken: process.env.SLACK_APP_TOKEN || '',
+    rtsApiKey: process.env.RTS_API_KEY || '',
   },
   gemini: {
     apiKey: process.env.GEMINI_API_KEY || '',

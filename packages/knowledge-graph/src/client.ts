@@ -1,5 +1,6 @@
 import neo4j, { Driver } from 'neo4j-driver';
-import { Decision, Person, Artifact, Channel, Topic } from '@sarvenix/shared-types';
+import { Decision, Person, Artifact, Channel } from '@sarvenix/shared-types';
+import { DatabaseQueryError, withRetry } from '@sarvenix/shared-types';
 
 let driver: Driver | null = null;
 
@@ -20,12 +21,50 @@ export async function closeDriver() {
   }
 }
 
+/**
+ * Runs a query with retry policy and custom DatabaseQueryError wrapping.
+ */
+export async function runQueryWithRetry(
+  query: string,
+  params: Record<string, any> = {}
+): Promise<any> {
+  const dbUrl = process.env.GRAPH_DB_URL || 'bolt://localhost:7687';
+  return withRetry(
+    async () => {
+      const session = getSession();
+      try {
+        return await session.run(query, params);
+      } catch (error: any) {
+        throw new DatabaseQueryError(
+          `Neo4j query execution failed: ${error.message || error}`,
+          query,
+          params,
+          dbUrl
+        );
+      } finally {
+        await session.close();
+      }
+    },
+    {
+      isRetryable: (error: any) => {
+        const code = error.code || '';
+        return (
+          error.message?.includes('connection') ||
+          error.message?.includes('timeout') ||
+          error.message?.includes('Socket') ||
+          code.includes('ServiceUnavailable') ||
+          code.includes('SessionExpired')
+        );
+      },
+    }
+  );
+}
+
 // Initialize Vector Index in Neo4j
 export async function initializeVectorIndex() {
-  const session = getSession();
   try {
     // Vector search index for decision embeddings
-    await session.run(`
+    await runQueryWithRetry(`
       CREATE VECTOR INDEX decision_embeddings IF NOT EXISTS
       FOR (d:Decision) ON (d.embedding)
       OPTIONS {indexConfig: {
@@ -35,114 +74,91 @@ export async function initializeVectorIndex() {
     `);
   } catch (error) {
     console.error('Error creating vector index (may require Neo4j Aura Enterprise or Community v5+):', error);
-  } finally {
-    await session.close();
   }
 }
 
 export async function createDecision(decision: Decision): Promise<void> {
-  const session = getSession();
-  try {
-    await session.run(
-      `MERGE (d:Decision {id: $id})
-       ON CREATE SET d.summary = $summary,
-                     d.status = $status,
-                     d.confidence = $confidence,
-                     d.extractedAt = datetime($extractedAt),
-                     d.decidedAt = datetime($decidedAt),
-                     d.embedding = $embedding
-       ON MATCH SET d.summary = $summary,
-                    d.status = $status,
-                    d.confidence = $confidence,
-                    d.extractedAt = datetime($extractedAt),
-                    d.decidedAt = datetime($decidedAt),
-                    d.embedding = $embedding`,
-      {
-        id: decision.id,
-        summary: decision.summary,
-        status: decision.status,
-        confidence: decision.confidence,
-        extractedAt: decision.extractedAt.toISOString(),
-        decidedAt: decision.decidedAt ? decision.decidedAt.toISOString() : null,
-        embedding: decision.embedding || null,
-      }
-    );
-  } finally {
-    await session.close();
-  }
+  await runQueryWithRetry(
+    `MERGE (d:Decision {id: $id})
+     ON CREATE SET d.summary = $summary,
+                   d.status = $status,
+                   d.confidence = $confidence,
+                   d.extractedAt = datetime($extractedAt),
+                   d.decidedAt = datetime($decidedAt),
+                   d.embedding = $embedding
+     ON MATCH SET d.summary = $summary,
+                  d.status = $status,
+                  d.confidence = $confidence,
+                  d.extractedAt = datetime($extractedAt),
+                  d.decidedAt = datetime($decidedAt),
+                  d.embedding = $embedding`,
+    {
+      id: decision.id,
+      summary: decision.summary,
+      status: decision.status,
+      confidence: decision.confidence,
+      extractedAt: decision.extractedAt.toISOString(),
+      decidedAt: decision.decidedAt ? decision.decidedAt.toISOString() : null,
+      embedding: decision.embedding || null,
+    }
+  );
 }
 
 export async function createPerson(person: Person): Promise<void> {
-  const session = getSession();
-  try {
-    await session.run(
-      `MERGE (p:Person {id: $id})
-       SET p.slackUserId = $slackUserId,
-           p.displayName = $displayName,
-           p.roles = $roles,
-           p.title = $title,
-           p.team = $team,
-           p.tz = $tz`,
-      {
-        id: person.id,
-        slackUserId: person.slackUserId,
-        displayName: person.displayName,
-        roles: person.roles || [],
-        title: person.title || null,
-        team: person.team || null,
-        tz: person.tz || null,
-      }
-    );
-  } finally {
-    await session.close();
-  }
+  await runQueryWithRetry(
+    `MERGE (p:Person {id: $id})
+     SET p.slackUserId = $slackUserId,
+         p.displayName = $displayName,
+         p.roles = $roles,
+         p.title = $title,
+         p.team = $team,
+         p.tz = $tz`,
+    {
+      id: person.id,
+      slackUserId: person.slackUserId,
+      displayName: person.displayName,
+      roles: person.roles || [],
+      title: person.title || null,
+      team: person.team || null,
+      tz: person.tz || null,
+    }
+  );
 }
 
-
 export async function createArtifact(artifact: Artifact): Promise<void> {
-  const session = getSession();
-  try {
-    await session.run(
-      `MERGE (a:Artifact {id: $id})
-       SET a.type = $type,
-           a.externalId = $externalId,
-           a.externalUrl = $externalUrl,
-           a.title = $title,
-           a.lastSyncedAt = datetime($lastSyncedAt)`,
-      {
-        id: artifact.id,
-        type: artifact.type,
-        externalId: artifact.externalId,
-        externalUrl: artifact.externalUrl,
-        title: artifact.title,
-        lastSyncedAt: artifact.lastSyncedAt.toISOString(),
-      }
-    );
-  } finally {
-    await session.close();
-  }
+  await runQueryWithRetry(
+    `MERGE (a:Artifact {id: $id})
+     SET a.type = $type,
+         a.externalId = $externalId,
+         a.externalUrl = $externalUrl,
+         a.title = $title,
+         a.lastSyncedAt = datetime($lastSyncedAt)`,
+    {
+      id: artifact.id,
+      type: artifact.type,
+      externalId: artifact.externalId,
+      externalUrl: artifact.externalUrl,
+      title: artifact.title,
+      lastSyncedAt: artifact.lastSyncedAt.toISOString(),
+    }
+  );
 }
 
 export async function createChannel(channel: Channel): Promise<void> {
-  const session = getSession();
-  try {
-    await session.run(
-      `MERGE (c:Channel {id: $id})
-       SET c.slackChannelId = $slackChannelId,
-           c.name = $name,
-           c.isMuted = $isMuted,
-           c.alertCountToday = $alertCountToday`,
-      {
-        id: channel.id,
-        slackChannelId: channel.slackChannelId,
-        name: channel.name,
-        isMuted: channel.isMuted,
-        alertCountToday: channel.alertCountToday,
-      }
-    );
-  } finally {
-    await session.close();
-  }
+  await runQueryWithRetry(
+    `MERGE (c:Channel {id: $id})
+     SET c.slackChannelId = $slackChannelId,
+         c.name = $name,
+         c.isMuted = $isMuted,
+         c.alertCountToday = $alertCountToday`,
+    {
+      id: channel.id,
+      slackChannelId: channel.slackChannelId,
+      name: channel.name,
+      isMuted: channel.isMuted,
+      alertCountToday: channel.alertCountToday,
+    }
+  );
 }
 
 export async function linkNodes(
@@ -153,21 +169,16 @@ export async function linkNodes(
   relType: string,
   properties: Record<string, any> = {}
 ): Promise<void> {
-  const session = getSession();
-  try {
-    const propString = Object.keys(properties)
-      .map((k) => `${k}: $props.${k}`)
-      .join(', ');
-    const query = `
-      MATCH (from:${fromLabel} {id: $fromId})
-      MATCH (to:${toLabel} {id: $toId})
-      MERGE (from)-[r:${relType}]->(to)
-      SET r += $props
-    `;
-    await session.run(query, { fromId, toId, props: properties });
-  } finally {
-    await session.close();
-  }
+  const propString = Object.keys(properties)
+    .map((k) => `${k}: $props.${k}`)
+    .join(', ');
+  const query = `
+    MATCH (from:${fromLabel} {id: $fromId})
+    MATCH (to:${toLabel} {id: $toId})
+    MERGE (from)-[r:${relType}]->(to)
+    SET r += $props
+  `;
+  await runQueryWithRetry(query, { fromId, toId, props: properties });
 }
 
 export async function findSimilarDecisions(
@@ -175,17 +186,15 @@ export async function findSimilarDecisions(
   threshold: number,
   limit = 5
 ): Promise<Array<{ decision: Decision; score: number }>> {
-  const session = getSession();
   try {
-    // Try to run using vector search index. If it fails, fallback to simple cosine similarity over loaded nodes
     const query = `
       CALL db.index.vector.queryNodes('decision_embeddings', $limit, $embedding)
       YIELD node, score
       WHERE score >= $threshold
       RETURN node, score
     `;
-    const result = await session.run(query, { embedding, threshold, limit: neo4j.int(limit) });
-    return result.records.map((record) => {
+    const result = await runQueryWithRetry(query, { embedding, threshold, limit: neo4j.int(limit) });
+    return result.records.map((record: any) => {
       const node = record.get('node');
       const score = record.get('score');
       return {
@@ -201,7 +210,6 @@ export async function findSimilarDecisions(
       };
     });
   } catch (error) {
-    // Fallback: Scan all Decision nodes (fine for hackathon demo scale)
     const query = `
       MATCH (d:Decision)
       WHERE d.embedding IS NOT NULL
@@ -212,8 +220,8 @@ export async function findSimilarDecisions(
       LIMIT $limit
     `;
     try {
-      const result = await session.run(query, { embedding, threshold, limit: neo4j.int(limit) });
-      return result.records.map((record) => {
+      const result = await runQueryWithRetry(query, { embedding, threshold, limit: neo4j.int(limit) });
+      return result.records.map((record: any) => {
         const node = record.get('d');
         const score = record.get('score');
         return {
@@ -230,9 +238,8 @@ export async function findSimilarDecisions(
       });
     } catch (fallbackError) {
       console.warn('Cosine similarity fallback failed (missing GDS library?):', fallbackError);
-      // Fallback 2: Just return all decisions (no similarity filter, for standard query-matching check)
-      const result = await session.run(`MATCH (d:Decision) RETURN d LIMIT $limit`, { limit: neo4j.int(limit) });
-      return result.records.map((record) => {
+      const result = await runQueryWithRetry(`MATCH (d:Decision) RETURN d LIMIT $limit`, { limit: neo4j.int(limit) });
+      return result.records.map((record: any) => {
         const node = record.get('d');
         return {
           decision: {
@@ -243,72 +250,50 @@ export async function findSimilarDecisions(
             extractedAt: new Date(node.properties.extractedAt),
             decidedAt: node.properties.decidedAt ? new Date(node.properties.decidedAt) : undefined,
           },
-          score: 1.0, // Mock score since vector index is unavailable
+          score: 1.0,
         };
       });
     }
-  } finally {
-    await session.close();
   }
 }
 
 export async function isChannelMuted(slackChannelId: string): Promise<boolean> {
-  const session = getSession();
-  try {
-    const result = await session.run(
-      `MATCH (c:Channel {slackChannelId: $slackChannelId})
-       RETURN c.isMuted AS isMuted LIMIT 1`,
-      { slackChannelId }
-    );
-    if (result.records.length === 0) return false;
-    return result.records[0].get('isMuted') === true;
-  } finally {
-    await session.close();
-  }
+  const result = await runQueryWithRetry(
+    `MATCH (c:Channel {slackChannelId: $slackChannelId})
+     RETURN c.isMuted AS isMuted LIMIT 1`,
+    { slackChannelId }
+  );
+  if (result.records.length === 0) return false;
+  return result.records[0].get('isMuted') === true;
 }
 
 export async function incrementChannelAlertCount(slackChannelId: string): Promise<number> {
-  const session = getSession();
-  try {
-    const result = await session.run(
-      `MATCH (c:Channel {slackChannelId: $slackChannelId})
-       SET c.alertCountToday = coalesce(c.alertCountToday, 0) + 1
-       RETURN c.alertCountToday AS count`,
-      { slackChannelId }
-    );
-    if (result.records.length === 0) return 1;
-    const val = result.records[0].get('count');
-    return typeof val === 'number' ? val : val.toNumber();
-  } finally {
-    await session.close();
-  }
+  const result = await runQueryWithRetry(
+    `MATCH (c:Channel {slackChannelId: $slackChannelId})
+     SET c.alertCountToday = coalesce(c.alertCountToday, 0) + 1
+     RETURN c.alertCountToday AS count`,
+    { slackChannelId }
+  );
+  if (result.records.length === 0) return 1;
+  const val = result.records[0].get('count');
+  return typeof val === 'number' ? val : val.toNumber();
 }
 
 export async function getChannelAlertCount(slackChannelId: string): Promise<number> {
-  const session = getSession();
-  try {
-    const result = await session.run(
-      `MATCH (c:Channel {slackChannelId: $slackChannelId})
-       RETURN c.alertCountToday AS count LIMIT 1`,
-      { slackChannelId }
-    );
-    if (result.records.length === 0) return 0;
-    const val = result.records[0].get('count');
-    return typeof val === 'number' ? val : val.toNumber();
-  } finally {
-    await session.close();
-  }
+  const result = await runQueryWithRetry(
+    `MATCH (c:Channel {slackChannelId: $slackChannelId})
+     RETURN c.alertCountToday AS count LIMIT 1`,
+    { slackChannelId }
+  );
+  if (result.records.length === 0) return 0;
+  const val = result.records[0].get('count');
+  return typeof val === 'number' ? val : val.toNumber();
 }
 
 export async function setChannelMute(slackChannelId: string, isMuted: boolean): Promise<void> {
-  const session = getSession();
-  try {
-    await session.run(
-      `MERGE (c:Channel {slackChannelId: $slackChannelId})
-       SET c.isMuted = $isMuted`,
-      { slackChannelId, isMuted }
-    );
-  } finally {
-    await session.close();
-  }
+  await runQueryWithRetry(
+    `MERGE (c:Channel {slackChannelId: $slackChannelId})
+     SET c.isMuted = $isMuted`,
+    { slackChannelId, isMuted }
+  );
 }

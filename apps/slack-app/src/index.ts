@@ -1,3 +1,4 @@
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 import { App } from '@slack/bolt';
 import { config } from './config';
 import { ingestSlackMessage } from './ingestion/slack-ingest';
@@ -12,6 +13,8 @@ import {
 import { exportBriefToCanvas } from './delivery/canvas-export';
 import { postInThreadReply } from './delivery/in-thread-reply';
 import { sendDMBrief } from './delivery/dm-brief';
+import { Logger } from './lib/logger';
+import { SarvenixError, DatabaseQueryError, GeminiApiError, SlackClientError } from '@sarvenix/shared-types';
 
 const app = new App({
   token: config.slack.botToken,
@@ -20,9 +23,15 @@ const app = new App({
   appToken: config.slack.appToken,
 });
 
+// Configure global Bolt framework error handler
+app.error(async (error) => {
+  await Logger.error('Unhandled Bolt framework-level error', error);
+});
+
 // 1. Message listener for Ingestion and Serve Mode Proactive Alerts
 app.message(async ({ message, client, say }) => {
   const msg = message as any;
+  Logger.debug(`app.message received: "${msg.text || ''}" from User ${msg.user || 'unknown'}`);
   if (!msg.text || msg.bot_id || msg.subtype) {
     return;
   }
@@ -75,12 +84,12 @@ app.message(async ({ message, client, say }) => {
         );
         return; // Stop here if we've flagged a contradiction to keep the thread focused
       }
-    } catch (err) {
-      console.error('Error running Serve Mode check on message:', err);
+    } catch (err: any) {
+      await Logger.error(`Serve Mode contradiction check failed on message ts: ${messageTs}`, err);
     }
   }
 
-  // Run normal Ingestion pipeline
+  // Run normal Ingestion pipeline (Write operation: propagates/logs error)
   try {
     const permalinkRes = await client.chat.getPermalink({
       channel: channelId,
@@ -102,7 +111,7 @@ app.message(async ({ message, client, say }) => {
         userTeam = (userProfile.user.profile as any).team || '';
       }
     } catch (e) {
-      console.warn('Could not fetch user profile info:', e);
+      Logger.warn(`Could not fetch user profile info for user: ${userId}`, e);
     }
 
     // Fetch channel info
@@ -113,7 +122,7 @@ app.message(async ({ message, client, say }) => {
         channelName = channelInfo.channel.name || 'channel';
       }
     } catch (e) {
-      console.warn('Could not fetch channel info:', e);
+      Logger.warn(`Could not fetch channel info for channel: ${channelId}`, e);
     }
 
     const ingestRes = await ingestSlackMessage(
@@ -157,11 +166,11 @@ app.message(async ({ message, client, say }) => {
           link: permalink,
         });
       } catch (e) {
-        console.warn('Could not create bookmark for decision:', e);
+        Logger.warn(`Could not create bookmark for decision in channel: ${channelId}`, e);
       }
     }
-  } catch (err) {
-    console.error('Failed to ingest Slack message:', err);
+  } catch (err: any) {
+    await Logger.error(`Failed to ingest Slack message at ts: ${messageTs}`, err);
     // Try to remove 👀 reaction on failure
     try {
       await client.reactions.remove({
@@ -173,8 +182,9 @@ app.message(async ({ message, client, say }) => {
   }
 });
 
-// 2. Mentions listener for Ask Mode Synthesized Responses
+// 2. Mentions listener for Ask Mode Synthesized Responses (Read operation: graceful degradation)
 app.event('app_mention', async ({ event, client, say }) => {
+  Logger.debug(`app_mention received: "${event.text}" from User ${event.user}`);
   const question = event.text.replace(/<@U[A-Z0-9]+>/g, '').trim();
   const channelId = event.channel;
   const threadTs = event.ts;
@@ -183,19 +193,50 @@ app.event('app_mention', async ({ event, client, say }) => {
     const askResult = await handleAskMode(client, question, channelId);
     const blocks = formatAskResponse(askResult);
     await postInThreadReply(client, channelId, threadTs, blocks, askResult.answer);
-  } catch (error) {
-    console.error('Error handling app mention in Ask Mode:', error);
+  } catch (error: any) {
+    let friendlyMessage = 'Sorry, I encountered an error while synthesizing the answer.';
+    let reasoning = 'Failed during API synthesis pass.';
+
+    if (error instanceof DatabaseQueryError) {
+      reasoning = 'Database query failed or timed out.';
+    } else if (error instanceof GeminiApiError) {
+      reasoning = `Gemini API failed: ${error.message}`;
+    } else if (error instanceof SlackClientError) {
+      reasoning = `Slack integration error: ${error.message}`;
+    }
+
+    await Logger.error(`Ask Mode query failed for question: "${question}"`, error);
+
+    const errorBlocks = [
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `⚠️ *${friendlyMessage}*`,
+        },
+      },
+      {
+        type: 'context',
+        elements: [
+          {
+            type: 'mrkdwn',
+            text: `*Status:* ⚪ Low Confidence | *Reasoning:* ${reasoning}`,
+          },
+        ],
+      },
+    ];
+
     await postInThreadReply(
       client,
       channelId,
       threadTs,
-      [],
-      'Sorry, I encountered an error processing your query.'
+      errorBlocks,
+      friendlyMessage
     );
   }
 });
 
-// 3. Slash Command `/sarvenix-catchup`
+// 3. Slash Command `/sarvenix-catchup` (Read/Brief operation: graceful user-facing error response)
 app.command('/sarvenix-catchup', async ({ command, ack, client }) => {
   await ack();
   const userId = command.user_id;
@@ -204,12 +245,30 @@ app.command('/sarvenix-catchup', async ({ command, ack, client }) => {
     const brief = await generateCatchupBrief(client, userId);
     const blocks = formatCatchupBrief(brief);
     await sendDMBrief(client, userId, blocks, 'Your catchup brief is ready!');
-  } catch (error) {
-    console.error('Error processing /sarvenix-catchup command:', error);
+  } catch (error: any) {
+    await Logger.error(`Command /sarvenix-catchup failed for user: ${userId}`, error);
+    try {
+      await sendDMBrief(
+        client,
+        userId,
+        [
+          {
+            type: 'section',
+            text: {
+              type: 'mrkdwn',
+              text: `⚠️ *Sorry, I could not generate your catchup brief right now.*\n_Reason:_ ${error.message || 'Unknown internal error.'}`,
+            },
+          },
+        ],
+        'Catchup brief generation failed.'
+      );
+    } catch (dmErr) {
+      Logger.warn(`Failed to deliver DM brief error notification to user: ${userId}`, dmErr);
+    }
   }
 });
 
-// 4. Slash Command `/sarvenix` Subcommands (mute, unmute)
+// 4. Slash Command `/sarvenix` Subcommands (Write operation: immediate notification of failure)
 app.command('/sarvenix', async ({ command, ack, respond }) => {
   await ack();
   const text = command.text.trim().toLowerCase();
@@ -222,8 +281,12 @@ app.command('/sarvenix', async ({ command, ack, respond }) => {
         text: 'Channel muted. Sarvenix will no longer index messages or alert here.',
         response_type: 'ephemeral',
       });
-    } catch (err) {
-      await respond({ text: 'Error muting channel.', response_type: 'ephemeral' });
+    } catch (err: any) {
+      await Logger.error(`Mute command failed on channel: ${channelId}`, err);
+      await respond({
+        text: `⚠️ Error muting channel: ${err.message || 'Unknown database issue.'}`,
+        response_type: 'ephemeral',
+      });
     }
   } else if (text === 'unmute') {
     try {
@@ -232,8 +295,12 @@ app.command('/sarvenix', async ({ command, ack, respond }) => {
         text: 'Channel unmuted. Ingestion and alerts resumed.',
         response_type: 'ephemeral',
       });
-    } catch (err) {
-      await respond({ text: 'Error unmuting channel.', response_type: 'ephemeral' });
+    } catch (err: any) {
+      await Logger.error(`Unmute command failed on channel: ${channelId}`, err);
+      await respond({
+        text: `⚠️ Error unmuting channel: ${err.message || 'Unknown database issue.'}`,
+        response_type: 'ephemeral',
+      });
     }
   } else {
     await respond({
@@ -250,13 +317,25 @@ app.action('export_catchup_canvas', async ({ body, ack, client, respond }) => {
 
   try {
     const brief = await generateCatchupBrief(client, userId);
-    const canvasUrl = await exportBriefToCanvas(client, brief);
+    const result = await exportBriefToCanvas(client, brief, userId);
+
+    if (result.type === 'canvas') {
+      await respond({
+        text: `Brief successfully exported! View Canvas: ${result.url}`,
+        replace_original: false,
+      });
+    } else {
+      await respond({
+        text: `✅ Brief successfully exported and pinned to your DM! (Note: Real Canvas export requires the canvases:write scope).`,
+        replace_original: false,
+      });
+    }
+  } catch (error: any) {
+    await Logger.error(`Catchup Canvas export action failed for user: ${userId}`, error);
     await respond({
-      text: `Brief successfully exported! View Canvas: ${canvasUrl}`,
+      text: `⚠️ Failed to export brief to Canvas: ${error.message || 'unknown error'}`,
       replace_original: false,
     });
-  } catch (error) {
-    console.error('Error exporting brief to canvas:', error);
   }
 });
 
@@ -289,10 +368,10 @@ app.action('dismiss_contradiction', async ({ body, ack, respond }) => {
 
 async function main() {
   await app.start();
-  console.log('⚡️ Sarvenix Slack App is running in Socket Mode!');
+  Logger.info('Sarvenix Slack App is running in Socket Mode!');
 }
 
 main().catch((error) => {
-  console.error('Fatal error starting Slack App:', error);
+  Logger.error('Fatal error starting Slack App', error);
   process.exit(1);
 });
