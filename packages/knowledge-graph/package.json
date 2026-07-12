@@ -1,0 +1,19 @@
+{
+  "name": "@sarvenix/knowledge-graph",
+  "version": "1.0.0",
+  "description": "Shared Knowledge Graph schema and client for Sarvenix",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
+    "test": "echo \"No tests in knowledge-graph\""
+  },
+  "dependencies": {
+    "@sarvenix/shared-types": "*",
+    "neo4j-driver": "^5.12.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

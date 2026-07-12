@@ -1,0 +1,23 @@
+{
+  "name": "sarvenix-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Institutional memory agent for Slack",
+  "workspaces": [
+    "apps/*",
+    "services/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "seed:demo": "ts-node scripts/seed-demo-data.ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "ts-node": "^10.9.1",
+    "turbo": "^1.10.0"
+  }
+}

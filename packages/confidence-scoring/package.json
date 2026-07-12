@@ -1,0 +1,21 @@
+{
+  "name": "@sarvenix/confidence-scoring",
+  "version": "1.0.0",
+  "description": "Confidence scoring logic for Sarvenix",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@sarvenix/shared-types": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "jest": "^29.5.0",
+    "@types/jest": "^29.5.0",
+    "ts-jest": "^29.1.0"
+  }
+}
