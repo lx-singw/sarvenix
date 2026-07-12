@@ -85,13 +85,15 @@ export async function createDecision(decision: Decision): Promise<void> {
                    d.confidence = $confidence,
                    d.extractedAt = datetime($extractedAt),
                    d.decidedAt = datetime($decidedAt),
-                   d.embedding = $embedding
+                   d.embedding = $embedding,
+                   d.channelId = $channelId
      ON MATCH SET d.summary = $summary,
                   d.status = $status,
                   d.confidence = $confidence,
                   d.extractedAt = datetime($extractedAt),
                   d.decidedAt = datetime($decidedAt),
-                  d.embedding = $embedding`,
+                  d.embedding = $embedding,
+                  d.channelId = $channelId`,
     {
       id: decision.id,
       summary: decision.summary,
@@ -100,6 +102,7 @@ export async function createDecision(decision: Decision): Promise<void> {
       extractedAt: decision.extractedAt.toISOString(),
       decidedAt: decision.decidedAt ? decision.decidedAt.toISOString() : null,
       embedding: decision.embedding || null,
+      channelId: decision.channelId || null,
     }
   );
 }
@@ -184,16 +187,22 @@ export async function linkNodes(
 export async function findSimilarDecisions(
   embedding: number[],
   threshold: number,
-  limit = 5
+  limit = 5,
+  allowedChannelIds?: string[]
 ): Promise<Array<{ decision: Decision; score: number }>> {
   try {
     const query = `
       CALL db.index.vector.queryNodes('decision_embeddings', $limit, $embedding)
       YIELD node, score
-      WHERE score >= $threshold
+      WHERE score >= $threshold AND ($allowedChannelIds IS NULL OR node.channelId IN $allowedChannelIds)
       RETURN node, score
     `;
-    const result = await runQueryWithRetry(query, { embedding, threshold, limit: neo4j.int(limit) });
+    const result = await runQueryWithRetry(query, {
+      embedding,
+      threshold,
+      limit: neo4j.int(limit),
+      allowedChannelIds: allowedChannelIds || null,
+    });
     return result.records.map((record: any) => {
       const node = record.get('node');
       const score = record.get('score');
@@ -205,6 +214,7 @@ export async function findSimilarDecisions(
           confidence: node.properties.confidence,
           extractedAt: new Date(node.properties.extractedAt),
           decidedAt: node.properties.decidedAt ? new Date(node.properties.decidedAt) : undefined,
+          channelId: node.properties.channelId,
         },
         score,
       };
@@ -212,7 +222,7 @@ export async function findSimilarDecisions(
   } catch (error) {
     const query = `
       MATCH (d:Decision)
-      WHERE d.embedding IS NOT NULL
+      WHERE d.embedding IS NOT NULL AND ($allowedChannelIds IS NULL OR d.channelId IN $allowedChannelIds)
       WITH d, gds.similarity.cosine(d.embedding, $embedding) AS score
       WHERE score >= $threshold
       RETURN d, score
@@ -220,7 +230,12 @@ export async function findSimilarDecisions(
       LIMIT $limit
     `;
     try {
-      const result = await runQueryWithRetry(query, { embedding, threshold, limit: neo4j.int(limit) });
+      const result = await runQueryWithRetry(query, {
+        embedding,
+        threshold,
+        limit: neo4j.int(limit),
+        allowedChannelIds: allowedChannelIds || null,
+      });
       return result.records.map((record: any) => {
         const node = record.get('d');
         const score = record.get('score');
@@ -232,13 +247,22 @@ export async function findSimilarDecisions(
             confidence: node.properties.confidence,
             extractedAt: new Date(node.properties.extractedAt),
             decidedAt: node.properties.decidedAt ? new Date(node.properties.decidedAt) : undefined,
+            channelId: node.properties.channelId,
           },
           score,
         };
       });
     } catch (fallbackError) {
       console.warn('Cosine similarity fallback failed (missing GDS library?):', fallbackError);
-      const result = await runQueryWithRetry(`MATCH (d:Decision) RETURN d LIMIT $limit`, { limit: neo4j.int(limit) });
+      const result = await runQueryWithRetry(
+        `MATCH (d:Decision)
+         WHERE $allowedChannelIds IS NULL OR d.channelId IN $allowedChannelIds
+         RETURN d LIMIT $limit`,
+        {
+          limit: neo4j.int(limit),
+          allowedChannelIds: allowedChannelIds || null,
+        }
+      );
       return result.records.map((record: any) => {
         const node = record.get('d');
         return {
@@ -249,6 +273,7 @@ export async function findSimilarDecisions(
             confidence: node.properties.confidence,
             extractedAt: new Date(node.properties.extractedAt),
             decidedAt: node.properties.decidedAt ? new Date(node.properties.decidedAt) : undefined,
+            channelId: node.properties.channelId,
           },
           score: 1.0,
         };
@@ -296,4 +321,22 @@ export async function setChannelMute(slackChannelId: string, isMuted: boolean): 
      SET c.isMuted = $isMuted`,
     { slackChannelId, isMuted }
   );
+}
+
+export async function verifyDatabaseConnection(): Promise<void> {
+  // Access session to trigger driver instantiation if needed
+  const session = getSession();
+  await session.close();
+  if (driver) {
+    await driver.verifyConnectivity();
+  }
+}
+
+export async function deleteDecisionByMessageTs(channelId: string, messageTs: string): Promise<void> {
+  const query = `
+    MATCH (d:Decision)-[r:DISCUSSED_IN]->(c:Channel {slackChannelId: $channelId})
+    WHERE r.message_ts = $messageTs
+    DETACH DELETE d
+  `;
+  await runQueryWithRetry(query, { channelId, messageTs });
 }

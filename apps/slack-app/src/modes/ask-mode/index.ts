@@ -31,7 +31,8 @@ Comments:
 export async function handleAskMode(
   client: WebClient,
   question: string,
-  channelId: string
+  channelId: string,
+  userId?: string
 ): Promise<SynthesizedResponse> {
   try {
     // 1. Query Slack RTS
@@ -40,9 +41,28 @@ export async function handleAskMode(
       ? rtsMatches.map((m, idx) => `[Slack Msg ${idx + 1}] User: ${m.username}, Ch: ${m.channel.name}, Text: "${m.text}", Link: ${m.permalink}`).join('\n')
       : 'No matching Slack conversations found.';
 
-    // 2. Query Knowledge Graph to trace decision provenance
+    // Resolve user's allowed channels for privacy filtering
+    let allowedChannelIds: string[] | undefined = undefined;
+    if (userId) {
+      try {
+        const conversations = await client.users.conversations({
+          user: userId,
+          types: 'public_channel,private_channel',
+          limit: 100,
+        });
+        allowedChannelIds = (conversations.channels || []).map((c: any) => c.id);
+        if (allowedChannelIds && !allowedChannelIds.includes(channelId)) {
+          allowedChannelIds.push(channelId);
+        }
+      } catch (convErr) {
+        console.warn(`Could not resolve channel memberships for user ${userId}:`, convErr);
+        allowedChannelIds = [channelId];
+      }
+    }
+
+    // 2. Query Knowledge Graph to trace decision provenance with allowedChannelIds boundary filter
     const questionEmbedding = await getEmbedding(question);
-    const similarDecisions = await findSimilarDecisions(questionEmbedding, 0.7);
+    const similarDecisions = await findSimilarDecisions(questionEmbedding, 0.7, 5, allowedChannelIds);
 
     let mcpContext = '';
     const referencedArtifactIds: string[] = [];

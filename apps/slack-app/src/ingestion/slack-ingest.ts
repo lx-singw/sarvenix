@@ -64,6 +64,7 @@ export async function ingestSlackMessage(
       confidence: (extracted as any).confidence || 'high',
       extractedAt: new Date(),
       embedding: embedding,
+      channelId: channelId,
     };
 
     await createDecision(newDecision);

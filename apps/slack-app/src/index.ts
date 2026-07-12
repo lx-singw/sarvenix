@@ -5,7 +5,7 @@ import { ingestSlackMessage } from './ingestion/slack-ingest';
 import { handleAskMode } from './modes/ask-mode';
 import { generateCatchupBrief } from './commands/catchup';
 import { processServeMode } from './modes/serve-mode';
-import { setChannelMute } from '@sarvenix/knowledge-graph';
+import { setChannelMute, verifyDatabaseConnection, deleteDecisionByMessageTs } from '@sarvenix/knowledge-graph';
 import {
   formatAskResponse,
   formatCatchupBrief,
@@ -31,7 +31,91 @@ app.error(async (error) => {
 // 1. Message listener for Ingestion and Serve Mode Proactive Alerts
 app.message(async ({ message, client, say }) => {
   const msg = message as any;
-  Logger.debug(`app.message received: "${msg.text || ''}" from User ${msg.user || 'unknown'}`);
+  Logger.debug(`app.message received: Subtype = ${msg.subtype || 'none'}, Channel = ${msg.channel || 'unknown'}`);
+
+  // Handle Slack message deletion sync
+  if (msg.subtype === 'message_deleted') {
+    const channelId = msg.channel;
+    const messageTs = msg.deleted_ts;
+    Logger.info(`Handling message deletion: Channel = ${channelId}, ts = ${messageTs}`);
+    try {
+      await deleteDecisionByMessageTs(channelId, messageTs);
+      Logger.info(`Decision node matching ts ${messageTs} deleted successfully.`);
+    } catch (err: any) {
+      await Logger.error(`Failed to handle message deletion for ts ${messageTs}`, err);
+    }
+    return;
+  }
+
+  // Handle Slack message edit sync
+  if (msg.subtype === 'message_changed') {
+    const channelId = msg.channel;
+    const editMsg = msg.message;
+    if (!editMsg || editMsg.bot_id || !editMsg.text) {
+      return;
+    }
+    const messageTs = editMsg.ts;
+    const messageText = editMsg.text;
+    const userId = editMsg.user || 'U_UNKNOWN';
+
+    Logger.info(`Handling message edit: Channel = ${channelId}, ts = ${messageTs}`);
+    try {
+      // 1. Delete the old decision node if it exists
+      await deleteDecisionByMessageTs(channelId, messageTs);
+
+      // 2. Extract and ingest the new edited decision
+      const permalinkRes = await client.chat.getPermalink({
+        channel: channelId,
+        message_ts: messageTs,
+      });
+      const permalink = permalinkRes.permalink || '';
+
+      let userName = 'User';
+      let userTitle = '';
+      let userTeam = '';
+      let userTz = '';
+      try {
+        const userProfile = await client.users.info({ user: userId });
+        if (userProfile.ok && userProfile.user) {
+          userName = userProfile.user.profile?.real_name || userProfile.user.name || 'User';
+          userTitle = userProfile.user.profile?.title || '';
+          userTz = userProfile.user.tz || '';
+          userTeam = (userProfile.user.profile as any).team || '';
+        }
+      } catch (e) {
+        Logger.warn(`Could not fetch user profile info for user: ${userId}`, e);
+      }
+
+      let channelName = 'channel';
+      try {
+        const channelInfo = await client.conversations.info({ channel: channelId });
+        if (channelInfo.ok && channelInfo.channel) {
+          channelName = channelInfo.channel.name || 'channel';
+        }
+      } catch (e) {
+        Logger.warn(`Could not fetch channel info for channel: ${channelId}`, e);
+      }
+
+      await ingestSlackMessage(
+        messageText,
+        userId,
+        userName,
+        channelId,
+        channelName,
+        messageTs,
+        permalink,
+        userTitle,
+        userTeam,
+        userTz
+      );
+      Logger.info(`Decision node matching ts ${messageTs} updated successfully.`);
+    } catch (err: any) {
+      await Logger.error(`Failed to handle message edit for ts ${messageTs}`, err);
+    }
+    return;
+  }
+
+  // Handle standard new message ingestion
   if (!msg.text || msg.bot_id || msg.subtype) {
     return;
   }
@@ -190,7 +274,7 @@ app.event('app_mention', async ({ event, client, say }) => {
   const threadTs = event.ts;
 
   try {
-    const askResult = await handleAskMode(client, question, channelId);
+    const askResult = await handleAskMode(client, question, channelId, event.user);
     const blocks = formatAskResponse(askResult);
     await postInThreadReply(client, channelId, threadTs, blocks, askResult.answer);
   } catch (error: any) {
@@ -367,6 +451,10 @@ app.action('dismiss_contradiction', async ({ body, ack, respond }) => {
 });
 
 async function main() {
+  Logger.info('Verifying database connectivity...');
+  await verifyDatabaseConnection();
+  Logger.info('Database connection verified successfully.');
+
   await app.start();
   Logger.info('Sarvenix Slack App is running in Socket Mode!');
 }

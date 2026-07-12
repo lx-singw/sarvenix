@@ -9,6 +9,7 @@ export interface Decision {
   extractedAt: Date;
   decidedAt?: Date;
   embedding?: number[];
+  channelId?: string;
 }
 
 export interface Person {
