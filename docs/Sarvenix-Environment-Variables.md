@@ -39,6 +39,8 @@ This document is the authoritative reference for every environment variable used
 | `GITHUB_APP_ID` | Yes | `services/mcp-github` | GitHub App ID | GitHub App settings |
 | `GITHUB_PRIVATE_KEY` | Yes | `services/mcp-github` | PEM private key for the GitHub App (store as a secret, not plaintext, in any non-local environment) | GitHub App settings → generate private key |
 | `GITHUB_INSTALLATION_ID` | Yes | `services/mcp-github` | Installation ID for the specific org/repo the app is installed on | GitHub App installation settings |
+| `GITHUB_OWNER` | Yes for Ask Mode live evidence | `apps/slack-app` | Canonical demo/pilot repository owner used when resolving PR references | GitHub repository path |
+| `GITHUB_REPO` | Yes for Ask Mode live evidence | `apps/slack-app` | Canonical demo/pilot repository name used when resolving PR references | GitHub repository path |
 | `GITHUB_ALLOWED_REPOS` | No (default: all installed repos) | `services/mcp-github` | Comma-separated allowlist to scope which repos Sarvenix can query, if you want to restrict below the App installation's full access |
 
 **Required GitHub App permissions:** `Pull requests: Read`, `Contents: Read`, `Issues: Read`. No write permissions should be granted in MVP.
@@ -49,10 +51,9 @@ This document is the authoritative reference for every environment variable used
 
 | Variable | Required | Used by | Description | Where to obtain |
 |---|---|---|---|---|
-| `JIRA_CLIENT_ID` | Yes | `services/mcp-jira` | OAuth 2.0 (3LO) client ID | Atlassian Developer Console |
-| `JIRA_CLIENT_SECRET` | Yes | `services/mcp-jira` | OAuth 2.0 (3LO) client secret | Atlassian Developer Console |
-| `JIRA_REDIRECT_URI` | Yes | `services/mcp-jira` | OAuth callback URL | Set in Atlassian Developer Console, must match your deployment URL |
-| `JIRA_CLOUD_ID` | Yes | `services/mcp-jira` | Identifies which Jira Cloud instance to query | Retrieved via Atlassian's `accessible-resources` endpoint after OAuth |
+| `JIRA_CLOUD_ID` | Yes | `services/mcp-jira` | Identifies which Jira Cloud instance to query | Atlassian accessible-resources endpoint |
+| `JIRA_ACCESS_TOKEN` | Yes | `services/mcp-jira` | Read-only bearer token used by the current MCP client | Atlassian OAuth flow |
+| `JIRA_SITE_URL` | Yes for canonical citations | `apps/slack-app` | Public base URL for exact `/browse/KEY` evidence links | Jira site URL, without a trailing slash |
 
 **Required Jira scope:** `read:jira-work`. No write scopes in MVP.
 
@@ -133,13 +134,14 @@ CLAUDE_MODEL_CRITIC=claude-sonnet-4-6
 GITHUB_APP_ID=
 GITHUB_PRIVATE_KEY=
 GITHUB_INSTALLATION_ID=
+GITHUB_OWNER=
+GITHUB_REPO=
 GITHUB_ALLOWED_REPOS=
 
 # Jira MCP
-JIRA_CLIENT_ID=
-JIRA_CLIENT_SECRET=
-JIRA_REDIRECT_URI=
 JIRA_CLOUD_ID=
+JIRA_ACCESS_TOKEN=
+JIRA_SITE_URL=
 
 # Docs MCP
 GOOGLE_SERVICE_ACCOUNT_JSON=
@@ -175,5 +177,5 @@ DEMO_MODE=true
 ## 12. Secrets Handling Notes
 
 - **Never commit** `.env` — only `.env.example` with empty/placeholder values belongs in version control.
-- `GITHUB_PRIVATE_KEY`, `JIRA_CLIENT_SECRET`, `GOOGLE_SERVICE_ACCOUNT_JSON`, `GRAPH_DB_PASSWORD`, and `ANTHROPIC_API_KEY` should be injected via your deployment platform's secret manager (Fly.io secrets, Render environment groups, etc.) in any non-local environment — not plain environment variables in a dashboard visible to all collaborators.
+- `GITHUB_PRIVATE_KEY`, `JIRA_ACCESS_TOKEN`, `GOOGLE_SERVICE_ACCOUNT_JSON`, `GRAPH_DB_PASSWORD`, and `ANTHROPIC_API_KEY` should be injected via the deployment platform's protected secret manager in any non-local environment—not committed or exposed to collaborators who do not need access.
 - `ADVERSARIAL_VERIFICATION_ENABLED` and `RTS_INDEX_MUTED_CHANNELS` are flagged above as safety-critical — treat any pull request that changes their defaults as requiring explicit review, since both directly affect the trust guarantees described in the PRD and Architecture Doc.
