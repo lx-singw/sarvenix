@@ -1,11 +1,10 @@
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 import { App } from '@slack/bolt';
 import { config } from './config';
 import { ingestSlackMessage } from './ingestion/slack-ingest';
 import { handleAskMode } from './modes/ask-mode';
 import { generateCatchupBrief } from './commands/catchup';
 import { processServeMode } from './modes/serve-mode';
-import { setChannelMute, verifyDatabaseConnection, deleteDecisionByMessageTs, getAppHomeData, isChannelMuted } from '@sarvenix/knowledge-graph';
+import { setChannelMute, verifyDatabaseConnection, deleteDecisionByMessageTs, getAppHomeData, isChannelMuted, resolveDecisionConflict } from '@sarvenix/knowledge-graph';
 import {
   formatAskResponse,
   formatCatchupBrief,
@@ -276,11 +275,31 @@ app.event('app_mention', async ({ event, client, say }) => {
   const channelId = event.channel;
   const threadTs = event.ts;
 
+  if (!question) {
+    await postInThreadReply(
+      client,
+      channelId,
+      threadTs,
+      [{
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: '*What decision should I trace?*\nTry: `@Sarvenix Why did we choose the current database migration approach?`',
+        },
+      }],
+      'Ask Sarvenix a specific question about a workspace decision.'
+    );
+    return;
+  }
+
   try {
+    await client.reactions.add({ name: 'hourglass_flowing_sand', channel: channelId, timestamp: threadTs }).catch(() => undefined);
     const askResult = await handleAskMode(client, question, channelId, event.user);
     const blocks = formatAskResponse(askResult);
     await postInThreadReply(client, channelId, threadTs, blocks, askResult.answer);
+    await client.reactions.remove({ name: 'hourglass_flowing_sand', channel: channelId, timestamp: threadTs }).catch(() => undefined);
   } catch (error: any) {
+    await client.reactions.remove({ name: 'hourglass_flowing_sand', channel: channelId, timestamp: threadTs }).catch(() => undefined);
     let friendlyMessage = 'Sorry, I encountered an error while synthesizing the answer.';
     let reasoning = 'Failed during API synthesis pass.';
 
@@ -391,7 +410,7 @@ app.command('/sarvenix', async ({ command, ack, respond }) => {
     }
   } else {
     await respond({
-      text: 'Unknown subcommand. Supported options: `/sarvenix mute`, `/sarvenix unmute`.',
+      text: '*Sarvenix channel controls*\n• `/sarvenix mute` — pause indexing and proactive alerts here\n• `/sarvenix unmute` — resume indexing and proactive alerts\n\nTo ask why a decision was made, mention `@Sarvenix` in the relevant channel. Use `/sarvenix-catchup` for a private return-from-OOO brief.',
       response_type: 'ephemeral',
     });
   }
@@ -428,13 +447,13 @@ app.action('export_catchup_canvas', async ({ body, ack, client, respond }) => {
 
 app.action('feedback_accurate', async ({ body, ack, respond }) => {
   await ack();
-  await respond({ text: 'Thank you for your feedback! 👍', replace_original: false });
+  await respond({ text: 'Feedback recorded. This answer was marked accurate.', replace_original: false });
 });
 
 app.action('feedback_wrong', async ({ body, ack, respond }) => {
   await ack();
   await respond({
-    text: 'Feedback recorded. I will update my reasoning path. 👎',
+    text: 'Feedback recorded as needing correction. Sarvenix will not claim the reasoning path was changed until the evidence is reviewed.',
     replace_original: false,
   });
 });
@@ -448,9 +467,28 @@ app.action('loop_in_owner', async ({ body, ack, client, respond }) => {
   });
 });
 
+app.action('resolve_decision_conflict', async ({ body, ack, respond }) => {
+  await ack();
+  const decisionId = (body as any).actions[0].value;
+  const userId = body.user.id;
+
+  try {
+    const resolved = await resolveDecisionConflict(decisionId, userId);
+    await respond({
+      text: resolved
+        ? `Resolved by <@${userId}>. Prior decision \`${decisionId}\` is closed and its open conflict links were removed.`
+        : `Decision \`${decisionId}\` was not found or was already removed.`,
+      replace_original: resolved,
+    });
+  } catch (error) {
+    await Logger.error(`Failed to resolve decision conflict ${decisionId}`, error);
+    await respond({ text: 'The conflict could not be resolved. No graph changes were applied.', replace_original: false });
+  }
+});
+
 app.action('dismiss_contradiction', async ({ body, ack, respond }) => {
   await ack();
-  await respond({ text: 'Alert dismissed.', replace_original: true });
+  await respond({ text: 'Alert dismissed. The underlying decision graph was not changed.', replace_original: true });
 });
 
 // 6. App Home opened view publisher (Best UX)

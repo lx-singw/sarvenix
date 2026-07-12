@@ -1,16 +1,22 @@
 import { handleAskMode } from '../../apps/slack-app/src/modes/ask-mode';
 import { searchMessages } from '../../apps/slack-app/src/lib/rts-client';
 import { getEmbedding } from '../../apps/slack-app/src/lib/gemini-client';
-import { findSimilarDecisions, traceProvenance } from '@sarvenix/knowledge-graph';
+import { findSimilarDecisions, traceProvenance, findDecisionPaths } from '@sarvenix/knowledge-graph';
 import { synthesizeResponse } from '../../apps/slack-app/src/modes/ask-mode/synthesis';
+import { resolveExternalEvidence } from '../../apps/slack-app/src/modes/ask-mode/evidence-resolver';
 
 jest.mock('../../apps/slack-app/src/lib/rts-client');
 jest.mock('../../apps/slack-app/src/lib/gemini-client');
 jest.mock('@sarvenix/knowledge-graph');
 jest.mock('../../apps/slack-app/src/modes/ask-mode/synthesis');
+jest.mock('../../apps/slack-app/src/modes/ask-mode/evidence-resolver');
 
 describe('E2E - Ask Mode Citations', () => {
-  const mockWebClient = {} as any;
+  const mockWebClient = {
+    users: {
+      conversations: jest.fn().mockResolvedValue({ channels: [{ id: 'C123' }] }),
+    },
+  } as any;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -37,6 +43,19 @@ describe('E2E - Ask Mode Citations', () => {
     (traceProvenance as jest.Mock).mockResolvedValue([
       { id: 'migrate-412', type: 'jira_ticket' }
     ]);
+    (findDecisionPaths as jest.Mock).mockResolvedValue([]);
+    (resolveExternalEvidence as jest.Mock).mockResolvedValue({
+      evidence: [
+        {
+          sourceType: 'jira_ticket',
+          externalId: 'MIGRATE-412',
+          title: 'MIGRATE-412: Legacy Database Migration to v2',
+          url: 'https://workspace.atlassian.net/browse/MIGRATE-412',
+          context: '[Jira MIGRATE-412] Status: Closed',
+        },
+      ],
+      unavailable: [],
+    });
     (synthesizeResponse as jest.Mock).mockResolvedValue({
       answer: 'Sarah Chen recommended dropping it due to leaks.',
       confidence: 'high',
@@ -69,7 +88,7 @@ describe('E2E - Ask Mode Citations', () => {
     expect(result.answer).toContain('Sarah Chen');
     expect(result.citations).toHaveLength(2);
     expect(result.citations[0].url).toBe('https://slack.com/archives/C123/p12345');
-    expect(result.citations[1].url).toBe('https://org.atlassian.net/browse/MIGRATE-412');
+    expect(result.citations[1].url).toBe('https://workspace.atlassian.net/browse/MIGRATE-412');
   });
 });
 

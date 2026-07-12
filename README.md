@@ -1,7 +1,35 @@
 # Sarvenix
 
-A proactive, cross-platform institutional memory agent for Slack that traces the "why" behind decisions across Slack, GitHub, and Jira — and speaks up before repeated mistakes happen.
+**Institutional memory that serves the answer before you ask.**
 
-For more information, please see:
-- [Architecture Details](ARCHITECTURE.md)
-- Detailed documents in [docs/](docs/)
+Sarvenix is a proactive Slack agent that reconstructs the “why” behind decisions across Slack, GitHub, and Jira. It answers with exact evidence, creates private return-from-OOO briefs, detects conflicts before teams repeat settled work, and keeps resolution under human control.
+
+## Core experiences
+
+- **Ask:** mention Sarvenix to trace a decision across requester-visible Slack channels and live read-only GitHub/Jira evidence.
+- **Catch Up:** run `/sarvenix-catchup` for a private brief of decisions, actions, and risks.
+- **Serve:** receive rate-limited, adversarially verified contradiction alerts with decision lineage and a confirmed resolution action.
+
+## Trust model
+
+Sarvenix preserves canonical source links, exposes confidence and partial-source failures, treats retrieved text as untrusted data, keeps external integrations read-only, supports channel mute controls, and redacts sensitive logging fields. Historical graph data can be seeded for a demo, but production evidence is never silently replaced with fixtures.
+
+## Verified quality gate
+
+```bash
+npx jest --runInBand
+npm run build
+npm audit --omit=dev --audit-level=high
+```
+
+Current verified result: 7 workspace packages build, 6 suites and 10 tests pass, and the production dependency audit reports 0 vulnerabilities.
+
+## Submission and architecture
+
+- [Concise judge architecture](docs/Sarvenix-Judge-Architecture.md)
+- [Three-minute demo script](docs/Sarvenix-Demo-Script.md)
+- [Devpost submission copy](docs/Sarvenix-Devpost-Submission.md)
+- [Judging evidence matrix](docs/Sarvenix-Judging-Evidence.md)
+- [Rehearsal and judge runbook](docs/Sarvenix-Rehearsal-Runbook.md)
+- [Full architecture](ARCHITECTURE.md)
+- [Detailed product documentation](docs/)

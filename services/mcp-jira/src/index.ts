@@ -66,69 +66,15 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const typedArgs = args as any;
 
   if (!isConfigured) {
-    // Graceful Fallback: Return mock scenario data for the demo if credentials are unset
-    console.error('Jira Credentials not set. Running in Demo Mock mode.');
-
-    switch (name) {
-      case 'search_issues':
-        return {
-          content: [
-            {
-              type: 'text',
-              text: JSON.stringify({
-                issues: [
-                  {
-                    key: 'MIGRATE-412',
-                    fields: {
-                      summary: 'Legacy Database Migration to v2',
-                      status: { name: 'Closed' },
-                    },
-                  },
-                ],
-              }),
-            },
-          ],
-        };
-      case 'get_issue_detail':
-        if (typedArgs.issueKey.toUpperCase() === 'MIGRATE-412') {
-          return {
-            content: [
-              {
-                type: 'text',
-                text: JSON.stringify({
-                  key: 'MIGRATE-412',
-                  fields: {
-                    summary: 'Legacy Database Migration to v2',
-                    description: 'Move all user profiles and transaction schemas off the legacy cluster.',
-                    status: { name: 'Closed' },
-                    resolution: { name: "Won't Do" },
-                  },
-                }),
-              },
-            ],
-          };
-        }
-        return { content: [{ type: 'text', text: JSON.stringify({ detail: null }) }] };
-      case 'get_resolution':
-        if (typedArgs.issueKey.toUpperCase() === 'MIGRATE-412') {
-          return {
-            content: [
-              {
-                type: 'text',
-                text: JSON.stringify({
-                  key: 'MIGRATE-412',
-                  status: 'Closed',
-                  resolution: "Won't Do",
-                  reason: 'Closed because Sarah Chen discovered memory leaks and schema compatibility issues in the connection pool.',
-                }),
-              },
-            ],
-          };
-        }
-        return { content: [{ type: 'text', text: JSON.stringify({ resolution: null }) }] };
-      default:
-        throw new Error(`Tool not found: ${name}`);
-    }
+    return {
+      isError: true,
+      content: [
+        {
+          type: 'text',
+          text: 'Jira MCP is unavailable because Jira credentials are not configured.',
+        },
+      ],
+    };
   }
 
   // Active Live mode: Execute real Jira requests
@@ -146,7 +92,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       }
       case 'get_issue_detail': {
         const data = await callJiraAPI(
-          `issue/${typedArgs.issueKey}`,
+          `issue/${typedArgs.issueKey}?fields=summary,description,status,resolution,resolutiondate,updated,comment`,
           config.jira.cloudId,
           config.jira.accessToken
         );

@@ -86,69 +86,15 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const typedArgs = args as any;
 
   if (!isConfigured) {
-    // Graceful Fallback: Return mock scenario data for the demo if credentials are unset
-    console.error('GitHub Credentials not set. Running in Demo Mock mode.');
-    
-    switch (name) {
-      case 'search_prs':
-        return {
-          content: [
-            {
-              type: 'text',
-              text: JSON.stringify({
-                prs: [
-                  {
-                    number: 412,
-                    title: 'Fix database connection pooling memory leak',
-                    url: 'https://github.com/org/repo/pull/412',
-                    state: 'merged',
-                  },
-                ],
-              }),
-            },
-          ],
-        };
-      case 'get_pr_detail':
-        if (typedArgs.number === 412) {
-          return {
-            content: [
-              {
-                type: 'text',
-                text: JSON.stringify({
-                  number: 412,
-                  title: 'Fix database connection pooling memory leak',
-                  state: 'merged',
-                  url: 'https://github.com/org/repo/pull/412',
-                  body: 'Replacing legacy DB connection pool driver to fix staging memory leak.',
-                }),
-              },
-            ],
-          };
-        }
-        return { content: [{ type: 'text', text: JSON.stringify({ detail: null }) }] };
-      case 'get_pr_comments':
-        if (typedArgs.number === 412) {
-          return {
-            content: [
-              {
-                type: 'text',
-                text: JSON.stringify({
-                  comments: [
-                    {
-                      author: 'Sarah Chen',
-                      body: 'Found schema conflicts and memory leaks in connection pooling. Do not reuse this old driver pattern.',
-                      createdAt: '2026-06-15T12:00:00Z',
-                    },
-                  ],
-                }),
-              },
-            ],
-          };
-        }
-        return { content: [{ type: 'text', text: JSON.stringify({ comments: [] }) }] };
-      default:
-        throw new Error(`Tool not found: ${name}`);
-    }
+    return {
+      isError: true,
+      content: [
+        {
+          type: 'text',
+          text: 'GitHub MCP is unavailable because GitHub App credentials are not configured.',
+        },
+      ],
+    };
   }
 
   // Active Live mode: Execute real GitHub requests
@@ -159,21 +105,57 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         const query = encodeURIComponent(typedArgs.query);
         const data = await callGitHubAPI(`search/issues?q=${query}+type:pr`, token);
         return {
-          content: [{ type: 'text', text: JSON.stringify({ prs: data.items || [] }) }],
+          content: [{
+            type: 'text',
+            text: JSON.stringify({
+              prs: (data.items || []).map((item: any) => ({
+                number: item.number,
+                title: item.title,
+                state: item.state,
+                url: item.html_url,
+                repositoryUrl: item.repository_url,
+                updatedAt: item.updated_at,
+              })),
+            }),
+          }],
         };
       }
       case 'get_pr_detail': {
         const endpoint = `repos/${typedArgs.owner}/${typedArgs.repo}/pulls/${typedArgs.number}`;
         const data = await callGitHubAPI(endpoint, token);
         return {
-          content: [{ type: 'text', text: JSON.stringify({ detail: data }) }],
+          content: [{
+            type: 'text',
+            text: JSON.stringify({
+              detail: {
+                number: data.number,
+                title: data.title,
+                state: data.state,
+                body: data.body,
+                html_url: data.html_url,
+                merged_at: data.merged_at,
+                updated_at: data.updated_at,
+                author: data.user?.login,
+              },
+            }),
+          }],
         };
       }
       case 'get_pr_comments': {
         const endpoint = `repos/${typedArgs.owner}/${typedArgs.repo}/pulls/${typedArgs.number}/comments`;
         const data = await callGitHubAPI(endpoint, token);
         return {
-          content: [{ type: 'text', text: JSON.stringify({ comments: data }) }],
+          content: [{
+            type: 'text',
+            text: JSON.stringify({
+              comments: (data || []).map((comment: any) => ({
+                author: comment.user?.login,
+                body: comment.body,
+                html_url: comment.html_url,
+                created_at: comment.created_at,
+              })),
+            }),
+          }],
         };
       }
       default:

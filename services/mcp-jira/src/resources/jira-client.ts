@@ -25,7 +25,11 @@ export async function callJiraAPI(
 
   const response = await fetch(url, options);
   if (!response.ok) {
-    throw new Error(`Jira API call failed: ${response.statusText} on ${endpoint}`);
+    const requestId = response.headers.get('x-arequestid');
+    const details = await response.text();
+    throw new Error(
+      `Jira API call failed (${response.status}) on ${endpoint}${requestId ? ` [request ${requestId}]` : ''}: ${details.slice(0, 500)}`
+    );
   }
 
   return response.json();

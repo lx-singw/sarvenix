@@ -1,117 +1,94 @@
-# Sarvenix — Demo Video Script
-### ~3 minutes · Track: New Slack Agent
+# Sarvenix — Three-Minute Demo Script
 
-**Goal of this script:** open simple and relatable, escalate to the architecturally impressive proactive features, close on impact. Every scene maps to a specific judging criterion so nothing in the video is wasted.
+## Recording thesis
 
----
+**Teams do not lose documents; they lose the causal chain between them. Sarvenix reconstructs that chain and serves it before the mistake repeats.**
 
-## Pre-production notes
+Every source shown in this recording must be a real sandbox Slack message, GitHub artifact, or Jira issue. The graph may be seeded to represent historical ingestion, but that fact must be disclosed. Never cut from a fixture into a claim of live retrieval.
 
-- Record in a realistic-looking Slack workspace (seeded with believable channel names: `#dev-infra`, `#platform`, `#product`, `#eng-general`) — not an empty sandbox. Judges notice sterile demo environments and it undercuts "Potential Impact."
-- Have a second monitor or split-screen ready to show GitHub/Jira in the background when Sarvenix cites them — seeing the *actual* source it pulled from is more convincing than just reading Sarvenix's text output.
-- Voiceover should sound like a product walkthrough, not a hackathon pitch — confident, plain language, no filler like "so basically."
+## 0:00–0:15 — The problem
 
----
+**Visual:** Slack, GitHub, and Jira visible in quick succession. Keep IDs in view so the systems clearly refer to the same project.
 
-## Scene-by-scene
+**Voiceover:**
 
-### [0:00–0:15] Cold open — the problem, fast
+> “A team’s decisions do not live in one document. The debate lives in Slack, the status lives in Jira, and the implementation detail lives in GitHub. Teams lose the causal chain—and repeat work that was already settled.”
 
-**Visual:** Quick montage — a person alt-tabbing between Slack, GitHub, Jira, looking increasingly lost. Timestamp counter ticking up in the corner ("14 minutes searching...").
+## 0:15–0:42 — Catch Up: immediate usefulness
 
-**VO:**
-> "Every large team has this problem. The answer to 'why did we do this' is scattered across Slack, GitHub, and Jira — and nobody has time to be a detective."
+**Visual:** Run `/sarvenix-catchup`. Show the private brief. Open one source link.
 
-### [0:15–0:35] Introduce Sarvenix — the front door
+**Voiceover:**
 
-**Visual:** User returns from vacation. Slack status flips from 🌴 OOO to active. A DM from Sarvenix appears automatically.
+> “Sarvenix starts with a familiar problem: returning to work. Catch Up searches only channels this user can access and turns the time window into a private brief of decisions, actions, and risks—with direct jumps to the original messages.”
 
-**On-screen (Sarvenix DM):**
-```
-While you were out:
-🔴 Decision: Migration to v2 API approved in #platform — affects your open PR #88
-🟡 Blocker: #dev-infra staging outage, resolved Tues 4pm
-🟢 FYI: Design review moved to Thursday 2pm
-```
+**Judge proof:** Slack-native command, private delivery, prioritization, exact provenance.
 
-**VO:**
-> "Sarvenix already knows what happened while you were gone — and what actually matters to you, specifically, versus everyone else."
+## 0:42–1:22 — Ask: reconstruct the decision
 
-### [0:35–1:10] Ask mode — the causal chain
+**Visual:** In the relevant channel, mention Sarvenix with the pre-verified question. Let the processing reaction appear. Show the answer, confidence, and source actions. Open the real GitHub and Jira links.
 
-**Visual:** In `#eng-general`, a user types: `@Sarvenix why did we drop the legacy database migration?`
+**Voiceover:**
 
-**On-screen (Sarvenix reply, appearing with a short "synthesizing across 3 sources..." loading state):**
-> "We dropped it because Sarah found a schema conflict in **PR #412** [link], which matches the memory leak discussed in **#dev-infra** [link] last Tuesday. **Jira MIGRATE-412** [link] was closed as *Won't Do* with that rationale.
-> ✅ **High confidence** — confirmed across all 3 sources."
+> “Now I can ask why the decision changed. Sarvenix searches the live Slack index with this user’s channel permissions, follows the referenced artifacts through read-only MCP tools, and reconstructs one answer. Every factual claim has a source. Confidence falls when evidence conflicts or a system is unavailable—it never swaps in fake production data.”
 
-**Cut to:** briefly show the actual GitHub PR comment and Jira ticket on screen — proving it's real data, not a hallucinated answer.
+**On-screen emphasis:**
 
-**VO:**
-> "It's not just searching Slack. It's tracing the decision across every system where it lives, showing its work — and telling you how sure it actually is."
+- Concise answer before details
+- Evidence-derived confidence
+- Exact Slack, GitHub, and Jira deep links
+- Any unavailable-source notice
 
-### [1:10–1:55] The differentiator — proactive intervention
+## 1:22–2:08 — Serve: the differentiator
 
-**Visual:** In `#product`, someone types: *"Let's ship the legacy DB migration next sprint, we have bandwidth now."*
+**Visual:** A second user proposes the incompatible plan. Do not mention Sarvenix. Show the proactive in-thread alert.
 
-**Beat:** Half a second of silence — then Sarvenix replies in-thread, unprompted.
+**Voiceover:**
 
-**On-screen (Sarvenix reply):**
-> "⚠️ Heads up — this was previously deprioritized in **MIGRATE-412** due to a schema conflict Sarah found in PR #412. Still want to proceed, or should I loop her in?"
+> “This is where Sarvenix stops being another search bot. A new proposal conflicts with an earlier decision. Sarvenix finds the prior owner and evidence, measures the semantic relationship, then sends the candidate to a separately prompted skeptical critic. Only verified candidates survive the channel rate limit and appear here.”
 
-**VO (slightly slower, letting this land):**
-> "This is the part that matters. Sarvenix didn't wait to be asked. It noticed a team was about to repeat a mistake that was already solved three months ago — and said something."
+**On-screen emphasis:**
 
-### [1:55–2:10] Handling being wrong
+- Prior decision and owner
+- Canonical evidence link
+- Semantic match percentage and decision ID
+- Statement that no external action was taken automatically
 
-**Visual:** A second, different scenario — Sarvenix flags what looks like a contradiction, but the human replies "actually this is intentional, we're revisiting on purpose." A single 👎 reaction is added to Sarvenix's message.
+## 2:08–2:30 — Human resolution and control
 
-**VO:**
-> "And when it's wrong — because it will be, sometimes — a single reaction is enough to teach it. Every alert is checked by a second, skeptical pass before it's ever posted, specifically to catch false positives like this before a human has to."
+**Visual:** Click **Resolve prior decision**, show the confirmation dialog, confirm, and show the resolution acknowledgement. Briefly show mute.
 
-*(Note: this beat directly demonstrates §4.8's adversarial verification pass and is worth protecting in the edit even under time pressure — it's the strongest "we thought about failure modes" moment in the video.)*
+**Voiceover:**
 
-### [2:10–2:35] Architecture flash
+> “The agent does not decide for the team. A human confirms whether the old decision should close. That updates the auditable decision graph and removes the open conflict; GitHub and Jira remain read-only. Teams can dismiss feedback or mute Sarvenix at any time.”
 
-**Visual:** Quick, clean animated diagram (10–15 sec) showing: Slack messages + GitHub + Jira → Knowledge Graph → Claude synthesis → proactive alert. Keep it visual, minimal text.
+## 2:30–2:48 — Architecture in one breath
 
-**VO:**
-> "Under the hood: Sarvenix indexes live conversation through Slack's Real-Time Search API, connects to GitHub and Jira through MCP, and builds a knowledge graph linking decisions, people, and artifacts — so it can detect contradictions, not just keywords."
+**Visual:** Show `Sarvenix-Judge-Architecture.md` rendered as the clean Mermaid diagram.
 
-### [2:35–2:50] Guardrails — the trust moment
+**Voiceover:**
 
-**Visual:** Show the `/sarvenix mute` command in a channel; show a rate-limit tooltip ("Sarvenix limits proactive alerts to avoid noise").
+> “Under the hood, Slack Real-Time Search provides permission-scoped evidence; GitHub and Jira MCP services provide live external context; Neo4j stores decision lineage; and grounding, confidence, and an adversarial critic turn retrieval into a trustworthy intervention.”
 
-**VO:**
-> "And because a proactive agent can become annoying fast, Sarvenix is read-only everywhere, rate-limited, and every channel can mute it. It never edits, never deletes — it only adds context, with receipts."
+## 2:48–3:00 — Measured proof and close
 
-### [2:50–3:00] Close — impact statement
+**Visual:** Show a simple proof card or terminal capture with the current verified gate: 7 packages, 6 suites, 10 tests, 0 production vulnerabilities.
 
-**Visual:** Return to the opening montage shot, now with the person calmly closing their laptop — the "14 minutes" counter never even starts.
+**Voiceover:**
 
-**VO:**
-> "Sarvenix turns tribal knowledge into institutional memory — so the answer to 'why did we do this' is never more than a Slack message away."
+> “The current build compiles all seven packages, passes every test suite, and has zero production dependency vulnerabilities. Sarvenix turns fragmented tribal knowledge into decision memory—and serves it before the mistake repeats.”
 
-**End card:** Sarvenix logo/wordmark, one-line tagline: *"Sarvenix. It serves the answer before you ask."*
+## Required edit checks
 
----
+- The final runtime is within the challenge limit.
+- At least one real Slack, GitHub, and Jira source is opened on screen.
+- The proactive alert is triggered without mentioning Sarvenix.
+- The confirmation dialog is visible before resolution.
+- Seeded graph history is described as seeded, not organic production history.
+- No unmeasured accuracy, precision, recall, latency, or time-saved claim appears.
+- Captions spell Sarvenix, Slack, Jira, GitHub, Neo4j, MCP, and RTS correctly.
+- Replace all `TBD` timestamps in `Sarvenix-Judging-Evidence.md` after locking the edit.
 
-## Judging criteria checklist (confirm each is visibly hit)
+## Backup scenario
 
-- [x] **Technological Implementation** — architecture flash scene (2:20) + real GitHub/Jira citations shown on screen
-- [x] **Design** — mute control, rate limiting, DM vs in-thread delivery choices shown explicitly
-- [x] **Potential Impact** — cold open problem framing + close statement generalizes beyond one team
-- [x] **Quality of Idea** — the 1:10–1:55 proactive-intervention beat is the single most important shot in the video; do not cut it short in editing
-- [x] **Trustworthiness** (supports Design + Technological Implementation) — confidence scoring (1:00) and the false-positive/adversarial-verification beat (1:55) together prove Sarvenix knows the difference between "confident" and "correct"
-
----
-
-## Appendix — Post-MVP features referenced but not demoed in the 3-minute cut
-
-These are specified in the architecture doc but intentionally left out of the timed video to protect pacing; mention them verbally in Q&A or the written project description instead:
-
-- **Decision Half-Life** — proactive staleness nudges on old decisions (temporal reasoning over the graph)
-- **Org-chart-aware private routing** — sensitive flags go to the decision-owner privately before any public post
-- **Admin dashboard** — alert-frequency, mute-status, and accuracy-trend visibility for workspace admins
-
-If time allows a longer submission cut (e.g., an optional extended video or written appendix), these are the next three beats to add, in that priority order.
+Prepare a second real cross-system decision chain with different Slack messages, Jira issue, and GitHub artifact. Use it only if the primary artifact is unavailable; do not substitute screenshots or fixture output while describing the flow as live.
