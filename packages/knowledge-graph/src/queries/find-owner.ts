@@ -21,3 +21,17 @@ export async function findOwner(decisionId: string): Promise<Person | null> {
     await session.close();
   }
 }
+
+export async function findDecisionsOwnedBy(slackUserId: string): Promise<string[]> {
+  const session = getSession();
+  try {
+    const result = await session.run(
+      `MATCH (p:Person {slackUserId: $slackUserId})<-[:OWNED_BY]-(d:Decision)
+       RETURN d.summary AS summary`,
+      { slackUserId }
+    );
+    return result.records.map(record => record.get('summary'));
+  } finally {
+    await session.close();
+  }
+}

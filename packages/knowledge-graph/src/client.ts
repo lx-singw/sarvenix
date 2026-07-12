@@ -244,3 +244,64 @@ export async function findSimilarDecisions(
     await session.close();
   }
 }
+
+export async function isChannelMuted(slackChannelId: string): Promise<boolean> {
+  const session = getSession();
+  try {
+    const result = await session.run(
+      `MATCH (c:Channel {slackChannelId: $slackChannelId})
+       RETURN c.isMuted AS isMuted LIMIT 1`,
+      { slackChannelId }
+    );
+    if (result.records.length === 0) return false;
+    return result.records[0].get('isMuted') === true;
+  } finally {
+    await session.close();
+  }
+}
+
+export async function incrementChannelAlertCount(slackChannelId: string): Promise<number> {
+  const session = getSession();
+  try {
+    const result = await session.run(
+      `MATCH (c:Channel {slackChannelId: $slackChannelId})
+       SET c.alertCountToday = coalesce(c.alertCountToday, 0) + 1
+       RETURN c.alertCountToday AS count`,
+      { slackChannelId }
+    );
+    if (result.records.length === 0) return 1;
+    const val = result.records[0].get('count');
+    return typeof val === 'number' ? val : val.toNumber();
+  } finally {
+    await session.close();
+  }
+}
+
+export async function getChannelAlertCount(slackChannelId: string): Promise<number> {
+  const session = getSession();
+  try {
+    const result = await session.run(
+      `MATCH (c:Channel {slackChannelId: $slackChannelId})
+       RETURN c.alertCountToday AS count LIMIT 1`,
+      { slackChannelId }
+    );
+    if (result.records.length === 0) return 0;
+    const val = result.records[0].get('count');
+    return typeof val === 'number' ? val : val.toNumber();
+  } finally {
+    await session.close();
+  }
+}
+
+export async function setChannelMute(slackChannelId: string, isMuted: boolean): Promise<void> {
+  const session = getSession();
+  try {
+    await session.run(
+      `MERGE (c:Channel {slackChannelId: $slackChannelId})
+       SET c.isMuted = $isMuted`,
+      { slackChannelId, isMuted }
+    );
+  } finally {
+    await session.close();
+  }
+}

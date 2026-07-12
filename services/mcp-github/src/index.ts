@@ -4,6 +4,8 @@ import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
+import { config } from './config.js';
+import { getInstallationToken, callGitHubAPI } from './resources/github-client.js';
 
 const server = new Server(
   {
@@ -16,6 +18,24 @@ const server = new Server(
     },
   }
 );
+
+// Flag to check if GitHub credentials are configured
+const isConfigured = !!(
+  config.github.appId &&
+  config.github.privateKey &&
+  config.github.installationId
+);
+
+async function getCachedToken(): Promise<string> {
+  if (!isConfigured) {
+    throw new Error('GitHub App credentials are not configured.');
+  }
+  return await getInstallationToken(
+    config.github.appId,
+    config.github.privateKey,
+    config.github.installationId
+  );
+}
 
 server.setRequestHandler(ListToolsRequestSchema, async () => {
   return {
@@ -63,21 +83,112 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
 
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name, arguments: args } = request.params;
-  switch (name) {
-    case 'search_prs':
-      return {
-        content: [{ type: 'text', text: JSON.stringify({ prs: [] }) }],
-      };
-    case 'get_pr_detail':
-      return {
-        content: [{ type: 'text', text: JSON.stringify({ details: {} }) }],
-      };
-    case 'get_pr_comments':
-      return {
-        content: [{ type: 'text', text: JSON.stringify({ comments: [] }) }],
-      };
-    default:
-      throw new Error(`Tool not found: ${name}`);
+  const typedArgs = args as any;
+
+  if (!isConfigured) {
+    // Graceful Fallback: Return mock scenario data for the demo if credentials are unset
+    console.error('GitHub Credentials not set. Running in Demo Mock mode.');
+    
+    switch (name) {
+      case 'search_prs':
+        return {
+          content: [
+            {
+              type: 'text',
+              text: JSON.stringify({
+                prs: [
+                  {
+                    number: 412,
+                    title: 'Fix database connection pooling memory leak',
+                    url: 'https://github.com/org/repo/pull/412',
+                    state: 'merged',
+                  },
+                ],
+              }),
+            },
+          ],
+        };
+      case 'get_pr_detail':
+        if (typedArgs.number === 412) {
+          return {
+            content: [
+              {
+                type: 'text',
+                text: JSON.stringify({
+                  number: 412,
+                  title: 'Fix database connection pooling memory leak',
+                  state: 'merged',
+                  url: 'https://github.com/org/repo/pull/412',
+                  body: 'Replacing legacy DB connection pool driver to fix staging memory leak.',
+                }),
+              },
+            ],
+          };
+        }
+        return { content: [{ type: 'text', text: JSON.stringify({ detail: null }) }] };
+      case 'get_pr_comments':
+        if (typedArgs.number === 412) {
+          return {
+            content: [
+              {
+                type: 'text',
+                text: JSON.stringify({
+                  comments: [
+                    {
+                      author: 'Sarah Chen',
+                      body: 'Found schema conflicts and memory leaks in connection pooling. Do not reuse this old driver pattern.',
+                      createdAt: '2026-06-15T12:00:00Z',
+                    },
+                  ],
+                }),
+              },
+            ],
+          };
+        }
+        return { content: [{ type: 'text', text: JSON.stringify({ comments: [] }) }] };
+      default:
+        throw new Error(`Tool not found: ${name}`);
+    }
+  }
+
+  // Active Live mode: Execute real GitHub requests
+  try {
+    const token = await getCachedToken();
+    switch (name) {
+      case 'search_prs': {
+        const query = encodeURIComponent(typedArgs.query);
+        const data = await callGitHubAPI(`search/issues?q=${query}+type:pr`, token);
+        return {
+          content: [{ type: 'text', text: JSON.stringify({ prs: data.items || [] }) }],
+        };
+      }
+      case 'get_pr_detail': {
+        const endpoint = `repos/${typedArgs.owner}/${typedArgs.repo}/pulls/${typedArgs.number}`;
+        const data = await callGitHubAPI(endpoint, token);
+        return {
+          content: [{ type: 'text', text: JSON.stringify({ detail: data }) }],
+        };
+      }
+      case 'get_pr_comments': {
+        const endpoint = `repos/${typedArgs.owner}/${typedArgs.repo}/pulls/${typedArgs.number}/comments`;
+        const data = await callGitHubAPI(endpoint, token);
+        return {
+          content: [{ type: 'text', text: JSON.stringify({ comments: data }) }],
+        };
+      }
+      default:
+        throw new Error(`Tool not found: ${name}`);
+    }
+  } catch (error: any) {
+    return {
+      isError: true,
+      content: [
+        {
+          type: 'text',
+          text: `GitHub MCP Error: ${error.message}`,
+        },
+      ],
+    };
   }
 });
 

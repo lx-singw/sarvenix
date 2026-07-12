@@ -4,6 +4,8 @@ import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
+import { config } from './config.js';
+import { callJiraAPI } from './resources/jira-client.js';
 
 const server = new Server(
   {
@@ -16,6 +18,8 @@ const server = new Server(
     },
   }
 );
+
+const isConfigured = !!(config.jira.cloudId && config.jira.accessToken);
 
 server.setRequestHandler(ListToolsRequestSchema, async () => {
   return {
@@ -59,21 +63,130 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
 
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name, arguments: args } = request.params;
-  switch (name) {
-    case 'search_issues':
-      return {
-        content: [{ type: 'text', text: JSON.stringify({ issues: [] }) }],
-      };
-    case 'get_issue_detail':
-      return {
-        content: [{ type: 'text', text: JSON.stringify({ detail: {} }) }],
-      };
-    case 'get_resolution':
-      return {
-        content: [{ type: 'text', text: JSON.stringify({ resolution: {} }) }],
-      };
-    default:
-      throw new Error(`Tool not found: ${name}`);
+  const typedArgs = args as any;
+
+  if (!isConfigured) {
+    // Graceful Fallback: Return mock scenario data for the demo if credentials are unset
+    console.error('Jira Credentials not set. Running in Demo Mock mode.');
+
+    switch (name) {
+      case 'search_issues':
+        return {
+          content: [
+            {
+              type: 'text',
+              text: JSON.stringify({
+                issues: [
+                  {
+                    key: 'MIGRATE-412',
+                    fields: {
+                      summary: 'Legacy Database Migration to v2',
+                      status: { name: 'Closed' },
+                    },
+                  },
+                ],
+              }),
+            },
+          ],
+        };
+      case 'get_issue_detail':
+        if (typedArgs.issueKey.toUpperCase() === 'MIGRATE-412') {
+          return {
+            content: [
+              {
+                type: 'text',
+                text: JSON.stringify({
+                  key: 'MIGRATE-412',
+                  fields: {
+                    summary: 'Legacy Database Migration to v2',
+                    description: 'Move all user profiles and transaction schemas off the legacy cluster.',
+                    status: { name: 'Closed' },
+                    resolution: { name: "Won't Do" },
+                  },
+                }),
+              },
+            ],
+          };
+        }
+        return { content: [{ type: 'text', text: JSON.stringify({ detail: null }) }] };
+      case 'get_resolution':
+        if (typedArgs.issueKey.toUpperCase() === 'MIGRATE-412') {
+          return {
+            content: [
+              {
+                type: 'text',
+                text: JSON.stringify({
+                  key: 'MIGRATE-412',
+                  status: 'Closed',
+                  resolution: "Won't Do",
+                  reason: 'Closed because Sarah Chen discovered memory leaks and schema compatibility issues in the connection pool.',
+                }),
+              },
+            ],
+          };
+        }
+        return { content: [{ type: 'text', text: JSON.stringify({ resolution: null }) }] };
+      default:
+        throw new Error(`Tool not found: ${name}`);
+    }
+  }
+
+  // Active Live mode: Execute real Jira requests
+  try {
+    switch (name) {
+      case 'search_issues': {
+        const data = await callJiraAPI(
+          `search?jql=${encodeURIComponent(typedArgs.jql)}`,
+          config.jira.cloudId,
+          config.jira.accessToken
+        );
+        return {
+          content: [{ type: 'text', text: JSON.stringify({ issues: data.issues || [] }) }],
+        };
+      }
+      case 'get_issue_detail': {
+        const data = await callJiraAPI(
+          `issue/${typedArgs.issueKey}`,
+          config.jira.cloudId,
+          config.jira.accessToken
+        );
+        return {
+          content: [{ type: 'text', text: JSON.stringify({ detail: data }) }],
+        };
+      }
+      case 'get_resolution': {
+        const data = await callJiraAPI(
+          `issue/${typedArgs.issueKey}?fields=status,resolution,resolutiondate`,
+          config.jira.cloudId,
+          config.jira.accessToken
+        );
+        return {
+          content: [
+            {
+              type: 'text',
+              text: JSON.stringify({
+                key: typedArgs.issueKey,
+                status: data.fields?.status?.name || 'Unknown',
+                resolution: data.fields?.resolution?.name || 'None',
+                resolvedAt: data.fields?.resolutiondate || null,
+              }),
+            },
+          ],
+        };
+      }
+      default:
+        throw new Error(`Tool not found: ${name}`);
+    }
+  } catch (error: any) {
+    return {
+      isError: true,
+      content: [
+        {
+          type: 'text',
+          text: `Jira MCP Error: ${error.message}`,
+        },
+      ],
+    };
   }
 });
 

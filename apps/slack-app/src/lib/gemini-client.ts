@@ -60,4 +60,13 @@ export async function generateStructuredJson<T>(
   }
   return JSON.parse(text) as T;
 }
+export async function getEmbedding(text: string): Promise<number[]> {
+  const ai = getClient();
+  const model = ai.getGenerativeModel({ model: 'gemini-embedding-2' });
+  const result = await model.embedContent(text);
+  if (!result.embedding || !result.embedding.values) {
+    throw new Error(`Embedding values not returned by Gemini API for text: "${text}"`);
+  }
+  return result.embedding.values;
+}
 export { SchemaType } from '@google/generative-ai';
