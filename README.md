@@ -22,7 +22,7 @@ npm run build
 npm audit --omit=dev --audit-level=high
 ```
 
-Current verified result: 7 workspace packages build, 6 suites and 10 tests pass, and the production dependency audit reports 0 vulnerabilities.
+Current verified result: 7 workspace packages build, 8 suites and 16 tests pass, 104 evaluation scenarios validate across 8 categories, and the production dependency audit reports 0 vulnerabilities. Product-accuracy metrics remain intentionally unpublished until live sandbox outputs are scored.
 
 ## Submission and architecture
 
