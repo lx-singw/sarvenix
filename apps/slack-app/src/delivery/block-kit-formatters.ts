@@ -265,6 +265,15 @@ export function formatAppHome(stats: AppHomeStats, recentDecisions: any[]) {
           },
           action_id: 'home_trigger_catchup',
         },
+        {
+          type: 'button',
+          text: {
+            type: 'plain_text',
+            text: '⚙️ Configure Alerts',
+            emoji: true,
+          },
+          action_id: 'configure_channels_modal',
+        },
       ],
     },
     { type: 'divider' },
@@ -301,6 +310,85 @@ export function formatAppHome(stats: AppHomeStats, recentDecisions: any[]) {
 
   return {
     type: 'home',
+    blocks,
+  };
+}
+
+export function formatChannelConfigModal(channels: { id: string; name: string; isMuted: boolean }[]) {
+  const options = channels.map((c) => ({
+    text: {
+      type: 'plain_text',
+      text: `#${c.name}`,
+    },
+    value: c.id,
+  }));
+
+  const initialOptions = channels
+    .filter((c) => c.isMuted)
+    .map((c) => ({
+      text: {
+        type: 'plain_text',
+        text: `#${c.name}`,
+      },
+      value: c.id,
+    }));
+
+  const blocks: any[] = [
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: 'Select channels you want to **mute**. Muted channels will not generate proactive Serve Mode contradiction alerts.',
+      },
+    },
+  ];
+
+  if (options.length === 0) {
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: '_No channels found. Make sure you are a member of at least one public or private channel._',
+      },
+    });
+  } else {
+    const element: any = {
+      type: 'checkboxes',
+      options,
+      action_id: 'mute_checkboxes',
+    };
+
+    if (initialOptions.length > 0) {
+      element.initial_options = initialOptions;
+    }
+
+    blocks.push({
+      type: 'input',
+      block_id: 'mute_block',
+      label: {
+        type: 'plain_text',
+        text: 'Mute Channel Alerts',
+      },
+      element,
+      optional: true,
+    });
+  }
+
+  return {
+    type: 'modal',
+    callback_id: 'configure_channels_submit',
+    title: {
+      type: 'plain_text',
+      text: 'Alerts Settings',
+    },
+    submit: {
+      type: 'plain_text',
+      text: 'Save Settings',
+    },
+    close: {
+      type: 'plain_text',
+      text: 'Cancel',
+    },
     blocks,
   };
 }

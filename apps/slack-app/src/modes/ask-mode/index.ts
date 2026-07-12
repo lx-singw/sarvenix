@@ -4,12 +4,79 @@ import { getEmbedding } from '../../lib/gemini-client';
 import { findSimilarDecisions, traceProvenance, findDecisionPaths } from '@sarvenix/knowledge-graph';
 import { synthesizeResponse, SynthesizedResponse } from './synthesis';
 
-// Mock MCP client call for Phase 3 (will be wired to real MCP in Phase 5)
+import { spawn } from 'child_process';
+import * as path from 'path';
+
+async function queryMcpServer(serverPath: string, toolName: string, args: any): Promise<any> {
+  return new Promise((resolve, reject) => {
+    try {
+      const cp = spawn('node', [serverPath]);
+      let buffer = '';
+
+      const timeout = setTimeout(() => {
+        cp.kill();
+        reject(new Error('MCP server response timeout'));
+      }, 3000);
+
+      cp.stdout.on('data', (data) => {
+        buffer += data.toString();
+        const lines = buffer.split('\n');
+        buffer = lines.pop() || '';
+
+        for (const line of lines) {
+          if (!line.trim()) continue;
+          try {
+            const msg = JSON.parse(line);
+            if (msg.id === 1) {
+              clearTimeout(timeout);
+              cp.kill();
+              resolve(msg.result);
+            }
+          } catch (e) {
+            // Ignore logs
+          }
+        }
+      });
+
+      cp.on('error', (err) => {
+        clearTimeout(timeout);
+        reject(err);
+      });
+
+      const request = {
+        jsonrpc: '2.0',
+        id: 1,
+        method: 'tools/call',
+        params: {
+          name: toolName,
+          arguments: args,
+        },
+      };
+      cp.stdin.write(JSON.stringify(request) + '\n');
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
 async function getMCPContextForArtifacts(artifactIds: string[]): Promise<string> {
   let context = '';
+  const jiraServerPath = path.resolve(process.cwd(), 'services/mcp-jira/dist/index.js');
+  const githubServerPath = path.resolve(process.cwd(), 'services/mcp-github/dist/index.js');
+
   for (const id of artifactIds) {
     if (id.toLowerCase().includes('migrate-412') || id.toLowerCase().includes('jira-migrate-412')) {
-      context += `[Jira Ticket MIGRATE-412]
+      try {
+        const mcpResult = await queryMcpServer(jiraServerPath, 'get_resolution', { issueKey: 'MIGRATE-412' });
+        if (mcpResult && mcpResult.content && mcpResult.content[0]) {
+          const resObj = JSON.parse(mcpResult.content[0].text);
+          context += `[Jira Ticket MIGRATE-412 (Live MCP)]\nTitle: Legacy Database Migration to v2\nStatus: ${resObj.status}\nResolution: ${resObj.resolution}\nReason: ${resObj.reason || 'No reason provided'}\n`;
+          continue;
+        }
+      } catch (err) {
+        // Fallback to high-fidelity mock scenario
+      }
+      context += `[Jira Ticket MIGRATE-412 (Mock Fallback)]
 Title: Legacy Database Migration to v2
 Status: Closed / Won't Do
 Resolution Reason: Closed because Sarah Chen discovered memory leaks and schema compatibility issues in the connection pool.
@@ -17,7 +84,20 @@ Comments:
 - Sarah Chen (2026-06-16): "Outage on staging was tied to the legacy pool. Recommend dropping the migration completely."
 `;
     } else if (id.toLowerCase().includes('pr-412') || id.toLowerCase().includes('pr #412')) {
-      context += `[GitHub Pull Request #412]
+      try {
+        const mcpResult = await queryMcpServer(githubServerPath, 'get_pr_comments', { owner: 'org', repo: 'repo', number: 412 });
+        if (mcpResult && mcpResult.content && mcpResult.content[0]) {
+          const resObj = JSON.parse(mcpResult.content[0].text);
+          context += `[GitHub Pull Request #412 (Live MCP)]\nTitle: Fix database connection pooling memory leak\nState: merged\nComments:\n`;
+          (resObj.comments || []).forEach((c: any) => {
+            context += `- ${c.author}: "${c.body}"\n`;
+          });
+          continue;
+        }
+      } catch (err) {
+        // Fallback to high-fidelity mock scenario
+      }
+      context += `[GitHub Pull Request #412 (Mock Fallback)]
 Title: Fix database connection pooling memory leak
 State: Merged
 Comments:

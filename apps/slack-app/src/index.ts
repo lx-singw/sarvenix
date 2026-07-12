@@ -5,11 +5,12 @@ import { ingestSlackMessage } from './ingestion/slack-ingest';
 import { handleAskMode } from './modes/ask-mode';
 import { generateCatchupBrief } from './commands/catchup';
 import { processServeMode } from './modes/serve-mode';
-import { setChannelMute, verifyDatabaseConnection, deleteDecisionByMessageTs, getAppHomeData } from '@sarvenix/knowledge-graph';
+import { setChannelMute, verifyDatabaseConnection, deleteDecisionByMessageTs, getAppHomeData, isChannelMuted } from '@sarvenix/knowledge-graph';
 import {
   formatAskResponse,
   formatCatchupBrief,
   formatAppHome,
+  formatChannelConfigModal,
 } from './delivery/block-kit-formatters';
 import { exportBriefToCanvas } from './delivery/canvas-export';
 import { postInThreadReply } from './delivery/in-thread-reply';
@@ -515,6 +516,17 @@ app.action('draft_reconciliation', async ({ body, ack, client, respond }) => {
       replace_original: false,
     });
 
+    // 1. Open direct group chat with proposing user and past decision owner
+    const openRes = await client.conversations.open({
+      users: `${userId},${pastOwnerId}`,
+    });
+
+    const dmChannelId = openRes.channel?.id;
+    if (!dmChannelId) {
+      throw new Error('Failed to open DM channel with contradiction participants.');
+    }
+
+    // 2. Draft compromise proposal
     const compromise = await draftReconciliationProposal(newSummary, pastSummary);
 
     const blocks = [
@@ -522,7 +534,7 @@ app.action('draft_reconciliation', async ({ body, ack, client, respond }) => {
         type: 'header',
         text: {
           type: 'plain_text',
-          text: '🤖 Sarvenix Reconciliation Proposal',
+          text: '🤖 Sarvenix Reconciliation Mediation',
           emoji: true,
         },
       },
@@ -530,7 +542,7 @@ app.action('draft_reconciliation', async ({ body, ack, client, respond }) => {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: compromise,
+          text: `Hello <@${userId}> and <@${pastOwnerId}>,\n\nI noticed a contradiction between your workspace decisions. Here is my drafted compromise proposal to reconcile them:\n\n${compromise}`,
         },
       },
       {
@@ -538,15 +550,20 @@ app.action('draft_reconciliation', async ({ body, ack, client, respond }) => {
         elements: [
           {
             type: 'mrkdwn',
-            text: `💡 _Reconciling proposal with previous decision owned by <@${pastOwnerId}>._`,
+            text: `💡 _Please discuss and coordinate here. You can update or archive the decisions directly._`,
           },
         ],
       },
     ];
 
-    await respond({
+    await client.chat.postMessage({
+      channel: dmChannelId,
       blocks: blocks,
       text: 'Sarvenix Reconciliation Proposal',
+    });
+
+    await respond({
+      text: `🤖 _Draft completed! I have opened a direct message group chat with <@${pastOwnerId}> and posted the proposal there._`,
       replace_original: false,
     });
   } catch (error) {
@@ -555,6 +572,68 @@ app.action('draft_reconciliation', async ({ body, ack, client, respond }) => {
       text: '⚠️ Failed to draft reconciliation proposal. Please check log details.',
       replace_original: false,
     });
+  }
+});
+
+// 1. App Home Config Modal action listener (Best UX)
+app.action('configure_channels_modal', async ({ body, ack, client }) => {
+  await ack();
+  const triggerId = (body as any).trigger_id;
+  const userId = body.user.id;
+  Logger.info(`Opening channel configurations modal for user: ${userId}`);
+
+  try {
+    const conversations = await client.users.conversations({
+      user: userId,
+      types: 'public_channel,private_channel',
+      limit: 100,
+    });
+    const allChannels = (conversations.channels || []).filter((c: any) => typeof c.id === 'string');
+
+    const channelsWithMuteStatus = [];
+    for (const chan of allChannels) {
+      const isMuted = await isChannelMuted(chan.id!);
+      channelsWithMuteStatus.push({
+        id: chan.id!,
+        name: chan.name || 'channel',
+        isMuted,
+      });
+    }
+
+    const modalView = formatChannelConfigModal(channelsWithMuteStatus);
+    await client.views.open({
+      trigger_id: triggerId,
+      view: modalView as any,
+    });
+  } catch (error) {
+    await Logger.error('Failed to open channel configurations modal', error);
+  }
+});
+
+// App Home Config Modal submission listener (Best UX)
+app.view('configure_channels_submit', async ({ ack, view, client, body }) => {
+  await ack();
+  const userId = body.user.id;
+  Logger.info(`Saving channel configuration settings for user: ${userId}`);
+
+  try {
+    const selectedOptions = view.state.values['mute_block']?.['mute_checkboxes']?.selected_options || [];
+    const mutedIds = selectedOptions.map((o: any) => o.value);
+
+    const conversations = await client.users.conversations({
+      user: userId,
+      types: 'public_channel,private_channel',
+      limit: 100,
+    });
+    const allChannels = (conversations.channels || []).filter((c: any) => typeof c.id === 'string');
+
+    for (const chan of allChannels) {
+      const isMuted = mutedIds.includes(chan.id!);
+      await setChannelMute(chan.id!, isMuted);
+    }
+    Logger.info(`Channel configurations saved successfully.`);
+  } catch (error) {
+    await Logger.error('Failed to save channel configurations from modal submit', error);
   }
 });
 
