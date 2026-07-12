@@ -1,5 +1,6 @@
 import { SynthesizedResponse } from '../modes/ask-mode/synthesis';
 import { CatchupBrief } from '../commands/catchup';
+import type { ImpactRadius, SourceHealth } from '@sarvenix/shared-types';
 
 const MAX_SECTION_TEXT = 2_900;
 const MAX_BUTTON_TEXT = 70;
@@ -209,7 +210,14 @@ export interface AppHomeStats {
   monitoredChannels: number;
 }
 
-export function formatAppHome(stats: AppHomeStats, recentDecisions: any[]) {
+export function formatAppHome(
+  stats: AppHomeStats,
+  recentDecisions: any[],
+  health: SourceHealth[] = []
+) {
+  const healthSummary = health.length === 0
+    ? 'Source diagnostics have not run yet.'
+    : health.map(item => `*${item.source.toUpperCase()}* — ${item.status}${item.detail ? `: ${item.detail}` : ''}`).join('\n');
   const blocks: any[] = [
     { type: 'header', text: plainText('Sarvenix command center', 150) },
     {
@@ -226,12 +234,20 @@ export function formatAppHome(stats: AppHomeStats, recentDecisions: any[]) {
       ],
     },
     {
+      type: 'section',
+      text: { type: 'mrkdwn', text: '*Start here*\n1. Mention `@Sarvenix` with a decision question.\n2. Run a catch-up after time away.\n3. Review proactive conflicts before changing work.' },
+    },
+    {
       type: 'actions',
       elements: [
         { type: 'button', style: 'primary', text: plainText('Generate catch-up'), action_id: 'home_trigger_catchup' },
+        { type: 'button', text: plainText('Run readiness check'), action_id: 'home_readiness_check' },
         { type: 'button', text: plainText('Configure alerts'), action_id: 'configure_channels_modal' },
       ],
     },
+    { type: 'divider' },
+    { type: 'section', text: { type: 'mrkdwn', text: `*Source readiness*\n${healthSummary}` } },
+    { type: 'context', elements: [{ type: 'mrkdwn', text: 'A denied source stays private. A stale or unavailable source lowers confidence and is never replaced with fixture data.' }] },
     { type: 'divider' },
     { type: 'section', text: { type: 'mrkdwn', text: '*Recent decisions visible to you*' } },
   ];
@@ -255,6 +271,52 @@ export function formatAppHome(stats: AppHomeStats, recentDecisions: any[]) {
 
   blocks.push({ type: 'context', elements: [{ type: 'mrkdwn', text: 'Sarvenix only surfaces channels and evidence the requesting user can access.' }] });
   return { type: 'home', blocks };
+}
+
+export function formatImpactRadius(impact: ImpactRadius) {
+  const blocks: any[] = [
+    { type: 'header', text: plainText('Affected work review', 150) },
+    {
+      type: 'section',
+      text: { type: 'mrkdwn', text: `*${impact.items.length} connected item${impact.items.length === 1 ? '' : 's'}*${impact.partial ? ' · Partial result' : ''}\nEach item is backed by a graph path. Review before resolving or superseding the decision.` },
+    },
+  ];
+  for (const item of impact.items.slice(0, 8)) {
+    const title = item.url ? `<${item.url}|${truncate(item.title, 160)}>` : truncate(item.title, 160);
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: `*${title}*\n${item.type.replace('_', ' ')} · ${item.freshness} · ${Math.round(item.confidence * 100)}% path confidence\n${truncate(item.reason, 500)}\n_Path: ${item.path.map(value => `\`${value}\``).join(' → ')}_`,
+      },
+    });
+  }
+  blocks.push({
+    type: 'actions',
+    elements: [
+      { type: 'button', text: plainText('Snooze review'), value: impact.decisionId, action_id: 'snooze_impact_review' },
+      { type: 'button', text: plainText('Not a contradiction'), value: impact.decisionId, action_id: 'reject_impact_alert' },
+    ],
+  });
+  return blocks;
+}
+
+export function formatSystemState(
+  state: 'loading' | 'empty' | 'timeout' | 'denied' | 'stale' | 'rate_limited' | 'conflicting' | 'partial',
+  detail?: string
+) {
+  const copy = {
+    loading: ['Gathering authorized evidence', 'Sarvenix is checking Slack, GitHub, Jira, and decision lineage.'],
+    empty: ['No matching evidence', 'Try a decision name, owner, ticket, pull request, or narrower date range.'],
+    timeout: ['A source took too long', 'Available evidence is preserved. Retry to check the missing source.'],
+    denied: ['Access is limited', 'The source exists but your current identity cannot access it. No details were revealed.'],
+    stale: ['Evidence may be stale', 'Review the last sync time before acting on this answer.'],
+    rate_limited: ['Source temporarily rate-limited', 'Wait before retrying; Sarvenix will not substitute unverified data.'],
+    conflicting: ['Sources disagree', 'Review the timeline and exact citations before choosing the current truth.'],
+    partial: ['Partial answer', 'Some sources were unavailable or permission-limited.'],
+  } as const;
+  const [title, body] = copy[state];
+  return [{ type: 'section', text: { type: 'mrkdwn', text: `*${title}*\n${body}${detail ? `\n_${truncate(detail, 500)}_` : ''}` } }];
 }
 
 export function formatChannelConfigModal(channels: { id: string; name: string; isMuted: boolean }[]) {

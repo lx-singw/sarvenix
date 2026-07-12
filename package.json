@@ -13,7 +13,11 @@
     "dev": "turbo run dev",
     "test": "turbo run test",
     "lint": "turbo run lint",
-    "seed:demo": "ts-node scripts/seed-demo-data.ts"
+    "seed:demo": "ts-node scripts/seed-demo-data.ts",
+    "eval:generate": "ts-node scripts/generate-evaluation-corpus.ts",
+    "eval:validate": "ts-node scripts/run-evaluation.ts",
+    "benchmark": "ts-node scripts/run-benchmark.ts",
+    "quality": "npm run eval:validate && npm test -- --runInBand && npm run build && npm audit --omit=dev --audit-level=high"
   },
   "devDependencies": {
     "typescript": "^5.0.0",

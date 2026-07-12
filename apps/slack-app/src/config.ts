@@ -27,5 +27,25 @@ export const config = {
     nodeEnv: process.env.NODE_ENV || 'development',
     logLevel: process.env.LOG_LEVEL || 'info',
     demoMode: process.env.DEMO_MODE === 'true',
-  }
+  },
+  features: {
+    durableThreads: process.env.FEATURE_DURABLE_THREADS !== 'false',
+    impactRadius: process.env.FEATURE_IMPACT_RADIUS !== 'false',
+    counterfactualPreview: process.env.FEATURE_COUNTERFACTUAL_PREVIEW !== 'false',
+    perUserOAuth: process.env.FEATURE_PER_USER_OAUTH === 'true',
+  },
+  sandbox: {
+    enabled: process.env.SARVENIX_SANDBOX_MODE === 'true',
+    workspaceId: process.env.SANDBOX_SLACK_WORKSPACE_ID || '',
+    githubRepository: process.env.SANDBOX_GITHUB_REPOSITORY || '',
+    jiraProjectKey: process.env.SANDBOX_JIRA_PROJECT_KEY || '',
+  },
 };
+
+if (config.general.nodeEnv === 'production' && config.general.demoMode) {
+  throw new Error('DEMO_MODE cannot be enabled in production. Use dedicated sandbox mode instead.');
+}
+
+if (config.sandbox.enabled && !config.sandbox.workspaceId) {
+  throw new Error('SANDBOX_SLACK_WORKSPACE_ID is required when sandbox mode is enabled.');
+}

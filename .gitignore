@@ -22,3 +22,6 @@ Thumbs.db
 
 # Turborepo
 .turbo/
+
+# Generated evaluation and benchmark reports
+reports/

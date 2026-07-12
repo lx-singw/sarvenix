@@ -18,16 +18,24 @@ Use this as the recording checklist and as the source of truth for every submiss
 | Technical: live MCP | Missing credentials return unavailable errors, never fake data | N/A | GitHub/Jira MCP `index.ts` | Build and source inspection |
 | Technical: security | TLS verification remains enabled; logging recursively redacts sensitive keys | N/A | `lib/logger.ts`; no TLS override | Dependency audit |
 | Technical: quality | Seven workspace packages compile | N/A | Monorepo build | `npm run build` |
-| Technical: regression gate | Six suites and ten tests pass | N/A | `tests/e2e/**` | `npx jest --runInBand` |
+| Technical: regression gate | Eight suites and sixteen tests pass | N/A | `tests/e2e/**` | `npx jest --runInBand` |
+| Technical: evaluation foundation | 104 versioned scenarios validate across eight adversarial categories | N/A | `tests/evaluation/corpus.json`; `scripts/run-evaluation.ts` | `npm run eval:validate` |
+| Technical: reliability | Deterministic idempotency keys, enforced timeouts, circuit breaking, and structured telemetry | N/A | `lib/reliability.ts`; `lib/telemetry.ts` | Measurement foundation suite |
+| Technical: source boundaries | Repository/project allowlists, endpoint validation, and redacted provider errors | N/A | GitHub/Jira resource clients; `shared-types/authorization.ts` | Build and source inspection |
+| Most Innovative: impact radius | Show affected decisions, artifacts, owners, path depth, freshness, and partial-result status | TBD | `calculateImpactRadius`; `formatImpactRadius` | Build plus live sandbox proof |
+| Most Innovative: temporal truth | Decision lifecycle events distinguish proposed, implemented, superseded, reopened, and resolved truth | TBD | lifecycle contracts and graph queries | Build plus sandbox lineage proof |
+| Most Innovative: counterfactual preview | Preview evidence-backed downstream impact without claiming certainty | TBD | `agent/counterfactual-preview.ts` | Innovation safeguards suite |
+| Best UX: onboarding and health | App Home explains first steps, source readiness, permissions, and safe failure behavior | TBD | `formatAppHome`; `formatSystemState` | Block Kit contract plus sandbox proof |
 | Technical: dependency health | Zero production dependency vulnerabilities at current audit | N/A | Lockfile | `npm audit --omit=dev --audit-level=high` |
 | Potential impact | Demonstrate one avoided repeat investigation and explain the reusable pattern | TBD | Demo narrative | Judge observation |
 
 ## Current verified baseline
 
 - Build: 7 successful packages out of 7.
-- Tests: 6 passing suites, 10 passing tests.
+- Tests: 8 passing suites, 16 passing tests.
+- Evaluation corpus: 104 validated scenarios across 8 categories.
 - Production dependency audit: 0 vulnerabilities.
-- Product accuracy: not yet represented by a statistically meaningful benchmark. Do not invent precision, recall, latency, or time-saved numbers.
+- Product accuracy metrics: pending scored live outputs. The corpus foundation is complete, but no precision, recall, latency, or time-saved number may be claimed until generated from recorded results.
 
 ## Claims that require live recording proof
 

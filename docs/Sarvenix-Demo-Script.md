@@ -72,11 +72,11 @@ Every source shown in this recording must be a real sandbox Slack message, GitHu
 
 ## 2:48–3:00 — Measured proof and close
 
-**Visual:** Show a simple proof card or terminal capture with the current verified gate: 7 packages, 6 suites, 10 tests, 0 production vulnerabilities.
+**Visual:** Show the generated proof card or CI capture with the current verified gate: 7 packages, 8 suites, 16 tests, 104 validated scenarios across 8 categories, and 0 production vulnerabilities.
 
 **Voiceover:**
 
-> “The current build compiles all seven packages, passes every test suite, and has zero production dependency vulnerabilities. Sarvenix turns fragmented tribal knowledge into decision memory—and serves it before the mistake repeats.”
+> “The current build compiles all seven packages, passes all eight suites and sixteen tests, validates 104 adversarial scenarios, and has zero production dependency vulnerabilities. Sarvenix turns fragmented tribal knowledge into decision memory—and serves it before the mistake repeats.”
 
 ## Required edit checks
 

@@ -22,7 +22,7 @@ npm run build
 npm audit --omit=dev --audit-level=high
 ```
 
-Current verified result: 7 workspace packages build, 6 suites and 10 tests pass, and the production dependency audit reports 0 vulnerabilities.
+Current verified result: 7 workspace packages build, 8 suites and 16 tests pass, 104 evaluation scenarios validate across 8 categories, and the production dependency audit reports 0 vulnerabilities. Product-accuracy metrics remain intentionally unpublished until live sandbox outputs are scored.
 
 ## Submission and architecture
 
@@ -30,6 +30,8 @@ Current verified result: 7 workspace packages build, 6 suites and 10 tests pass,
 - [Three-minute demo script](docs/Sarvenix-Demo-Script.md)
 - [Devpost submission copy](docs/Sarvenix-Devpost-Submission.md)
 - [Judging evidence matrix](docs/Sarvenix-Judging-Evidence.md)
+- [Evaluation and controlled benchmark methodology](docs/Sarvenix-Evaluation-Methodology.md)
+- [Live sandbox acceptance runbook](docs/Sarvenix-Live-Acceptance.md)
 - [Rehearsal and judge runbook](docs/Sarvenix-Rehearsal-Runbook.md)
 - [Full architecture](ARCHITECTURE.md)
 - [Detailed product documentation](docs/)
