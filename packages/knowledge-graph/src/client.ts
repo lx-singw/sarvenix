@@ -340,3 +340,107 @@ export async function deleteDecisionByMessageTs(channelId: string, messageTs: st
   `;
   await runQueryWithRetry(query, { channelId, messageTs });
 }
+
+export async function getAppHomeData(allowedChannelIds?: string[]): Promise<{
+  stats: { totalDecisions: number; unresolvedConflicts: number; monitoredChannels: number };
+  recentDecisions: Decision[];
+}> {
+  // 1. Get total decisions count
+  const decQuery = `
+    MATCH (d:Decision)
+    WHERE $allowedChannelIds IS NULL OR d.channelId IN $allowedChannelIds
+    RETURN count(d) AS count
+  `;
+  const decResult = await runQueryWithRetry(decQuery, { allowedChannelIds: allowedChannelIds || null });
+  const rawDecCount = decResult.records[0].get('count');
+  const totalDecisions = typeof rawDecCount === 'number' ? rawDecCount : (rawDecCount.toNumber ? rawDecCount.toNumber() : 0);
+
+  // 2. Get channels count
+  const chanQuery = `
+    MATCH (c:Channel)
+    RETURN count(c) AS count
+  `;
+  const chanResult = await runQueryWithRetry(chanQuery);
+  const rawChanCount = chanResult.records[0].get('count');
+  const monitoredChannels = typeof rawChanCount === 'number' ? rawChanCount : (rawChanCount.toNumber ? rawChanCount.toNumber() : 0);
+
+  // 3. Get conflicts count
+  const conflictQuery = `
+    MATCH (d1:Decision)-[r:CONTRADICTS]->(d2:Decision)
+    WHERE $allowedChannelIds IS NULL OR (d1.channelId IN $allowedChannelIds AND d2.channelId IN $allowedChannelIds)
+    RETURN count(r) AS count
+  `;
+  const conflictResult = await runQueryWithRetry(conflictQuery, { allowedChannelIds: allowedChannelIds || null });
+  const rawConflictCount = conflictResult.records[0].get('count');
+  const conflictCount = typeof rawConflictCount === 'number' ? rawConflictCount : (rawConflictCount.toNumber ? rawConflictCount.toNumber() : 0);
+  const unresolvedConflicts = Math.ceil(conflictCount / 2);
+
+  // 4. Get recent decisions
+  const recentQuery = `
+    MATCH (d:Decision)
+    WHERE $allowedChannelIds IS NULL OR d.channelId IN $allowedChannelIds
+    RETURN d
+    ORDER BY d.extractedAt DESC
+    LIMIT 5
+  `;
+  const recentResult = await runQueryWithRetry(recentQuery, { allowedChannelIds: allowedChannelIds || null });
+  const recentDecisions = recentResult.records.map((record: any) => {
+    const node = record.get('d');
+    return {
+      id: node.properties.id,
+      summary: node.properties.summary,
+      status: node.properties.status,
+      confidence: node.properties.confidence,
+      extractedAt: new Date(node.properties.extractedAt),
+      decidedAt: node.properties.decidedAt ? new Date(node.properties.decidedAt) : undefined,
+      channelId: node.properties.channelId,
+    };
+  });
+
+  return {
+    stats: { totalDecisions, unresolvedConflicts, monitoredChannels },
+    recentDecisions,
+  };
+}
+
+export async function findDecisionPaths(decisionId: string): Promise<string[]> {
+  const query = `
+    MATCH (d:Decision {id: $decisionId})
+    OPTIONAL MATCH (d)-[:OWNED_BY]->(p:Person)
+    OPTIONAL MATCH (d)-[:DISCUSSED_IN]->(c:Channel)
+    OPTIONAL MATCH (d)-[:REFERENCES]->(a:Artifact)
+    OPTIONAL MATCH (d)-[:CONTRADICTS]-(other:Decision)
+    OPTIONAL MATCH (d)-[:REFERENCES]->(a2:Artifact)<-[:REFERENCES]-(dep:Decision)
+    RETURN p, c, a, other, dep, a2
+  `;
+  
+  const result = await runQueryWithRetry(query, { decisionId });
+  const paths: string[] = [];
+  
+  if (result.records.length > 0) {
+    const record = result.records[0];
+    const p = record.get('p');
+    const c = record.get('c');
+    const a = record.get('a');
+    const other = record.get('other');
+    const dep = record.get('dep');
+    const a2 = record.get('a2');
+    
+    if (p) {
+      paths.push(`Decision is owned by Person: ${p.properties.displayName} (@${p.properties.slackUserId})`);
+    }
+    if (c) {
+      paths.push(`Decision was discussed in Slack Channel: #${c.properties.name}`);
+    }
+    if (a) {
+      paths.push(`Decision references Artifact: [${a.properties.type}] ${a.properties.title} (${a.properties.externalUrl})`);
+    }
+    if (other) {
+      paths.push(`Decision directly contradicts another Decision: "${other.properties.summary}"`);
+    }
+    if (dep && a2) {
+      paths.push(`Decision shares dependency artifact [${a2.properties.type}] "${a2.properties.title}" with decision: "${dep.properties.summary}"`);
+    }
+  }
+  return paths;
+}

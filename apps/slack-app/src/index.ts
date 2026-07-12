@@ -5,14 +5,16 @@ import { ingestSlackMessage } from './ingestion/slack-ingest';
 import { handleAskMode } from './modes/ask-mode';
 import { generateCatchupBrief } from './commands/catchup';
 import { processServeMode } from './modes/serve-mode';
-import { setChannelMute, verifyDatabaseConnection, deleteDecisionByMessageTs } from '@sarvenix/knowledge-graph';
+import { setChannelMute, verifyDatabaseConnection, deleteDecisionByMessageTs, getAppHomeData } from '@sarvenix/knowledge-graph';
 import {
   formatAskResponse,
   formatCatchupBrief,
+  formatAppHome,
 } from './delivery/block-kit-formatters';
 import { exportBriefToCanvas } from './delivery/canvas-export';
 import { postInThreadReply } from './delivery/in-thread-reply';
 import { sendDMBrief } from './delivery/dm-brief';
+import { draftReconciliationProposal } from './modes/serve-mode/mediator';
 import { Logger } from './lib/logger';
 import { SarvenixError, DatabaseQueryError, GeminiApiError, SlackClientError } from '@sarvenix/shared-types';
 
@@ -448,6 +450,112 @@ app.action('loop_in_owner', async ({ body, ack, client, respond }) => {
 app.action('dismiss_contradiction', async ({ body, ack, respond }) => {
   await ack();
   await respond({ text: 'Alert dismissed.', replace_original: true });
+});
+
+// 6. App Home opened view publisher (Best UX)
+app.event('app_home_opened', async ({ event, client }) => {
+  const userId = event.user;
+  Logger.debug(`app_home_opened event received for user: ${userId}`);
+
+  try {
+    let allowedChannelIds: string[] | undefined = undefined;
+    try {
+      const conversations = await client.users.conversations({
+        user: userId,
+        types: 'public_channel,private_channel',
+        limit: 100,
+      });
+      allowedChannelIds = (conversations.channels || []).map((c: any) => c.id);
+    } catch (e) {
+      Logger.warn(`Could not fetch allowed channels for App Home for user ${userId}`, e);
+    }
+
+    const homeData = await getAppHomeData(allowedChannelIds);
+    const homeView = formatAppHome(homeData.stats, homeData.recentDecisions);
+
+    await client.views.publish({
+      user_id: userId,
+      view: homeView as any,
+    });
+  } catch (error) {
+    await Logger.error(`Failed to publish App Home view for user ${userId}`, error);
+  }
+});
+
+// App Home Quick Action for Catchup Brief
+app.action('home_trigger_catchup', async ({ body, ack, client }) => {
+  await ack();
+  const userId = body.user.id;
+  Logger.info(`App Home triggered catchup brief for user: ${userId}`);
+
+  try {
+    const brief = await generateCatchupBrief(client, userId);
+    const blocks = formatCatchupBrief(brief);
+    await sendDMBrief(client, userId, blocks, 'Your catchup brief is ready!');
+  } catch (error) {
+    await Logger.error(`App Home catchup brief generation failed for user: ${userId}`, error);
+  }
+});
+
+// Mediator Action Listener (Most Innovative Slack Agent)
+app.action('draft_reconciliation', async ({ body, ack, client, respond }) => {
+  await ack();
+  const userId = body.user.id;
+  const actionValue = (body as any).actions[0].value;
+  Logger.info(`Drafting reconciliation compromise proposal for user: ${userId}`);
+
+  try {
+    const parts = actionValue.split('|||');
+    const newSummary = parts[0];
+    const pastSummary = parts[1];
+    const pastOwnerId = parts[2];
+
+    await respond({
+      text: '🤖 _Sarvenix is drafting a reconciliation compromise proposal, please wait..._',
+      replace_original: false,
+    });
+
+    const compromise = await draftReconciliationProposal(newSummary, pastSummary);
+
+    const blocks = [
+      {
+        type: 'header',
+        text: {
+          type: 'plain_text',
+          text: '🤖 Sarvenix Reconciliation Proposal',
+          emoji: true,
+        },
+      },
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: compromise,
+        },
+      },
+      {
+        type: 'context',
+        elements: [
+          {
+            type: 'mrkdwn',
+            text: `💡 _Reconciling proposal with previous decision owned by <@${pastOwnerId}>._`,
+          },
+        ],
+      },
+    ];
+
+    await respond({
+      blocks: blocks,
+      text: 'Sarvenix Reconciliation Proposal',
+      replace_original: false,
+    });
+  } catch (error) {
+    await Logger.error('Failed to draft reconciliation proposal:', error);
+    await respond({
+      text: '⚠️ Failed to draft reconciliation proposal. Please check log details.',
+      replace_original: false,
+    });
+  }
 });
 
 async function main() {

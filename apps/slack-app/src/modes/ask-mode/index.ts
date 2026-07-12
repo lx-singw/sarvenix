@@ -1,7 +1,7 @@
 import { WebClient } from '@slack/web-api';
 import { searchMessages } from '../../lib/rts-client';
 import { getEmbedding } from '../../lib/gemini-client';
-import { findSimilarDecisions, traceProvenance } from '@sarvenix/knowledge-graph';
+import { findSimilarDecisions, traceProvenance, findDecisionPaths } from '@sarvenix/knowledge-graph';
 import { synthesizeResponse, SynthesizedResponse } from './synthesis';
 
 // Mock MCP client call for Phase 3 (will be wired to real MCP in Phase 5)
@@ -67,6 +67,8 @@ export async function handleAskMode(
     let mcpContext = '';
     const referencedArtifactIds: string[] = [];
 
+    let graphContext = 'No direct decision paths matched.';
+
     if (similarDecisions.length > 0) {
       const bestMatch = similarDecisions[0].decision;
       const provenanceArtifacts = await traceProvenance(bestMatch.id);
@@ -74,13 +76,22 @@ export async function handleAskMode(
       provenanceArtifacts.forEach((art) => {
         referencedArtifactIds.push(art.id);
       });
+
+      try {
+        const paths = await findDecisionPaths(bestMatch.id);
+        if (paths && paths.length > 0) {
+          graphContext = paths.join('\n');
+        }
+      } catch (err) {
+        console.warn(`Could not trace decision paths for match ${bestMatch.id}:`, err);
+      }
     }
 
     // 3. Fetch MCP details (mocked for now, real MCP integrated in Phase 5)
     mcpContext = await getMCPContextForArtifacts(referencedArtifactIds);
 
     // 4. Synthesize Answer
-    const synthesisResult = await synthesizeResponse(question, slackContext, mcpContext);
+    const synthesisResult = await synthesizeResponse(question, slackContext, mcpContext, graphContext);
 
     // Hydrate citations with actual deep links if they match the mocked files
     synthesisResult.citations = synthesisResult.citations.map((cit) => {

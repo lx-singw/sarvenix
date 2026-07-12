@@ -55,15 +55,19 @@ const synthesisSchema = {
 export async function synthesizeResponse(
   question: string,
   slackContext: string,
-  mcpContext: string
+  mcpContext: string,
+  graphContext: string
 ): Promise<SynthesizedResponse> {
   const prompt = `
-    You are Sarvenix, an institutional memory agent. Your goal is to answer the user's question about the "why" behind decisions, drawing from the provided Slack conversation contexts and external systems (GitHub/Jira/Docs context).
+    You are Sarvenix, an institutional memory agent. Your goal is to answer the user's question about the "why" behind decisions, drawing from the provided Slack conversation contexts, Graph-RAG relationship paths, and external systems (GitHub/Jira/Docs context).
 
     Question: "${question}"
 
     Slack Conversations Context:
     ${slackContext}
+
+    Graph-RAG Relationship Context (from Neo4j):
+    ${graphContext}
 
     GitHub, Jira, and Docs Context (from MCP):
     ${mcpContext}

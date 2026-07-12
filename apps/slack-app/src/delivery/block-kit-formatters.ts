@@ -139,6 +139,17 @@ export function formatServeModeAlert(input: ServeModeAlertInput) {
         },
         {
           type: 'button',
+          style: 'primary',
+          text: {
+            type: 'plain_text',
+            text: '🤖 Draft Reconciliation',
+            emoji: true,
+          },
+          value: `${input.newDecisionSummary}|||${input.pastDecisionSummary}|||${input.pastDecisionOwnerId}`,
+          action_id: 'draft_reconciliation',
+        },
+        {
+          type: 'button',
           text: {
             type: 'plain_text',
             text: '❌ Dismiss Alert',
@@ -200,4 +211,96 @@ export function formatCatchupBrief(brief: CatchupBrief) {
   });
 
   return blocks;
+}
+
+export interface AppHomeStats {
+  totalDecisions: number;
+  unresolvedConflicts: number;
+  monitoredChannels: number;
+}
+
+export function formatAppHome(stats: AppHomeStats, recentDecisions: any[]) {
+  const blocks: any[] = [
+    {
+      type: 'header',
+      text: {
+        type: 'plain_text',
+        text: '🏠 Sarvenix Command Center',
+        emoji: true,
+      },
+    },
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: '*Live workspace intelligence at your fingertips.* Track graph decisions, resolve conflicts, and run OOO briefs directly from your dashboard.',
+      },
+    },
+    { type: 'divider' },
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: `*📊 Quick Stats*\n• *Total Decisions Indexed:* \`${stats.totalDecisions}\` \n• *Unresolved Contradictions:* \`${stats.unresolvedConflicts}\`\n• *Monitored Channels:* \`${stats.monitoredChannels}\` \n• *Service Status:* 🟢 \`Healthy\``,
+      },
+    },
+    { type: 'divider' },
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: '⚡ *Actions Control Panel*',
+      },
+    },
+    {
+      type: 'actions',
+      elements: [
+        {
+          type: 'button',
+          style: 'primary',
+          text: {
+            type: 'plain_text',
+            text: '🌴 Generate Catchup Brief',
+            emoji: true,
+          },
+          action_id: 'home_trigger_catchup',
+        },
+      ],
+    },
+    { type: 'divider' },
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: '📋 *Recent Graph Decisions*',
+      },
+    },
+  ];
+
+  if (recentDecisions.length === 0) {
+    blocks.push({
+      type: 'context',
+      elements: [
+        {
+          type: 'mrkdwn',
+          text: '_No decisions indexed in your allowed channels yet._',
+        },
+      ],
+    });
+  } else {
+    recentDecisions.slice(0, 5).forEach((dec) => {
+      blocks.push({
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `*Decision:* "${dec.summary}"\n*Confidence:* \`${dec.confidence.toUpperCase()}\` | *Date:* \`${new Date(dec.extractedAt).toLocaleDateString()}\``,
+        },
+      });
+    });
+  }
+
+  return {
+    type: 'home',
+    blocks,
+  };
 }
