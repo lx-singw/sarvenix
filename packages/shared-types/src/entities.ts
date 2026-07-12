@@ -16,6 +16,9 @@ export interface Person {
   slackUserId: string;
   displayName: string;
   roles?: string[];
+  title?: string;
+  team?: string;
+  tz?: string;
 }
 
 export type ArtifactType = 'github_pr' | 'jira_ticket' | 'doc';

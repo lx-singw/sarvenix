@@ -79,18 +79,25 @@ export async function createPerson(person: Person): Promise<void> {
       `MERGE (p:Person {id: $id})
        SET p.slackUserId = $slackUserId,
            p.displayName = $displayName,
-           p.roles = $roles`,
+           p.roles = $roles,
+           p.title = $title,
+           p.team = $team,
+           p.tz = $tz`,
       {
         id: person.id,
         slackUserId: person.slackUserId,
         displayName: person.displayName,
         roles: person.roles || [],
+        title: person.title || null,
+        team: person.team || null,
+        tz: person.tz || null,
       }
     );
   } finally {
     await session.close();
   }
 }
+
 
 export async function createArtifact(artifact: Artifact): Promise<void> {
   const session = getSession();

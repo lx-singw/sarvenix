@@ -32,11 +32,40 @@ app.message(async ({ message, client, say }) => {
   const userId = msg.user || 'U_UNKNOWN';
   const messageTs = msg.ts;
 
+  // Add 👀 reaction to indicate processing has started
+  try {
+    await client.reactions.add({
+      name: 'eyes',
+      channel: channelId,
+      timestamp: messageTs,
+    });
+  } catch (err) {
+    // Ignore if already reacted or failed
+  }
+
   // Run Serve Mode contradiction check
   if (config.serveMode.enabled) {
     try {
       const serveResult = await processServeMode(messageText, channelId);
       if (serveResult.alertBlocks && serveResult.isApproved) {
+        // Remove 👀 reaction
+        try {
+          await client.reactions.remove({
+            name: 'eyes',
+            channel: channelId,
+            timestamp: messageTs,
+          });
+        } catch (e) {}
+
+        // Add ⚠️ reaction to indicate contradiction warning
+        try {
+          await client.reactions.add({
+            name: 'warning',
+            channel: channelId,
+            timestamp: messageTs,
+          });
+        } catch (e) {}
+
         await postInThreadReply(
           client,
           channelId,
@@ -61,10 +90,16 @@ app.message(async ({ message, client, say }) => {
 
     // Fetch user profile info
     let userName = 'User';
+    let userTitle = '';
+    let userTeam = '';
+    let userTz = '';
     try {
       const userProfile = await client.users.info({ user: userId });
       if (userProfile.ok && userProfile.user) {
         userName = userProfile.user.profile?.real_name || userProfile.user.name || 'User';
+        userTitle = userProfile.user.profile?.title || '';
+        userTz = userProfile.user.tz || '';
+        userTeam = (userProfile.user.profile as any).team || '';
       }
     } catch (e) {
       console.warn('Could not fetch user profile info:', e);
@@ -81,17 +116,60 @@ app.message(async ({ message, client, say }) => {
       console.warn('Could not fetch channel info:', e);
     }
 
-    await ingestSlackMessage(
+    const ingestRes = await ingestSlackMessage(
       messageText,
       userId,
       userName,
       channelId,
       channelName,
       messageTs,
-      permalink
+      permalink,
+      userTitle,
+      userTeam,
+      userTz
     );
+
+    // Remove 👀 reaction when analysis completes
+    try {
+      await client.reactions.remove({
+        name: 'eyes',
+        channel: channelId,
+        timestamp: messageTs,
+      });
+    } catch (e) {}
+
+    if (ingestRes) {
+      // Add ✅ reaction to indicate decision successfully recorded in Graph
+      try {
+        await client.reactions.add({
+          name: 'white_check_mark',
+          channel: channelId,
+          timestamp: messageTs,
+        });
+      } catch (e) {}
+
+      // Add a bookmark in the channel linking to the decision
+      try {
+        await client.bookmarks.add({
+          channel_id: channelId,
+          title: `Decision: ${ingestRes.summary.slice(0, 40)}...`,
+          type: 'link',
+          link: permalink,
+        });
+      } catch (e) {
+        console.warn('Could not create bookmark for decision:', e);
+      }
+    }
   } catch (err) {
     console.error('Failed to ingest Slack message:', err);
+    // Try to remove 👀 reaction on failure
+    try {
+      await client.reactions.remove({
+        name: 'eyes',
+        channel: channelId,
+        timestamp: messageTs,
+      });
+    } catch (e) {}
   }
 });
 

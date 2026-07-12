@@ -23,7 +23,10 @@ export async function ingestSlackMessage(
   channelId: string,
   channelName: string,
   messageTs: string,
-  permalink: string
+  permalink: string,
+  userTitle?: string,
+  userTeam?: string,
+  userTz?: string
 ): Promise<IngestResult | null> {
   try {
     // 1. Run entity extraction
@@ -49,6 +52,9 @@ export async function ingestSlackMessage(
       id: `person-${userId}`,
       slackUserId: userId,
       displayName: userName,
+      title: userTitle,
+      team: userTeam,
+      tz: userTz,
     });
 
     const newDecision: Decision = {
