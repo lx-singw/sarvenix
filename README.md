@@ -30,6 +30,8 @@ Current verified result: 7 workspace packages build, 8 suites and 16 tests pass,
 - [Three-minute demo script](docs/Sarvenix-Demo-Script.md)
 - [Devpost submission copy](docs/Sarvenix-Devpost-Submission.md)
 - [Judging evidence matrix](docs/Sarvenix-Judging-Evidence.md)
+- [Evaluation and controlled benchmark methodology](docs/Sarvenix-Evaluation-Methodology.md)
+- [Live sandbox acceptance runbook](docs/Sarvenix-Live-Acceptance.md)
 - [Rehearsal and judge runbook](docs/Sarvenix-Rehearsal-Runbook.md)
 - [Full architecture](ARCHITECTURE.md)
 - [Detailed product documentation](docs/)
