@@ -14,7 +14,8 @@
     "@sarvenix/shared-types": "*",
     "@sarvenix/knowledge-graph": "*",
     "@sarvenix/confidence-scoring": "*",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "@google/generative-ai": "^0.21.0"
   },
   "devDependencies": {
     "typescript": "^5.0.0",
