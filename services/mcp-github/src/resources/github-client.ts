@@ -1,4 +1,18 @@
 import * as crypto from 'crypto';
+import { redactSensitive } from '@sarvenix/shared-types';
+
+function assertSafeGitHubEndpoint(endpoint: string): string {
+  const normalized = endpoint.replace(/^\/+/, '');
+  if (!/^[A-Za-z0-9._~!$&'()*+,;=:@%/-]+$/.test(normalized) || normalized.includes('..')) {
+    throw new Error('Unsafe GitHub API endpoint.');
+  }
+  const allowed = (process.env.GITHUB_ALLOWED_REPOS || '').split(',').map(value => value.trim()).filter(Boolean);
+  const match = normalized.match(/^repos\/([^/]+\/[^/]+)(?:\/|$)/);
+  if (allowed.length > 0 && match && !allowed.includes(match[1])) {
+    throw new Error('GitHub resource is outside the configured repository allowlist.');
+  }
+  return normalized;
+}
 
 export function generateJWT(appId: string, privateKey: string): string {
   const header = {
@@ -67,7 +81,8 @@ export async function callGitHubAPI(
   method = 'GET',
   body: any = null
 ): Promise<any> {
-  const url = `https://api.github.com/${endpoint}`;
+  const safeEndpoint = assertSafeGitHubEndpoint(endpoint);
+  const url = `https://api.github.com/${safeEndpoint}`;
   const headers: Record<string, string> = {
     Authorization: `token ${token}`,
     Accept: 'application/vnd.github+json',
@@ -89,7 +104,7 @@ export async function callGitHubAPI(
     const requestId = response.headers.get('x-github-request-id');
     const details = await response.text();
     throw new Error(
-      `GitHub API call failed (${response.status}) on ${endpoint}${requestId ? ` [request ${requestId}]` : ''}: ${details.slice(0, 500)}`
+      redactSensitive(`GitHub API call failed (${response.status}) on ${safeEndpoint}${requestId ? ` [request ${requestId}]` : ''}: ${details.slice(0, 500)}`)
     );
   }
 

@@ -49,9 +49,12 @@ The second challenge was cross-system provenance. GitHub and Jira return differe
 - Serve alerts expose semantic match strength and prior decision identity
 - Resolution actions update decision state only after explicit confirmation
 - TLS verification is enabled; structured logs redact secret-like fields
-- Current quality gate: **7 packages build, 6 suites pass, 10 tests pass, and production dependency audit reports 0 vulnerabilities**
+- Temporal lifecycle events distinguish proposed, implemented, superseded, reopened, and resolved truth
+- Impact-radius traversal explains affected decisions, artifacts, owners, path depth, and freshness
+- Evidence-backed counterfactual previews never present speculative effects as certainty
+- Current quality gate: **7 packages build, 8 suites and 16 tests pass, 104 evaluation scenarios validate across 8 categories, and the production dependency audit reports 0 vulnerabilities**
 
-These numbers describe the current repository quality gate, not a claim of production-scale accuracy. Alert precision and groundedness need a larger labeled pilot corpus before we publish statistically meaningful product metrics.
+These numbers describe repository and evaluation-foundation quality, not production-scale model accuracy. Groundedness, contradiction precision, and latency remain unpublished until the live sandbox outputs are scored and the generated report passes its thresholds.
 
 ## What we learned
 

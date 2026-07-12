@@ -1,5 +1,5 @@
 import neo4j, { Driver } from 'neo4j-driver';
-import { Decision, Person, Artifact, Channel } from '@sarvenix/shared-types';
+import { Decision, Person, Artifact, Channel, DecisionLifecycleEvent, ImpactRadius } from '@sarvenix/shared-types';
 import { DatabaseQueryError, withRetry } from '@sarvenix/shared-types';
 
 let driver: Driver | null = null;
@@ -85,6 +85,10 @@ export async function createDecision(decision: Decision): Promise<void> {
                    d.confidence = $confidence,
                    d.extractedAt = datetime($extractedAt),
                    d.decidedAt = datetime($decidedAt),
+                   d.validFrom = datetime($validFrom),
+                   d.validTo = datetime($validTo),
+                   d.currentTruth = $currentTruth,
+                   d.evidenceVersion = $evidenceVersion,
                    d.embedding = $embedding,
                    d.channelId = $channelId
      ON MATCH SET d.summary = $summary,
@@ -92,6 +96,10 @@ export async function createDecision(decision: Decision): Promise<void> {
                   d.confidence = $confidence,
                   d.extractedAt = datetime($extractedAt),
                   d.decidedAt = datetime($decidedAt),
+                  d.validFrom = datetime($validFrom),
+                  d.validTo = datetime($validTo),
+                  d.currentTruth = $currentTruth,
+                  d.evidenceVersion = $evidenceVersion,
                   d.embedding = $embedding,
                   d.channelId = $channelId`,
     {
@@ -101,6 +109,10 @@ export async function createDecision(decision: Decision): Promise<void> {
       confidence: decision.confidence,
       extractedAt: decision.extractedAt.toISOString(),
       decidedAt: decision.decidedAt ? decision.decidedAt.toISOString() : null,
+      validFrom: (decision.validFrom || decision.decidedAt || decision.extractedAt).toISOString(),
+      validTo: decision.validTo?.toISOString() || null,
+      currentTruth: decision.currentTruth ?? !['superseded', 'rejected', 'closed'].includes(decision.status),
+      evidenceVersion: decision.evidenceVersion || 'v1',
       embedding: decision.embedding || null,
       channelId: decision.channelId || null,
     }
@@ -460,4 +472,117 @@ export async function findDecisionPaths(decisionId: string): Promise<string[]> {
     }
   }
   return paths;
+}
+
+export async function recordLifecycleEvent(event: DecisionLifecycleEvent): Promise<boolean> {
+  const result = await runQueryWithRetry(
+    `MATCH (d:Decision {id: $decisionId})
+     MERGE (e:LifecycleEvent {id: $id})
+     ON CREATE SET e.type = $type,
+                   e.occurredAt = datetime($occurredAt),
+                   e.validFrom = datetime($validFrom),
+                   e.validTo = datetime($validTo),
+                   e.actorSlackUserId = $actorSlackUserId,
+                   e.reason = $reason,
+                   e.evidenceUrl = $evidenceUrl,
+                   e.evidenceVersion = $evidenceVersion
+     MERGE (d)-[:HAS_LIFECYCLE_EVENT]->(e)
+     RETURN e.id AS id`,
+    {
+      ...event,
+      occurredAt: event.occurredAt.toISOString(),
+      validFrom: event.validFrom.toISOString(),
+      validTo: event.validTo?.toISOString() || null,
+    }
+  );
+  return result.records.length > 0;
+}
+
+export async function getDecisionLineage(decisionId: string): Promise<DecisionLifecycleEvent[]> {
+  const result = await runQueryWithRetry(
+    `MATCH (:Decision {id: $decisionId})-[:HAS_LIFECYCLE_EVENT]->(e:LifecycleEvent)
+     RETURN e ORDER BY e.occurredAt ASC`,
+    { decisionId }
+  );
+  return result.records.map((record: any) => {
+    const event = record.get('e').properties;
+    return {
+      id: event.id,
+      decisionId,
+      type: event.type,
+      occurredAt: new Date(event.occurredAt),
+      validFrom: new Date(event.validFrom),
+      validTo: event.validTo ? new Date(event.validTo) : undefined,
+      actorSlackUserId: event.actorSlackUserId,
+      reason: event.reason,
+      evidenceUrl: event.evidenceUrl,
+      evidenceVersion: event.evidenceVersion,
+    };
+  });
+}
+
+export async function calculateImpactRadius(decisionId: string, maxDepth = 4): Promise<ImpactRadius> {
+  const safeDepth = Math.max(1, Math.min(maxDepth, 6));
+  const result = await runQueryWithRetry(
+    `MATCH path=(root:Decision {id: $decisionId})-[rels:REFERENCES|RESOLVED_BY|DEPENDS_ON|SUPERSEDES|CONTRADICTS*1..${safeDepth}]-(node)
+     WHERE all(n IN nodes(path) WHERE single(m IN nodes(path) WHERE m = n))
+     WITH node, path, length(path) AS depth
+     ORDER BY depth ASC
+     LIMIT 100
+     RETURN node, [n IN nodes(path) | coalesce(n.id, n.externalId, n.displayName)] AS pathIds, depth`,
+    { decisionId }
+  );
+  const seen = new Set<string>();
+  const items = result.records.flatMap((record: any) => {
+    const node = record.get('node');
+    const id = node.properties.id || node.properties.externalId;
+    if (!id || seen.has(id)) return [];
+    seen.add(id);
+    const labels = node.labels as string[];
+    const type = labels.includes('Decision') ? 'decision'
+      : node.properties.type === 'github_pr' ? 'github_pr'
+      : node.properties.type === 'jira_ticket' ? 'jira_ticket'
+      : labels.includes('Person') ? 'owner'
+      : 'channel';
+    const depthValue = record.get('depth');
+    const depth = typeof depthValue === 'number' ? depthValue : depthValue.toNumber();
+    const lastSyncedAt = node.properties.lastSyncedAt ? new Date(node.properties.lastSyncedAt) : undefined;
+    return [{
+      id,
+      type,
+      title: node.properties.title || node.properties.summary || node.properties.displayName || node.properties.name || id,
+      url: node.properties.externalUrl,
+      owner: node.properties.owner,
+      depth,
+      confidence: Number((1 / (1 + depth * 0.25)).toFixed(2)),
+      freshness: lastSyncedAt && Date.now() - lastSyncedAt.getTime() > 7 * 86_400_000 ? 'stale' : lastSyncedAt ? 'current' : 'unknown',
+      path: record.get('pathIds'),
+      reason: `Connected by an evidence path ${depth} hop${depth === 1 ? '' : 's'} from the decision.`,
+    }];
+  });
+  return { decisionId, generatedAt: new Date(), partial: result.records.length >= 100, items };
+}
+
+export async function resolveDecisionConflictTransaction(
+  decisionId: string,
+  replacementDecisionId: string,
+  resolvedBySlackUserId: string,
+  reason: string,
+  idempotencyKey: string
+): Promise<boolean> {
+  const result = await runQueryWithRetry(
+    `MERGE (operation:GraphOperation {idempotencyKey: $idempotencyKey})
+     ON CREATE SET operation.createdAt = datetime(), operation.applied = false
+     WITH operation
+     MATCH (prior:Decision {id: $decisionId}), (replacement:Decision {id: $replacementDecisionId})
+     FOREACH (_ IN CASE WHEN operation.applied = false THEN [1] ELSE [] END |
+       SET prior.status = 'superseded', prior.currentTruth = false, prior.validTo = datetime(),
+           replacement.currentTruth = true,
+           operation.applied = true, operation.resolvedBy = $resolvedBySlackUserId, operation.reason = $reason
+       MERGE (replacement)-[:SUPERSEDES {resolvedBy: $resolvedBySlackUserId, reason: $reason}]->(prior)
+     )
+     RETURN operation.applied AS applied`,
+    { decisionId, replacementDecisionId, resolvedBySlackUserId, reason, idempotencyKey }
+  );
+  return result.records.length > 0 && result.records[0].get('applied') === true;
 }
