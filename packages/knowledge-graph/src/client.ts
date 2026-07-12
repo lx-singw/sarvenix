@@ -403,6 +403,23 @@ export async function getAppHomeData(allowedChannelIds?: string[]): Promise<{
   };
 }
 
+export async function resolveDecisionConflict(
+  decisionId: string,
+  resolvedBySlackUserId: string
+): Promise<boolean> {
+  const query = `
+    MATCH (d:Decision {id: $decisionId})
+    OPTIONAL MATCH (d)-[conflict:CONTRADICTS]-(:Decision)
+    SET d.status = 'closed',
+        d.resolvedAt = datetime(),
+        d.resolvedBySlackUserId = $resolvedBySlackUserId
+    DELETE conflict
+    RETURN d.id AS id
+  `;
+  const result = await runQueryWithRetry(query, { decisionId, resolvedBySlackUserId });
+  return result.records.length > 0;
+}
+
 export async function findDecisionPaths(decisionId: string): Promise<string[]> {
   const query = `
     MATCH (d:Decision {id: $decisionId})

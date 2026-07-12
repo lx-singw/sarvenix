@@ -76,6 +76,8 @@ export async function processServeMode(
       pastDecisionOwner: match.ownerName,
       pastDecisionOwnerId: match.ownerSlackId,
       citationUrl: match.citationUrl,
+      priorDecisionId: match.similarDecision.id,
+      similarityScore: match.score ?? 0,
     });
 
     // 7. Increment alert counter
