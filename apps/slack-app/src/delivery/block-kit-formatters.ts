@@ -14,16 +14,16 @@ function plainText(value: string, limit = MAX_BUTTON_TEXT) {
 }
 
 function confidenceLabel(confidence: SynthesizedResponse['confidence']): string {
-  if (confidence === 'high') return 'High confidence';
-  if (confidence === 'moderate') return 'Moderate confidence';
-  return 'Low confidence';
+  if (confidence === 'high') return '🟢 High confidence';
+  if (confidence === 'moderate') return '🟡 Moderate confidence';
+  return '🔴 Low confidence';
 }
 
 export function formatAskResponse(response: SynthesizedResponse) {
   const blocks: any[] = [
     {
       type: 'header',
-      text: plainText('Sarvenix evidence brief', 150),
+      text: plainText('🧠 Sarvenix Evidence Brief', 150),
     },
     {
       type: 'section',
@@ -34,59 +34,61 @@ export function formatAskResponse(response: SynthesizedResponse) {
       elements: [
         {
           type: 'mrkdwn',
-          text: `*${confidenceLabel(response.confidence)}* · ${truncate(response.confidenceReasoning, 1_500)}`,
+          text: `*${confidenceLabel(response.confidence)}* · ℹ️ ${truncate(response.confidenceReasoning, 1_500)}`,
         },
       ],
     },
   ];
-
+ 
   if (response.citations.length > 0) {
     blocks.push({ type: 'divider' });
     blocks.push({
       type: 'section',
-      text: { type: 'mrkdwn', text: `*Verified sources* · ${response.citations.length} deep link${response.citations.length === 1 ? '' : 's'}` },
+      text: { type: 'mrkdwn', text: `*📋 Verified Sources* · ${response.citations.length} deep link${response.citations.length === 1 ? '' : 's'}` },
     });
-
+ 
     const sourceButtons = response.citations.slice(0, 10).map((citation) => ({
       type: 'button',
-      text: plainText(`[${citation.index}] ${citation.title}`),
+      text: plainText(`🔗 [${citation.index}] ${citation.title}`),
       value: `citation_${citation.index}`,
       url: citation.url,
       action_id: `click_citation_${citation.index}`,
       accessibility_label: `Open source ${citation.index}: ${truncate(citation.title, 120)}`,
     }));
-
+ 
     for (let index = 0; index < sourceButtons.length; index += 5) {
       blocks.push({ type: 'actions', elements: sourceButtons.slice(index, index + 5) });
     }
   } else {
     blocks.push({
       type: 'context',
-      elements: [{ type: 'mrkdwn', text: '_No verifiable source links were available. Treat this response as incomplete._' }],
+      elements: [{ type: 'mrkdwn', text: '_⚠️ No verifiable source links were available. Treat this response as incomplete._' }],
     });
   }
-
+ 
   blocks.push({
     type: 'actions',
     block_id: 'ask_feedback',
     elements: [
       {
         type: 'button',
-        text: plainText('Accurate'),
+        style: 'primary',
+        text: plainText('👍 Accurate'),
         value: 'accurate',
         action_id: 'feedback_accurate',
         accessibility_label: 'Mark this answer accurate',
       },
       {
         type: 'button',
-        text: plainText('Needs correction'),
+        style: 'danger',
+        text: plainText('👎 Needs correction'),
         value: 'wrong',
         action_id: 'feedback_wrong',
         accessibility_label: 'Report an unsupported or incorrect answer',
       },
     ],
   });
-
+ 
   return blocks;
 }
 
@@ -104,19 +106,18 @@ export function formatServeModeAlert(input: ServeModeAlertInput) {
   return [
     {
       type: 'header',
-      text: plainText('Potential decision conflict', 150),
+      text: plainText('⚠️ Potential Decision Conflict', 150),
     },
     {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*New proposal*\n${truncate(input.newDecisionSummary, 900)}\n\n*Prior decision · ${input.pastDecisionOwner}*\n>${truncate(input.pastDecisionSummary, 900)}`,
+        text: `*🚨 New Proposal*\n> ${truncate(input.newDecisionSummary, 900)}\n\n*📌 Prior Decision · ${input.pastDecisionOwner}*\n> ${truncate(input.pastDecisionSummary, 900)}`,
       },
     },
     {
       type: 'context',
-      elements: [{ type: 'mrkdwn',           text: `_Verified by the adversarial critic · ${Math.round(input.similarityScore * 100)}% semantic match · Decision ID: \`${input.priorDecisionId}\` · No action taken automatically._` }],
-
+      elements: [{ type: 'mrkdwn', text: `_🛡️ *Adversarial Critic* · ${Math.round(input.similarityScore * 100)}% semantic match · Decision ID: \`${input.priorDecisionId}\` · No action taken automatically._` }],
     },
     {
       type: 'actions',
@@ -124,32 +125,32 @@ export function formatServeModeAlert(input: ServeModeAlertInput) {
       elements: [
         {
           type: 'button',
-          text: plainText('Open prior context'),
+          text: plainText('🔗 Open prior context'),
           url: input.citationUrl,
           action_id: 'view_past_context',
           accessibility_label: 'Open the source for the prior decision',
         },
         {
           type: 'button',
-          text: plainText(`Loop in ${input.pastDecisionOwner}`),
+          text: plainText(`👥 Loop in ${input.pastDecisionOwner}`),
           value: input.pastDecisionOwnerId,
           action_id: 'loop_in_owner',
         },
         {
           type: 'button',
           style: 'primary',
-          text: plainText('Draft reconciliation'),
+          text: plainText('⚡ Draft reconciliation'),
           value: `${input.newDecisionSummary}|||${input.pastDecisionSummary}|||${input.pastDecisionOwnerId}`,
           action_id: 'draft_reconciliation',
         },
         {
           type: 'button',
-          text: plainText('Resolve prior decision'),
+          text: plainText('✅ Resolve prior decision'),
           value: input.priorDecisionId,
           action_id: 'resolve_decision_conflict',
           confirm: {
-            title: plainText('Resolve conflict', 100),
-            text: plainText('Close the prior decision and remove its open conflict links?', 300),
+            title: plainText('⚠️ Resolve decision conflict?', 100),
+            text: plainText('This will close the prior decision in the knowledge graph and remove its open conflict links. Proceed?', 300),
             confirm: plainText('Resolve', 30),
             deny: plainText('Cancel', 30),
             style: 'danger',
@@ -157,7 +158,7 @@ export function formatServeModeAlert(input: ServeModeAlertInput) {
         },
         {
           type: 'button',
-          text: plainText('Dismiss'),
+          text: plainText('❌ Dismiss'),
           value: 'dismiss',
           action_id: 'dismiss_contradiction',
         },

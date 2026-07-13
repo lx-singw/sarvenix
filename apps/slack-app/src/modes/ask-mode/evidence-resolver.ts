@@ -32,6 +32,7 @@ interface ArtifactReference {
 }
 
 function parseArtifactReference(artifactId: string): ArtifactReference | null {
+  if (!artifactId) return null;
   const normalized = artifactId.trim();
   const jiraMatch = normalized.match(/(?:^|[^A-Z0-9])([A-Z][A-Z0-9]+-\d+)(?:$|[^A-Z0-9])/i);
   if (jiraMatch) {

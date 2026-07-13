@@ -67,7 +67,7 @@ export async function handleAskMode(
     if (similarDecisions.length > 0) {
       const bestMatch = similarDecisions[0].decision;
       const provenanceArtifacts = await traceProvenance(bestMatch.id);
-      for (const artifact of provenanceArtifacts) referencedArtifactIds.add(artifact.id);
+      for (const artifact of provenanceArtifacts) referencedArtifactIds.add(artifact.externalId || artifact.id);
 
       try {
         const paths = await findDecisionPaths(bestMatch.id);

@@ -18,6 +18,10 @@ import { draftReconciliationProposal } from './modes/serve-mode/mediator';
 import { Logger } from './lib/logger';
 import { SarvenixError, DatabaseQueryError, GeminiApiError, SlackClientError } from '@sarvenix/shared-types';
 
+if (process.env.NODE_ENV !== 'production') {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+}
+
 const app = new App({
   token: config.slack.botToken,
   signingSecret: config.slack.signingSecret,

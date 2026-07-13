@@ -59,13 +59,41 @@ async function provisionGraph(manifest: LiveRunManifest, suffix: string, resourc
   const driver = neo4j.driver(process.env.GRAPH_DB_URL!, neo4j.auth.basic(process.env.GRAPH_DB_USER!, process.env.GRAPH_DB_PASSWORD!));
   const session = driver.session();
   const id = `${manifest.runId}-${suffix}`;
+  
+  const slackChannel = resources.find(r => r.provider === 'slack' && r.type === 'channel');
+  const channelId = slackChannel ? slackChannel.id : '';
+  
+  const title = `${suffix} regional connection pool`;
+  let embedding: number[] | null = null;
+  if (process.env.GEMINI_API_KEY) {
+    try {
+      const ai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+      const model = ai.getGenerativeModel({ model: 'gemini-embedding-2' });
+      const result = await model.embedContent(title);
+      if (result.embedding && result.embedding.values) {
+        embedding = result.embedding.values;
+      }
+    } catch (e) {
+      console.warn(`Embedding generation failed during seeding:`, e);
+    }
+  }
+
   try {
     await session.run(
-      `MERGE (d:Decision {id: $id}) SET d.runMarker=$marker, d.title=$title, d.status='active', d.currentTruth=true, d.validFrom=datetime()
+      `MERGE (d:Decision {id: $id}) 
+       SET d.runMarker=$marker, d.title=$title, d.summary=$title, d.status='rejected', 
+           d.currentTruth=true, d.validFrom=datetime(), d.channelId=$channelId, d.embedding=$embedding
        WITH d UNWIND $artifacts AS artifact
        MERGE (a:Artifact {externalId: artifact.id, runMarker: $marker}) SET a.type=artifact.type, a.externalUrl=artifact.url
        MERGE (d)-[:REFERENCES]->(a)`,
-      { id, marker: manifest.marker, title: `${suffix} regional connection pool`, artifacts: resources.filter(resource => resource.canonicalUrl).map(resource => ({ id: resource.id, type: `${resource.provider}_${resource.type}`, url: resource.canonicalUrl })) },
+      { 
+        id, 
+        marker: manifest.marker, 
+        title, 
+        channelId,
+        embedding,
+        artifacts: resources.filter(resource => resource.canonicalUrl).map(resource => ({ id: resource.id, type: `${resource.provider}_${resource.type}`, url: resource.canonicalUrl })) 
+      },
     );
   } finally { await session.close(); await driver.close(); }
   return { provider: 'neo4j', type: 'decision', id, marker: manifest.marker, cleanupAction: 'delete' };

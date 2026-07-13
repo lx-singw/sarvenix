@@ -11,7 +11,7 @@ export interface ContradictionMatch {
 
 export async function detectContradiction(
   newDecisionEmbedding: number[],
-  similarityThreshold = 0.82
+  similarityThreshold = 0.70
 ): Promise<ContradictionMatch | null> {
   try {
     // 1. Query graph for decisions matching the new decision's semantic vector
