@@ -1,0 +1,49 @@
+{
+  "generatedAt": "2026-07-13T05:23:01.559Z",
+  "passed": true,
+  "failures": [],
+  "evidence": [
+    {
+      "id": "quality-gate",
+      "claim": "Build, tests, evaluation corpus, and audit",
+      "artifact": "docs/Sarvenix-Judging-Evidence.md",
+      "required": true,
+      "present": true
+    },
+    {
+      "id": "evaluation-method",
+      "claim": "Reproducible evaluation methodology",
+      "artifact": "docs/Sarvenix-Evaluation-Methodology.md",
+      "required": true,
+      "present": true
+    },
+    {
+      "id": "live-runbook",
+      "claim": "Cross-system acceptance procedure",
+      "artifact": "docs/Sarvenix-Live-Acceptance.md",
+      "required": true,
+      "present": true
+    },
+    {
+      "id": "app-home-shot",
+      "claim": "Slack App Home onboarding and readiness",
+      "artifact": "reports/evidence/app-home.png",
+      "required": false,
+      "present": true
+    },
+    {
+      "id": "primary-run",
+      "claim": "Primary live causal chain",
+      "artifact": "reports/live/PRIMARY/acceptance.json",
+      "required": false,
+      "present": true
+    },
+    {
+      "id": "backup-run",
+      "claim": "Backup live causal chain",
+      "artifact": "reports/live/BACKUP/acceptance.json",
+      "required": false,
+      "present": true
+    }
+  ]
+}

@@ -1,0 +1,2446 @@
+[
+  {
+    "scenarioId": "eval-answerable-001",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-1",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-1",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-1",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 829
+  },
+  {
+    "scenarioId": "eval-answerable-002",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-2",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-2",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-2",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1373
+  },
+  {
+    "scenarioId": "eval-answerable-003",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-3",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-3",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-3",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1325
+  },
+  {
+    "scenarioId": "eval-answerable-004",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-4",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-4",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-4",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 920
+  },
+  {
+    "scenarioId": "eval-answerable-005",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-5",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-5",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-5",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1056
+  },
+  {
+    "scenarioId": "eval-answerable-006",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-6",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-6",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-6",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1400
+  },
+  {
+    "scenarioId": "eval-answerable-007",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-7",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-7",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-7",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1130
+  },
+  {
+    "scenarioId": "eval-answerable-008",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-8",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-8",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-8",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 965
+  },
+  {
+    "scenarioId": "eval-answerable-009",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-9",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-9",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-9",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 942
+  },
+  {
+    "scenarioId": "eval-answerable-010",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-10",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-10",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-10",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1410
+  },
+  {
+    "scenarioId": "eval-answerable-011",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-11",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-11",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-11",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1000
+  },
+  {
+    "scenarioId": "eval-answerable-012",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-12",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-12",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-12",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1485
+  },
+  {
+    "scenarioId": "eval-answerable-013",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-13",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-13",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-13",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 912
+  },
+  {
+    "scenarioId": "eval-unanswerable-001",
+    "alerted": false,
+    "abstained": true,
+    "citations": [],
+    "claims": [],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1254
+  },
+  {
+    "scenarioId": "eval-unanswerable-002",
+    "alerted": false,
+    "abstained": true,
+    "citations": [],
+    "claims": [],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1008
+  },
+  {
+    "scenarioId": "eval-unanswerable-003",
+    "alerted": false,
+    "abstained": true,
+    "citations": [],
+    "claims": [],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 931
+  },
+  {
+    "scenarioId": "eval-unanswerable-004",
+    "alerted": false,
+    "abstained": true,
+    "citations": [],
+    "claims": [],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1143
+  },
+  {
+    "scenarioId": "eval-unanswerable-005",
+    "alerted": false,
+    "abstained": true,
+    "citations": [],
+    "claims": [],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1417
+  },
+  {
+    "scenarioId": "eval-unanswerable-006",
+    "alerted": false,
+    "abstained": true,
+    "citations": [],
+    "claims": [],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1332
+  },
+  {
+    "scenarioId": "eval-unanswerable-007",
+    "alerted": false,
+    "abstained": true,
+    "citations": [],
+    "claims": [],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 995
+  },
+  {
+    "scenarioId": "eval-unanswerable-008",
+    "alerted": false,
+    "abstained": true,
+    "citations": [],
+    "claims": [],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1100
+  },
+  {
+    "scenarioId": "eval-unanswerable-009",
+    "alerted": false,
+    "abstained": true,
+    "citations": [],
+    "claims": [],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 801
+  },
+  {
+    "scenarioId": "eval-unanswerable-010",
+    "alerted": false,
+    "abstained": true,
+    "citations": [],
+    "claims": [],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1371
+  },
+  {
+    "scenarioId": "eval-unanswerable-011",
+    "alerted": false,
+    "abstained": true,
+    "citations": [],
+    "claims": [],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1004
+  },
+  {
+    "scenarioId": "eval-unanswerable-012",
+    "alerted": false,
+    "abstained": true,
+    "citations": [],
+    "claims": [],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1258
+  },
+  {
+    "scenarioId": "eval-unanswerable-013",
+    "alerted": false,
+    "abstained": true,
+    "citations": [],
+    "claims": [],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1180
+  },
+  {
+    "scenarioId": "eval-contradictory-001",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": true,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-1",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-1",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-1",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1154
+  },
+  {
+    "scenarioId": "eval-contradictory-002",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": true,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-2",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-2",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-2",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1256
+  },
+  {
+    "scenarioId": "eval-contradictory-003",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-3",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-3",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-3",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1042
+  },
+  {
+    "scenarioId": "eval-contradictory-004",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": true,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-4",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-4",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-4",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1085
+  },
+  {
+    "scenarioId": "eval-contradictory-005",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": true,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-5",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-5",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-5",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1227
+  },
+  {
+    "scenarioId": "eval-contradictory-006",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-6",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-6",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-6",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 823
+  },
+  {
+    "scenarioId": "eval-contradictory-007",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": true,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-7",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-7",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-7",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1377
+  },
+  {
+    "scenarioId": "eval-contradictory-008",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": true,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-8",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-8",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-8",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 862
+  },
+  {
+    "scenarioId": "eval-contradictory-009",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-9",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-9",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-9",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1047
+  },
+  {
+    "scenarioId": "eval-contradictory-010",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": true,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-10",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-10",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-10",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1288
+  },
+  {
+    "scenarioId": "eval-contradictory-011",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": true,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-11",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-11",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-11",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1480
+  },
+  {
+    "scenarioId": "eval-contradictory-012",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-12",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-12",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-12",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1477
+  },
+  {
+    "scenarioId": "eval-contradictory-013",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": true,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-13",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-13",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-13",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1017
+  },
+  {
+    "scenarioId": "eval-stale-001",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-1",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-1",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-1",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 975
+  },
+  {
+    "scenarioId": "eval-stale-002",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-2",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-2",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-2",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1480
+  },
+  {
+    "scenarioId": "eval-stale-003",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-3",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-3",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-3",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 817
+  },
+  {
+    "scenarioId": "eval-stale-004",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-4",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-4",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-4",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1098
+  },
+  {
+    "scenarioId": "eval-stale-005",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-5",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-5",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-5",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1310
+  },
+  {
+    "scenarioId": "eval-stale-006",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-6",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-6",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-6",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1007
+  },
+  {
+    "scenarioId": "eval-stale-007",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-7",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-7",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-7",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1241
+  },
+  {
+    "scenarioId": "eval-stale-008",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-8",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-8",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-8",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1145
+  },
+  {
+    "scenarioId": "eval-stale-009",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-9",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-9",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-9",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1329
+  },
+  {
+    "scenarioId": "eval-stale-010",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-10",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-10",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-10",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 840
+  },
+  {
+    "scenarioId": "eval-stale-011",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-11",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-11",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-11",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1364
+  },
+  {
+    "scenarioId": "eval-stale-012",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-12",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-12",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-12",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 1273
+  },
+  {
+    "scenarioId": "eval-stale-013",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-13",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/github/decision-13",
+        "supportsClaim": true
+      },
+      {
+        "url": "https://sandbox.example/jira/decision-13",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "sourcesAvailable": [
+      "slack",
+      "github",
+      "jira"
+    ],
+    "latencyMs": 933
+  },
+  {
+    "scenarioId": "eval-inaccessible-001",
+    "alerted": false,
+    "abstained": true,
+    "citations": [],
+    "claims": [],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 807
+  },
+  {
+    "scenarioId": "eval-inaccessible-002",
+    "alerted": false,
+    "abstained": true,
+    "citations": [],
+    "claims": [],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1107
+  },
+  {
+    "scenarioId": "eval-inaccessible-003",
+    "alerted": false,
+    "abstained": true,
+    "citations": [],
+    "claims": [],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1337
+  },
+  {
+    "scenarioId": "eval-inaccessible-004",
+    "alerted": false,
+    "abstained": true,
+    "citations": [],
+    "claims": [],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1001
+  },
+  {
+    "scenarioId": "eval-inaccessible-005",
+    "alerted": false,
+    "abstained": true,
+    "citations": [],
+    "claims": [],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 920
+  },
+  {
+    "scenarioId": "eval-inaccessible-006",
+    "alerted": false,
+    "abstained": true,
+    "citations": [],
+    "claims": [],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1229
+  },
+  {
+    "scenarioId": "eval-inaccessible-007",
+    "alerted": false,
+    "abstained": true,
+    "citations": [],
+    "claims": [],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1136
+  },
+  {
+    "scenarioId": "eval-inaccessible-008",
+    "alerted": false,
+    "abstained": true,
+    "citations": [],
+    "claims": [],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1354
+  },
+  {
+    "scenarioId": "eval-inaccessible-009",
+    "alerted": false,
+    "abstained": true,
+    "citations": [],
+    "claims": [],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1250
+  },
+  {
+    "scenarioId": "eval-inaccessible-010",
+    "alerted": false,
+    "abstained": true,
+    "citations": [],
+    "claims": [],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1293
+  },
+  {
+    "scenarioId": "eval-inaccessible-011",
+    "alerted": false,
+    "abstained": true,
+    "citations": [],
+    "claims": [],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 848
+  },
+  {
+    "scenarioId": "eval-inaccessible-012",
+    "alerted": false,
+    "abstained": true,
+    "citations": [],
+    "claims": [],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1229
+  },
+  {
+    "scenarioId": "eval-inaccessible-013",
+    "alerted": false,
+    "abstained": true,
+    "citations": [],
+    "claims": [],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 822
+  },
+  {
+    "scenarioId": "eval-false_positive-001",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 858
+  },
+  {
+    "scenarioId": "eval-false_positive-002",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 867
+  },
+  {
+    "scenarioId": "eval-false_positive-003",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 882
+  },
+  {
+    "scenarioId": "eval-false_positive-004",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 844
+  },
+  {
+    "scenarioId": "eval-false_positive-005",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1185
+  },
+  {
+    "scenarioId": "eval-false_positive-006",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1491
+  },
+  {
+    "scenarioId": "eval-false_positive-007",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1384
+  },
+  {
+    "scenarioId": "eval-false_positive-008",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1381
+  },
+  {
+    "scenarioId": "eval-false_positive-009",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1023
+  },
+  {
+    "scenarioId": "eval-false_positive-010",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1342
+  },
+  {
+    "scenarioId": "eval-false_positive-011",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1099
+  },
+  {
+    "scenarioId": "eval-false_positive-012",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1007
+  },
+  {
+    "scenarioId": "eval-false_positive-013",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1127
+  },
+  {
+    "scenarioId": "eval-adversarial-001",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1358
+  },
+  {
+    "scenarioId": "eval-adversarial-002",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 801
+  },
+  {
+    "scenarioId": "eval-adversarial-003",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1157
+  },
+  {
+    "scenarioId": "eval-adversarial-004",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1041
+  },
+  {
+    "scenarioId": "eval-adversarial-005",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1277
+  },
+  {
+    "scenarioId": "eval-adversarial-006",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1197
+  },
+  {
+    "scenarioId": "eval-adversarial-007",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1308
+  },
+  {
+    "scenarioId": "eval-adversarial-008",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1260
+  },
+  {
+    "scenarioId": "eval-adversarial-009",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 964
+  },
+  {
+    "scenarioId": "eval-adversarial-010",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1006
+  },
+  {
+    "scenarioId": "eval-adversarial-011",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 866
+  },
+  {
+    "scenarioId": "eval-adversarial-012",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1119
+  },
+  {
+    "scenarioId": "eval-adversarial-013",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [],
+    "sourcesAvailable": [],
+    "latencyMs": 1038
+  },
+  {
+    "scenarioId": "eval-outage-001",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-1",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack"
+    ],
+    "sourcesAvailable": [
+      "slack"
+    ],
+    "latencyMs": 1480
+  },
+  {
+    "scenarioId": "eval-outage-002",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-2",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack"
+    ],
+    "sourcesAvailable": [
+      "slack"
+    ],
+    "latencyMs": 1087
+  },
+  {
+    "scenarioId": "eval-outage-003",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-3",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack"
+    ],
+    "sourcesAvailable": [
+      "slack"
+    ],
+    "latencyMs": 1239
+  },
+  {
+    "scenarioId": "eval-outage-004",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-4",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack"
+    ],
+    "sourcesAvailable": [
+      "slack"
+    ],
+    "latencyMs": 1131
+  },
+  {
+    "scenarioId": "eval-outage-005",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-5",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack"
+    ],
+    "sourcesAvailable": [
+      "slack"
+    ],
+    "latencyMs": 1448
+  },
+  {
+    "scenarioId": "eval-outage-006",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-6",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack"
+    ],
+    "sourcesAvailable": [
+      "slack"
+    ],
+    "latencyMs": 1291
+  },
+  {
+    "scenarioId": "eval-outage-007",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-7",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack"
+    ],
+    "sourcesAvailable": [
+      "slack"
+    ],
+    "latencyMs": 887
+  },
+  {
+    "scenarioId": "eval-outage-008",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-8",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack"
+    ],
+    "sourcesAvailable": [
+      "slack"
+    ],
+    "latencyMs": 1366
+  },
+  {
+    "scenarioId": "eval-outage-009",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-9",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack"
+    ],
+    "sourcesAvailable": [
+      "slack"
+    ],
+    "latencyMs": 814
+  },
+  {
+    "scenarioId": "eval-outage-010",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-10",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack"
+    ],
+    "sourcesAvailable": [
+      "slack"
+    ],
+    "latencyMs": 1316
+  },
+  {
+    "scenarioId": "eval-outage-011",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-11",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack"
+    ],
+    "sourcesAvailable": [
+      "slack"
+    ],
+    "latencyMs": 946
+  },
+  {
+    "scenarioId": "eval-outage-012",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-12",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack"
+    ],
+    "sourcesAvailable": [
+      "slack"
+    ],
+    "latencyMs": 1045
+  },
+  {
+    "scenarioId": "eval-outage-013",
+    "answer": "Based on Slack and GitHub records, we use the regional connection pool to decrease failover latency.",
+    "alerted": false,
+    "abstained": false,
+    "citations": [
+      {
+        "url": "https://sandbox.example/slack/decision-13",
+        "supportsClaim": true
+      }
+    ],
+    "claims": [
+      {
+        "text": "Database pool uses regional connection pool.",
+        "supported": true
+      }
+    ],
+    "sourcesAttempted": [
+      "slack"
+    ],
+    "sourcesAvailable": [
+      "slack"
+    ],
+    "latencyMs": 1178
+  }
+]

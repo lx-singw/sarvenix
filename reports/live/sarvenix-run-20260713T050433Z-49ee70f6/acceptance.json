@@ -1,0 +1,43 @@
+{
+  "runId": "sarvenix-run-20260713T050433Z-49ee70f6",
+  "generatedAt": "2026-07-13T05:04:52.896Z",
+  "passed": true,
+  "steps": [
+    {
+      "id": "canonical-citations",
+      "title": "Canonical evidence links resolve",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:04:46.690Z",
+      "finishedAt": "2026-07-13T05:04:48.834Z",
+      "durationMs": 2144,
+      "detail": "6 manifest-owned citation URLs responded."
+    },
+    {
+      "id": "graph-lineage",
+      "title": "Graph contains both decision chains and evidence",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:04:48.834Z",
+      "finishedAt": "2026-07-13T05:04:52.894Z",
+      "durationMs": 4060,
+      "detail": "Observed 2 decision chains and 6 evidence edges."
+    },
+    {
+      "id": "idempotent-seed",
+      "title": "Manifest enforces seed idempotency",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:04:52.894Z",
+      "finishedAt": "2026-07-13T05:04:52.894Z",
+      "durationMs": 0,
+      "detail": "10 unique resources recorded."
+    },
+    {
+      "id": "impact-radius",
+      "title": "Impact radius has cross-system evidence",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:04:52.894Z",
+      "finishedAt": "2026-07-13T05:04:52.894Z",
+      "durationMs": 0,
+      "detail": "Slack, GitHub, Jira, and Neo4j are represented in the owned evidence chain."
+    }
+  ]
+}

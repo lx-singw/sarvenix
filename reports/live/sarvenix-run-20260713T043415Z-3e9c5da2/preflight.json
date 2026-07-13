@@ -1,0 +1,91 @@
+{
+  "runId": "sarvenix-run-20260713T043415Z-3e9c5da2",
+  "generatedAt": "2026-07-13T04:34:15.195Z",
+  "passed": false,
+  "checks": [
+    {
+      "id": "env-slack_bot_token",
+      "provider": "local",
+      "passed": true,
+      "detail": "Configured."
+    },
+    {
+      "id": "env-slack_signing_secret",
+      "provider": "local",
+      "passed": true,
+      "detail": "Configured."
+    },
+    {
+      "id": "env-sandbox_slack_workspace_id",
+      "provider": "local",
+      "passed": true,
+      "detail": "Configured."
+    },
+    {
+      "id": "env-github_app_id",
+      "provider": "local",
+      "passed": false,
+      "detail": "Missing required protected variable."
+    },
+    {
+      "id": "env-github_private_key",
+      "provider": "local",
+      "passed": false,
+      "detail": "Missing required protected variable."
+    },
+    {
+      "id": "env-github_installation_id",
+      "provider": "local",
+      "passed": false,
+      "detail": "Missing required protected variable."
+    },
+    {
+      "id": "env-sandbox_github_repository",
+      "provider": "local",
+      "passed": true,
+      "detail": "Configured."
+    },
+    {
+      "id": "env-jira_cloud_id",
+      "provider": "local",
+      "passed": true,
+      "detail": "Configured."
+    },
+    {
+      "id": "env-jira_access_token",
+      "provider": "local",
+      "passed": true,
+      "detail": "Configured."
+    },
+    {
+      "id": "env-jira_site_url",
+      "provider": "local",
+      "passed": true,
+      "detail": "Configured."
+    },
+    {
+      "id": "env-sandbox_jira_project_key",
+      "provider": "local",
+      "passed": true,
+      "detail": "Configured."
+    },
+    {
+      "id": "env-graph_db_url",
+      "provider": "local",
+      "passed": true,
+      "detail": "Configured."
+    },
+    {
+      "id": "env-graph_db_user",
+      "provider": "local",
+      "passed": true,
+      "detail": "Configured."
+    },
+    {
+      "id": "env-graph_db_password",
+      "provider": "local",
+      "passed": true,
+      "detail": "Configured."
+    }
+  ]
+}

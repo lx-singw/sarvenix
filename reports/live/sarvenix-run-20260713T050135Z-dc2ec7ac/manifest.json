@@ -1,0 +1,185 @@
+{
+  "schemaVersion": 1,
+  "runId": "sarvenix-run-20260713T050135Z-dc2ec7ac",
+  "marker": "sarvenix-run-20260713T050135Z-dc2ec7ac",
+  "createdAt": "2026-07-13T05:01:35.611Z",
+  "updatedAt": "2026-07-13T05:03:59.296Z",
+  "sandbox": {
+    "slackWorkspaceId": "T0BGNGTJYJH",
+    "githubRepository": "lx-singw/sarvenix",
+    "jiraProjectKey": "MIGRATE"
+  },
+  "resources": [
+    {
+      "provider": "slack",
+      "type": "channel",
+      "id": "C0BGVHV6KQA",
+      "marker": "sarvenix-run-20260713T050135Z-dc2ec7ac",
+      "cleanupAction": "archive"
+    },
+    {
+      "provider": "slack",
+      "type": "message",
+      "id": "C0BGVHV6KQA:1783918972.948199",
+      "marker": "sarvenix-run-20260713T050135Z-dc2ec7ac",
+      "canonicalUrl": "https://slack.com/archives/C0BGVHV6KQA/p1783918972948199",
+      "cleanupAction": "delete"
+    },
+    {
+      "provider": "github",
+      "type": "issue",
+      "id": "6",
+      "marker": "sarvenix-run-20260713T050135Z-dc2ec7ac",
+      "canonicalUrl": "https://github.com/lx-singw/sarvenix/issues/6",
+      "cleanupAction": "close"
+    },
+    {
+      "provider": "jira",
+      "type": "issue",
+      "id": "MIGRATE-8",
+      "marker": "sarvenix-run-20260713T050135Z-dc2ec7ac",
+      "canonicalUrl": "https://lx-singw-sandbox.atlassian.net/browse/MIGRATE-8",
+      "cleanupAction": "close"
+    },
+    {
+      "provider": "neo4j",
+      "type": "decision",
+      "id": "sarvenix-run-20260713T050135Z-dc2ec7ac-primary",
+      "marker": "sarvenix-run-20260713T050135Z-dc2ec7ac",
+      "cleanupAction": "delete"
+    },
+    {
+      "provider": "slack",
+      "type": "channel",
+      "id": "C0BGS92F945",
+      "marker": "sarvenix-run-20260713T050135Z-dc2ec7ac",
+      "cleanupAction": "archive"
+    },
+    {
+      "provider": "slack",
+      "type": "message",
+      "id": "C0BGS92F945:1783918978.645149",
+      "marker": "sarvenix-run-20260713T050135Z-dc2ec7ac",
+      "canonicalUrl": "https://slack.com/archives/C0BGS92F945/p1783918978645149",
+      "cleanupAction": "delete"
+    },
+    {
+      "provider": "github",
+      "type": "issue",
+      "id": "7",
+      "marker": "sarvenix-run-20260713T050135Z-dc2ec7ac",
+      "canonicalUrl": "https://github.com/lx-singw/sarvenix/issues/7",
+      "cleanupAction": "close"
+    },
+    {
+      "provider": "jira",
+      "type": "issue",
+      "id": "MIGRATE-9",
+      "marker": "sarvenix-run-20260713T050135Z-dc2ec7ac",
+      "canonicalUrl": "https://lx-singw-sandbox.atlassian.net/browse/MIGRATE-9",
+      "cleanupAction": "close"
+    },
+    {
+      "provider": "neo4j",
+      "type": "decision",
+      "id": "sarvenix-run-20260713T050135Z-dc2ec7ac-backup",
+      "marker": "sarvenix-run-20260713T050135Z-dc2ec7ac",
+      "cleanupAction": "delete"
+    }
+  ],
+  "steps": [
+    {
+      "id": "canonical-citations",
+      "title": "Canonical evidence links resolve",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:03:25.218Z",
+      "finishedAt": "2026-07-13T05:03:28.049Z",
+      "durationMs": 2831,
+      "detail": "6 manifest-owned citation URLs responded."
+    },
+    {
+      "id": "graph-lineage",
+      "title": "Graph contains both decision chains and evidence",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:03:28.049Z",
+      "finishedAt": "2026-07-13T05:03:30.473Z",
+      "durationMs": 2424,
+      "detail": "Observed 2 decision chains and 6 evidence edges."
+    },
+    {
+      "id": "idempotent-seed",
+      "title": "Manifest enforces seed idempotency",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:03:30.473Z",
+      "finishedAt": "2026-07-13T05:03:30.474Z",
+      "durationMs": 1,
+      "detail": "10 unique resources recorded."
+    },
+    {
+      "id": "impact-radius",
+      "title": "Impact radius has cross-system evidence",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:03:30.474Z",
+      "finishedAt": "2026-07-13T05:03:30.474Z",
+      "durationMs": 0,
+      "detail": "Slack, GitHub, Jira, and Neo4j are represented in the owned evidence chain."
+    },
+    {
+      "id": "secret-redaction",
+      "title": "Secrets never enter reports",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:03:59.279Z",
+      "finishedAt": "2026-07-13T05:03:59.279Z",
+      "durationMs": 0,
+      "detail": "Nested authorization and token fields were redacted."
+    },
+    {
+      "id": "provider-timeout",
+      "title": "Provider timeout fails closed",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:03:59.279Z",
+      "finishedAt": "2026-07-13T05:03:59.295Z",
+      "durationMs": 16,
+      "detail": "Bounded timeout rejected the delayed provider."
+    },
+    {
+      "id": "circuit-breaker",
+      "title": "Repeated provider failures open circuit",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:03:59.295Z",
+      "finishedAt": "2026-07-13T05:03:59.295Z",
+      "durationMs": 0,
+      "detail": "Circuit opened after the configured failure threshold."
+    },
+    {
+      "id": "duplicate-delivery",
+      "title": "Duplicate Slack deliveries share one idempotency key",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:03:59.295Z",
+      "finishedAt": "2026-07-13T05:03:59.295Z",
+      "durationMs": 0,
+      "detail": "Stable idempotency key b7e1543d0214… generated."
+    },
+    {
+      "id": "alert-suppression",
+      "title": "Repeated or low-quality alerts are suppressed",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:03:59.295Z",
+      "finishedAt": "2026-07-13T05:03:59.295Z",
+      "durationMs": 0,
+      "detail": "Alert suppressed: Suppressed because the grounded score 0.063 was below 0.68; repetition or prior feedback reduced novelty to 0.15."
+    },
+    {
+      "id": "ownership-boundary",
+      "title": "All evidence belongs to the current run",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:03:59.295Z",
+      "finishedAt": "2026-07-13T05:03:59.296Z",
+      "durationMs": 1,
+      "detail": "10 resources match the run marker."
+    }
+  ],
+  "cleanup": {
+    "verified": false
+  }
+}

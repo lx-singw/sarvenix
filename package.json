@@ -25,7 +25,7 @@
     "live:all": "node --env-file-if-exists=/vercel/share/.env.project -r ts-node/register -e \"require('./scripts/live/all').runAll().then(id=>console.log('Live proof completed for '+id)).catch(e=>{console.error(e.message);process.exitCode=1})\"",
     "evidence:capture": "ts-node scripts/live/capture-evidence.ts",
     "competition:freeze": "ts-node scripts/live/freeze.ts",
-    "quality": "npm run eval:validate && npm test -- --runInBand && npm run build && npm audit --omit=dev --audit-level=high"
+    "quality": "npm run eval:validate && turbo run test -- --runInBand && npm run build && npm audit --omit=dev --audit-level=high"
   },
   "devDependencies": {
     "typescript": "^5.0.0",

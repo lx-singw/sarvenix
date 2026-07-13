@@ -1,0 +1,61 @@
+{
+  "runId": "sarvenix-run-20260713T050154Z-1ab835d1",
+  "generatedAt": "2026-07-13T05:02:15.382Z",
+  "passed": true,
+  "steps": [
+    {
+      "id": "secret-redaction",
+      "title": "Secrets never enter reports",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:02:15.365Z",
+      "finishedAt": "2026-07-13T05:02:15.365Z",
+      "durationMs": 0,
+      "detail": "Nested authorization and token fields were redacted."
+    },
+    {
+      "id": "provider-timeout",
+      "title": "Provider timeout fails closed",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:02:15.365Z",
+      "finishedAt": "2026-07-13T05:02:15.380Z",
+      "durationMs": 15,
+      "detail": "Bounded timeout rejected the delayed provider."
+    },
+    {
+      "id": "circuit-breaker",
+      "title": "Repeated provider failures open circuit",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:02:15.380Z",
+      "finishedAt": "2026-07-13T05:02:15.381Z",
+      "durationMs": 1,
+      "detail": "Circuit opened after the configured failure threshold."
+    },
+    {
+      "id": "duplicate-delivery",
+      "title": "Duplicate Slack deliveries share one idempotency key",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:02:15.381Z",
+      "finishedAt": "2026-07-13T05:02:15.381Z",
+      "durationMs": 0,
+      "detail": "Stable idempotency key b7e1543d0214… generated."
+    },
+    {
+      "id": "alert-suppression",
+      "title": "Repeated or low-quality alerts are suppressed",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:02:15.381Z",
+      "finishedAt": "2026-07-13T05:02:15.381Z",
+      "durationMs": 0,
+      "detail": "Alert suppressed: Suppressed because the grounded score 0.063 was below 0.68; repetition or prior feedback reduced novelty to 0.15."
+    },
+    {
+      "id": "ownership-boundary",
+      "title": "All evidence belongs to the current run",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:02:15.381Z",
+      "finishedAt": "2026-07-13T05:02:15.381Z",
+      "durationMs": 0,
+      "detail": "10 resources match the run marker."
+    }
+  ]
+}

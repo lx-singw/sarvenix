@@ -1,0 +1,187 @@
+{
+  "schemaVersion": 1,
+  "runId": "sarvenix-run-20260713T050154Z-1ab835d1",
+  "marker": "sarvenix-run-20260713T050154Z-1ab835d1",
+  "createdAt": "2026-07-13T05:01:54.635Z",
+  "updatedAt": "2026-07-13T05:02:17.725Z",
+  "sandbox": {
+    "slackWorkspaceId": "T0BGNGTJYJH",
+    "githubRepository": "lx-singw/sarvenix",
+    "jiraProjectKey": "MIGRATE"
+  },
+  "resources": [
+    {
+      "provider": "slack",
+      "type": "channel",
+      "id": "C0BGVHSJAGJ",
+      "marker": "sarvenix-run-20260713T050154Z-1ab835d1",
+      "cleanupAction": "archive"
+    },
+    {
+      "provider": "slack",
+      "type": "message",
+      "id": "C0BGVHSJAGJ:1783918918.299499",
+      "marker": "sarvenix-run-20260713T050154Z-1ab835d1",
+      "canonicalUrl": "https://slack.com/archives/C0BGVHSJAGJ/p1783918918299499",
+      "cleanupAction": "delete"
+    },
+    {
+      "provider": "github",
+      "type": "issue",
+      "id": "4",
+      "marker": "sarvenix-run-20260713T050154Z-1ab835d1",
+      "canonicalUrl": "https://github.com/lx-singw/sarvenix/issues/4",
+      "cleanupAction": "close"
+    },
+    {
+      "provider": "jira",
+      "type": "issue",
+      "id": "MIGRATE-6",
+      "marker": "sarvenix-run-20260713T050154Z-1ab835d1",
+      "canonicalUrl": "https://lx-singw-sandbox.atlassian.net/browse/MIGRATE-6",
+      "cleanupAction": "close"
+    },
+    {
+      "provider": "neo4j",
+      "type": "decision",
+      "id": "sarvenix-run-20260713T050154Z-1ab835d1-primary",
+      "marker": "sarvenix-run-20260713T050154Z-1ab835d1",
+      "cleanupAction": "delete"
+    },
+    {
+      "provider": "slack",
+      "type": "channel",
+      "id": "C0BGPAJ6403",
+      "marker": "sarvenix-run-20260713T050154Z-1ab835d1",
+      "cleanupAction": "archive"
+    },
+    {
+      "provider": "slack",
+      "type": "message",
+      "id": "C0BGPAJ6403:1783918925.066309",
+      "marker": "sarvenix-run-20260713T050154Z-1ab835d1",
+      "canonicalUrl": "https://slack.com/archives/C0BGPAJ6403/p1783918925066309",
+      "cleanupAction": "delete"
+    },
+    {
+      "provider": "github",
+      "type": "issue",
+      "id": "5",
+      "marker": "sarvenix-run-20260713T050154Z-1ab835d1",
+      "canonicalUrl": "https://github.com/lx-singw/sarvenix/issues/5",
+      "cleanupAction": "close"
+    },
+    {
+      "provider": "jira",
+      "type": "issue",
+      "id": "MIGRATE-7",
+      "marker": "sarvenix-run-20260713T050154Z-1ab835d1",
+      "canonicalUrl": "https://lx-singw-sandbox.atlassian.net/browse/MIGRATE-7",
+      "cleanupAction": "close"
+    },
+    {
+      "provider": "neo4j",
+      "type": "decision",
+      "id": "sarvenix-run-20260713T050154Z-1ab835d1-backup",
+      "marker": "sarvenix-run-20260713T050154Z-1ab835d1",
+      "cleanupAction": "delete",
+      "cleanedAt": "2026-07-13T05:02:17.725Z"
+    }
+  ],
+  "steps": [
+    {
+      "id": "canonical-citations",
+      "title": "Canonical evidence links resolve",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:02:10.298Z",
+      "finishedAt": "2026-07-13T05:02:13.051Z",
+      "durationMs": 2753,
+      "detail": "6 manifest-owned citation URLs responded."
+    },
+    {
+      "id": "graph-lineage",
+      "title": "Graph contains both decision chains and evidence",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:02:13.051Z",
+      "finishedAt": "2026-07-13T05:02:15.338Z",
+      "durationMs": 2287,
+      "detail": "Observed 2 decision chains and 6 evidence edges."
+    },
+    {
+      "id": "idempotent-seed",
+      "title": "Manifest enforces seed idempotency",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:02:15.338Z",
+      "finishedAt": "2026-07-13T05:02:15.339Z",
+      "durationMs": 1,
+      "detail": "10 unique resources recorded."
+    },
+    {
+      "id": "impact-radius",
+      "title": "Impact radius has cross-system evidence",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:02:15.339Z",
+      "finishedAt": "2026-07-13T05:02:15.339Z",
+      "durationMs": 0,
+      "detail": "Slack, GitHub, Jira, and Neo4j are represented in the owned evidence chain."
+    },
+    {
+      "id": "secret-redaction",
+      "title": "Secrets never enter reports",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:02:15.365Z",
+      "finishedAt": "2026-07-13T05:02:15.365Z",
+      "durationMs": 0,
+      "detail": "Nested authorization and token fields were redacted."
+    },
+    {
+      "id": "provider-timeout",
+      "title": "Provider timeout fails closed",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:02:15.365Z",
+      "finishedAt": "2026-07-13T05:02:15.380Z",
+      "durationMs": 15,
+      "detail": "Bounded timeout rejected the delayed provider."
+    },
+    {
+      "id": "circuit-breaker",
+      "title": "Repeated provider failures open circuit",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:02:15.380Z",
+      "finishedAt": "2026-07-13T05:02:15.381Z",
+      "durationMs": 1,
+      "detail": "Circuit opened after the configured failure threshold."
+    },
+    {
+      "id": "duplicate-delivery",
+      "title": "Duplicate Slack deliveries share one idempotency key",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:02:15.381Z",
+      "finishedAt": "2026-07-13T05:02:15.381Z",
+      "durationMs": 0,
+      "detail": "Stable idempotency key b7e1543d0214… generated."
+    },
+    {
+      "id": "alert-suppression",
+      "title": "Repeated or low-quality alerts are suppressed",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:02:15.381Z",
+      "finishedAt": "2026-07-13T05:02:15.381Z",
+      "durationMs": 0,
+      "detail": "Alert suppressed: Suppressed because the grounded score 0.063 was below 0.68; repetition or prior feedback reduced novelty to 0.15."
+    },
+    {
+      "id": "ownership-boundary",
+      "title": "All evidence belongs to the current run",
+      "status": "passed",
+      "startedAt": "2026-07-13T05:02:15.381Z",
+      "finishedAt": "2026-07-13T05:02:15.381Z",
+      "durationMs": 0,
+      "detail": "10 resources match the run marker."
+    }
+  ],
+  "cleanup": {
+    "verified": false,
+    "startedAt": "2026-07-13T05:02:15.387Z"
+  }
+}

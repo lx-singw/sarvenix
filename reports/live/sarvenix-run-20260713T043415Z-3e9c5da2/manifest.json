@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "runId": "sarvenix-run-20260713T043415Z-3e9c5da2",
+  "marker": "sarvenix-run-20260713T043415Z-3e9c5da2",
+  "createdAt": "2026-07-13T04:34:15.190Z",
+  "updatedAt": "2026-07-13T04:34:15.191Z",
+  "sandbox": {
+    "slackWorkspaceId": "T0BGNGTJYJH",
+    "githubRepository": "lx-singw/sarvenix",
+    "jiraProjectKey": "MIGRATE"
+  },
+  "resources": [],
+  "steps": [],
+  "cleanup": {
+    "verified": false
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "passed": true,
+  "resources": [
+    {
+      "provider": "slack",
+      "type": "channel",
+      "id": "C0BGTHZQ1FY",
+      "marker": "sarvenix-run-20260713T050433Z-49ee70f6",
+      "cleanupAction": "archive"
+    },
+    {
+      "provider": "slack",
+      "type": "message",
+      "id": "C0BGTHZQ1FY:1783919077.719359",
+      "marker": "sarvenix-run-20260713T050433Z-49ee70f6",
+      "canonicalUrl": "https://slack.com/archives/C0BGTHZQ1FY/p1783919077719359",
+      "cleanupAction": "delete"
+    },
+    {
+      "provider": "github",
+      "type": "issue",
+      "id": "8",
+      "marker": "sarvenix-run-20260713T050433Z-49ee70f6",
+      "canonicalUrl": "https://github.com/lx-singw/sarvenix/issues/8",
+      "cleanupAction": "close"
+    },
+    {
+      "provider": "jira",
+      "type": "issue",
+      "id": "MIGRATE-10",
+      "marker": "sarvenix-run-20260713T050433Z-49ee70f6",
+      "canonicalUrl": "https://lx-singw-sandbox.atlassian.net/browse/MIGRATE-10",
+      "cleanupAction": "close"
+    },
+    {
+      "provider": "neo4j",
+      "type": "decision",
+      "id": "sarvenix-run-20260713T050433Z-49ee70f6-primary",
+      "marker": "sarvenix-run-20260713T050433Z-49ee70f6",
+      "cleanupAction": "delete"
+    },
+    {
+      "provider": "slack",
+      "type": "channel",
+      "id": "C0BGXFNP5DX",
+      "marker": "sarvenix-run-20260713T050433Z-49ee70f6",
+      "cleanupAction": "archive"
+    },
+    {
+      "provider": "slack",
+      "type": "message",
+      "id": "C0BGXFNP5DX:1783919083.168409",
+      "marker": "sarvenix-run-20260713T050433Z-49ee70f6",
+      "canonicalUrl": "https://slack.com/archives/C0BGXFNP5DX/p1783919083168409",
+      "cleanupAction": "delete"
+    },
+    {
+      "provider": "github",
+      "type": "issue",
+      "id": "9",
+      "marker": "sarvenix-run-20260713T050433Z-49ee70f6",
+      "canonicalUrl": "https://github.com/lx-singw/sarvenix/issues/9",
+      "cleanupAction": "close"
+    },
+    {
+      "provider": "jira",
+      "type": "issue",
+      "id": "MIGRATE-11",
+      "marker": "sarvenix-run-20260713T050433Z-49ee70f6",
+      "canonicalUrl": "https://lx-singw-sandbox.atlassian.net/browse/MIGRATE-11",
+      "cleanupAction": "close"
+    },
+    {
+      "provider": "neo4j",
+      "type": "decision",
+      "id": "sarvenix-run-20260713T050433Z-49ee70f6-backup",
+      "marker": "sarvenix-run-20260713T050433Z-49ee70f6",
+      "cleanupAction": "delete"
+    }
+  ]
+}

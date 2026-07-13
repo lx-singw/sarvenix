@@ -1,0 +1,1874 @@
+[
+  {
+    "scenarioId": "eval-answerable-001",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 119637,
+    "systemsOpened": 3,
+    "steps": 9
+  },
+  {
+    "scenarioId": "eval-answerable-001",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1049,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-answerable-002",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 118935,
+    "systemsOpened": 3,
+    "steps": 7
+  },
+  {
+    "scenarioId": "eval-answerable-002",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 976,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-answerable-003",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 74271,
+    "systemsOpened": 3,
+    "steps": 7
+  },
+  {
+    "scenarioId": "eval-answerable-003",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1357,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-answerable-004",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 73049,
+    "systemsOpened": 3,
+    "steps": 12
+  },
+  {
+    "scenarioId": "eval-answerable-004",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1238,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-answerable-005",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 60109,
+    "systemsOpened": 3,
+    "steps": 13
+  },
+  {
+    "scenarioId": "eval-answerable-005",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 966,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-answerable-006",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 103802,
+    "systemsOpened": 3,
+    "steps": 10
+  },
+  {
+    "scenarioId": "eval-answerable-006",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1291,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-answerable-007",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 58384,
+    "systemsOpened": 3,
+    "steps": 13
+  },
+  {
+    "scenarioId": "eval-answerable-007",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1021,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-answerable-008",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 86975,
+    "systemsOpened": 3,
+    "steps": 9
+  },
+  {
+    "scenarioId": "eval-answerable-008",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1098,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-answerable-009",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 106427,
+    "systemsOpened": 3,
+    "steps": 12
+  },
+  {
+    "scenarioId": "eval-answerable-009",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1349,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-answerable-010",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 116756,
+    "systemsOpened": 3,
+    "steps": 12
+  },
+  {
+    "scenarioId": "eval-answerable-010",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1031,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-answerable-011",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 88678,
+    "systemsOpened": 3,
+    "steps": 8
+  },
+  {
+    "scenarioId": "eval-answerable-011",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1328,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-answerable-012",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 85396,
+    "systemsOpened": 3,
+    "steps": 10
+  },
+  {
+    "scenarioId": "eval-answerable-012",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1188,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-answerable-013",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 70365,
+    "systemsOpened": 3,
+    "steps": 9
+  },
+  {
+    "scenarioId": "eval-answerable-013",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1175,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-unanswerable-001",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 63188,
+    "systemsOpened": 3,
+    "steps": 13
+  },
+  {
+    "scenarioId": "eval-unanswerable-001",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1436,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-unanswerable-002",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 88707,
+    "systemsOpened": 3,
+    "steps": 13
+  },
+  {
+    "scenarioId": "eval-unanswerable-002",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1101,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-unanswerable-003",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 84255,
+    "systemsOpened": 3,
+    "steps": 8
+  },
+  {
+    "scenarioId": "eval-unanswerable-003",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1474,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-unanswerable-004",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 105462,
+    "systemsOpened": 3,
+    "steps": 8
+  },
+  {
+    "scenarioId": "eval-unanswerable-004",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1207,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-unanswerable-005",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 118988,
+    "systemsOpened": 3,
+    "steps": 9
+  },
+  {
+    "scenarioId": "eval-unanswerable-005",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1114,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-unanswerable-006",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 54849,
+    "systemsOpened": 3,
+    "steps": 11
+  },
+  {
+    "scenarioId": "eval-unanswerable-006",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1384,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-unanswerable-007",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 45079,
+    "systemsOpened": 3,
+    "steps": 7
+  },
+  {
+    "scenarioId": "eval-unanswerable-007",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1237,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-unanswerable-008",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 99026,
+    "systemsOpened": 3,
+    "steps": 11
+  },
+  {
+    "scenarioId": "eval-unanswerable-008",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1063,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-unanswerable-009",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 119192,
+    "systemsOpened": 3,
+    "steps": 8
+  },
+  {
+    "scenarioId": "eval-unanswerable-009",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 916,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-unanswerable-010",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 92102,
+    "systemsOpened": 3,
+    "steps": 9
+  },
+  {
+    "scenarioId": "eval-unanswerable-010",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1094,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-unanswerable-011",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 73404,
+    "systemsOpened": 3,
+    "steps": 11
+  },
+  {
+    "scenarioId": "eval-unanswerable-011",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1444,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-unanswerable-012",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 90424,
+    "systemsOpened": 3,
+    "steps": 7
+  },
+  {
+    "scenarioId": "eval-unanswerable-012",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1417,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-unanswerable-013",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 80524,
+    "systemsOpened": 3,
+    "steps": 12
+  },
+  {
+    "scenarioId": "eval-unanswerable-013",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1017,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-contradictory-001",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 51320,
+    "systemsOpened": 3,
+    "steps": 9
+  },
+  {
+    "scenarioId": "eval-contradictory-001",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 974,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-contradictory-002",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 103636,
+    "systemsOpened": 3,
+    "steps": 11
+  },
+  {
+    "scenarioId": "eval-contradictory-002",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1068,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-contradictory-003",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 115461,
+    "systemsOpened": 3,
+    "steps": 7
+  },
+  {
+    "scenarioId": "eval-contradictory-003",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1234,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-contradictory-004",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 58853,
+    "systemsOpened": 3,
+    "steps": 11
+  },
+  {
+    "scenarioId": "eval-contradictory-004",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1346,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-contradictory-005",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 117214,
+    "systemsOpened": 3,
+    "steps": 13
+  },
+  {
+    "scenarioId": "eval-contradictory-005",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1425,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-contradictory-006",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 58137,
+    "systemsOpened": 3,
+    "steps": 12
+  },
+  {
+    "scenarioId": "eval-contradictory-006",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1153,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-contradictory-007",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 83694,
+    "systemsOpened": 3,
+    "steps": 13
+  },
+  {
+    "scenarioId": "eval-contradictory-007",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1393,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-contradictory-008",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 50248,
+    "systemsOpened": 3,
+    "steps": 8
+  },
+  {
+    "scenarioId": "eval-contradictory-008",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1026,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-contradictory-009",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 108872,
+    "systemsOpened": 3,
+    "steps": 8
+  },
+  {
+    "scenarioId": "eval-contradictory-009",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1024,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-contradictory-010",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 54581,
+    "systemsOpened": 3,
+    "steps": 7
+  },
+  {
+    "scenarioId": "eval-contradictory-010",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1377,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-contradictory-011",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 104749,
+    "systemsOpened": 3,
+    "steps": 8
+  },
+  {
+    "scenarioId": "eval-contradictory-011",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 985,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-contradictory-012",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 108279,
+    "systemsOpened": 3,
+    "steps": 8
+  },
+  {
+    "scenarioId": "eval-contradictory-012",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1117,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-contradictory-013",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 62646,
+    "systemsOpened": 3,
+    "steps": 8
+  },
+  {
+    "scenarioId": "eval-contradictory-013",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1054,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-stale-001",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 108187,
+    "systemsOpened": 3,
+    "steps": 13
+  },
+  {
+    "scenarioId": "eval-stale-001",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1076,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-stale-002",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 100708,
+    "systemsOpened": 3,
+    "steps": 6
+  },
+  {
+    "scenarioId": "eval-stale-002",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1213,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-stale-003",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 58236,
+    "systemsOpened": 3,
+    "steps": 11
+  },
+  {
+    "scenarioId": "eval-stale-003",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1307,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-stale-004",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 60812,
+    "systemsOpened": 3,
+    "steps": 7
+  },
+  {
+    "scenarioId": "eval-stale-004",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1115,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-stale-005",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 90951,
+    "systemsOpened": 3,
+    "steps": 7
+  },
+  {
+    "scenarioId": "eval-stale-005",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1391,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-stale-006",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 118002,
+    "systemsOpened": 3,
+    "steps": 6
+  },
+  {
+    "scenarioId": "eval-stale-006",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1017,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-stale-007",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 119575,
+    "systemsOpened": 3,
+    "steps": 9
+  },
+  {
+    "scenarioId": "eval-stale-007",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1226,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-stale-008",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 65188,
+    "systemsOpened": 3,
+    "steps": 8
+  },
+  {
+    "scenarioId": "eval-stale-008",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1238,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-stale-009",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 110431,
+    "systemsOpened": 3,
+    "steps": 9
+  },
+  {
+    "scenarioId": "eval-stale-009",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 959,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-stale-010",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 101969,
+    "systemsOpened": 3,
+    "steps": 7
+  },
+  {
+    "scenarioId": "eval-stale-010",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1213,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-stale-011",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 71181,
+    "systemsOpened": 3,
+    "steps": 8
+  },
+  {
+    "scenarioId": "eval-stale-011",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1204,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-stale-012",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 107007,
+    "systemsOpened": 3,
+    "steps": 10
+  },
+  {
+    "scenarioId": "eval-stale-012",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 948,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-stale-013",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 55212,
+    "systemsOpened": 3,
+    "steps": 6
+  },
+  {
+    "scenarioId": "eval-stale-013",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 927,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-inaccessible-001",
+    "path": "manual",
+    "correct": false,
+    "completed": true,
+    "elapsedMs": 97701,
+    "systemsOpened": 1,
+    "steps": 8
+  },
+  {
+    "scenarioId": "eval-inaccessible-001",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 947,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-inaccessible-002",
+    "path": "manual",
+    "correct": false,
+    "completed": true,
+    "elapsedMs": 107479,
+    "systemsOpened": 1,
+    "steps": 9
+  },
+  {
+    "scenarioId": "eval-inaccessible-002",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 970,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-inaccessible-003",
+    "path": "manual",
+    "correct": false,
+    "completed": true,
+    "elapsedMs": 60094,
+    "systemsOpened": 1,
+    "steps": 13
+  },
+  {
+    "scenarioId": "eval-inaccessible-003",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1295,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-inaccessible-004",
+    "path": "manual",
+    "correct": false,
+    "completed": true,
+    "elapsedMs": 91374,
+    "systemsOpened": 1,
+    "steps": 8
+  },
+  {
+    "scenarioId": "eval-inaccessible-004",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1130,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-inaccessible-005",
+    "path": "manual",
+    "correct": false,
+    "completed": true,
+    "elapsedMs": 102796,
+    "systemsOpened": 1,
+    "steps": 10
+  },
+  {
+    "scenarioId": "eval-inaccessible-005",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 995,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-inaccessible-006",
+    "path": "manual",
+    "correct": false,
+    "completed": true,
+    "elapsedMs": 98326,
+    "systemsOpened": 1,
+    "steps": 12
+  },
+  {
+    "scenarioId": "eval-inaccessible-006",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1198,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-inaccessible-007",
+    "path": "manual",
+    "correct": false,
+    "completed": true,
+    "elapsedMs": 118338,
+    "systemsOpened": 1,
+    "steps": 12
+  },
+  {
+    "scenarioId": "eval-inaccessible-007",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 974,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-inaccessible-008",
+    "path": "manual",
+    "correct": false,
+    "completed": true,
+    "elapsedMs": 99478,
+    "systemsOpened": 1,
+    "steps": 11
+  },
+  {
+    "scenarioId": "eval-inaccessible-008",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1244,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-inaccessible-009",
+    "path": "manual",
+    "correct": false,
+    "completed": true,
+    "elapsedMs": 68557,
+    "systemsOpened": 1,
+    "steps": 8
+  },
+  {
+    "scenarioId": "eval-inaccessible-009",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1468,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-inaccessible-010",
+    "path": "manual",
+    "correct": false,
+    "completed": true,
+    "elapsedMs": 89448,
+    "systemsOpened": 1,
+    "steps": 6
+  },
+  {
+    "scenarioId": "eval-inaccessible-010",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1047,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-inaccessible-011",
+    "path": "manual",
+    "correct": false,
+    "completed": true,
+    "elapsedMs": 88358,
+    "systemsOpened": 1,
+    "steps": 6
+  },
+  {
+    "scenarioId": "eval-inaccessible-011",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1316,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-inaccessible-012",
+    "path": "manual",
+    "correct": false,
+    "completed": true,
+    "elapsedMs": 64586,
+    "systemsOpened": 1,
+    "steps": 13
+  },
+  {
+    "scenarioId": "eval-inaccessible-012",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 936,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-inaccessible-013",
+    "path": "manual",
+    "correct": false,
+    "completed": true,
+    "elapsedMs": 61244,
+    "systemsOpened": 1,
+    "steps": 10
+  },
+  {
+    "scenarioId": "eval-inaccessible-013",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 954,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-false_positive-001",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 86658,
+    "systemsOpened": 3,
+    "steps": 12
+  },
+  {
+    "scenarioId": "eval-false_positive-001",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1334,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-false_positive-002",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 111604,
+    "systemsOpened": 3,
+    "steps": 13
+  },
+  {
+    "scenarioId": "eval-false_positive-002",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1240,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-false_positive-003",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 56971,
+    "systemsOpened": 3,
+    "steps": 12
+  },
+  {
+    "scenarioId": "eval-false_positive-003",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1319,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-false_positive-004",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 118177,
+    "systemsOpened": 3,
+    "steps": 8
+  },
+  {
+    "scenarioId": "eval-false_positive-004",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1438,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-false_positive-005",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 103932,
+    "systemsOpened": 3,
+    "steps": 11
+  },
+  {
+    "scenarioId": "eval-false_positive-005",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1122,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-false_positive-006",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 105435,
+    "systemsOpened": 3,
+    "steps": 10
+  },
+  {
+    "scenarioId": "eval-false_positive-006",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1089,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-false_positive-007",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 85346,
+    "systemsOpened": 3,
+    "steps": 9
+  },
+  {
+    "scenarioId": "eval-false_positive-007",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1352,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-false_positive-008",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 81635,
+    "systemsOpened": 3,
+    "steps": 6
+  },
+  {
+    "scenarioId": "eval-false_positive-008",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 976,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-false_positive-009",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 108025,
+    "systemsOpened": 3,
+    "steps": 11
+  },
+  {
+    "scenarioId": "eval-false_positive-009",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1348,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-false_positive-010",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 102207,
+    "systemsOpened": 3,
+    "steps": 13
+  },
+  {
+    "scenarioId": "eval-false_positive-010",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1059,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-false_positive-011",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 108345,
+    "systemsOpened": 3,
+    "steps": 9
+  },
+  {
+    "scenarioId": "eval-false_positive-011",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1387,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-false_positive-012",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 104055,
+    "systemsOpened": 3,
+    "steps": 8
+  },
+  {
+    "scenarioId": "eval-false_positive-012",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 997,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-false_positive-013",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 103810,
+    "systemsOpened": 3,
+    "steps": 6
+  },
+  {
+    "scenarioId": "eval-false_positive-013",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1125,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-adversarial-001",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 49435,
+    "systemsOpened": 3,
+    "steps": 12
+  },
+  {
+    "scenarioId": "eval-adversarial-001",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1393,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-adversarial-002",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 60507,
+    "systemsOpened": 3,
+    "steps": 7
+  },
+  {
+    "scenarioId": "eval-adversarial-002",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1358,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-adversarial-003",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 78829,
+    "systemsOpened": 3,
+    "steps": 7
+  },
+  {
+    "scenarioId": "eval-adversarial-003",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1277,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-adversarial-004",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 91491,
+    "systemsOpened": 3,
+    "steps": 6
+  },
+  {
+    "scenarioId": "eval-adversarial-004",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 914,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-adversarial-005",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 113530,
+    "systemsOpened": 3,
+    "steps": 13
+  },
+  {
+    "scenarioId": "eval-adversarial-005",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1227,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-adversarial-006",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 111590,
+    "systemsOpened": 3,
+    "steps": 13
+  },
+  {
+    "scenarioId": "eval-adversarial-006",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1371,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-adversarial-007",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 83514,
+    "systemsOpened": 3,
+    "steps": 7
+  },
+  {
+    "scenarioId": "eval-adversarial-007",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1097,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-adversarial-008",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 57885,
+    "systemsOpened": 3,
+    "steps": 10
+  },
+  {
+    "scenarioId": "eval-adversarial-008",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1149,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-adversarial-009",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 72342,
+    "systemsOpened": 3,
+    "steps": 10
+  },
+  {
+    "scenarioId": "eval-adversarial-009",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1426,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-adversarial-010",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 119355,
+    "systemsOpened": 3,
+    "steps": 10
+  },
+  {
+    "scenarioId": "eval-adversarial-010",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1487,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-adversarial-011",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 57310,
+    "systemsOpened": 3,
+    "steps": 10
+  },
+  {
+    "scenarioId": "eval-adversarial-011",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1465,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-adversarial-012",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 112187,
+    "systemsOpened": 3,
+    "steps": 13
+  },
+  {
+    "scenarioId": "eval-adversarial-012",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 989,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-adversarial-013",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 60408,
+    "systemsOpened": 3,
+    "steps": 7
+  },
+  {
+    "scenarioId": "eval-adversarial-013",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1211,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-outage-001",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 45259,
+    "systemsOpened": 3,
+    "steps": 11
+  },
+  {
+    "scenarioId": "eval-outage-001",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1139,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-outage-002",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 56023,
+    "systemsOpened": 3,
+    "steps": 7
+  },
+  {
+    "scenarioId": "eval-outage-002",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1287,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-outage-003",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 76652,
+    "systemsOpened": 3,
+    "steps": 9
+  },
+  {
+    "scenarioId": "eval-outage-003",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1112,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-outage-004",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 81005,
+    "systemsOpened": 3,
+    "steps": 10
+  },
+  {
+    "scenarioId": "eval-outage-004",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1047,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-outage-005",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 83312,
+    "systemsOpened": 3,
+    "steps": 13
+  },
+  {
+    "scenarioId": "eval-outage-005",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1037,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-outage-006",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 95583,
+    "systemsOpened": 3,
+    "steps": 8
+  },
+  {
+    "scenarioId": "eval-outage-006",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1464,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-outage-007",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 74828,
+    "systemsOpened": 3,
+    "steps": 13
+  },
+  {
+    "scenarioId": "eval-outage-007",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1462,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-outage-008",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 84292,
+    "systemsOpened": 3,
+    "steps": 10
+  },
+  {
+    "scenarioId": "eval-outage-008",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1293,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-outage-009",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 94419,
+    "systemsOpened": 3,
+    "steps": 11
+  },
+  {
+    "scenarioId": "eval-outage-009",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1157,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-outage-010",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 69525,
+    "systemsOpened": 3,
+    "steps": 9
+  },
+  {
+    "scenarioId": "eval-outage-010",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1411,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-outage-011",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 90712,
+    "systemsOpened": 3,
+    "steps": 8
+  },
+  {
+    "scenarioId": "eval-outage-011",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1256,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-outage-012",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 90597,
+    "systemsOpened": 3,
+    "steps": 8
+  },
+  {
+    "scenarioId": "eval-outage-012",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1061,
+    "systemsOpened": 1,
+    "steps": 1
+  },
+  {
+    "scenarioId": "eval-outage-013",
+    "path": "manual",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 100394,
+    "systemsOpened": 3,
+    "steps": 8
+  },
+  {
+    "scenarioId": "eval-outage-013",
+    "path": "sarvenix",
+    "correct": true,
+    "completed": true,
+    "elapsedMs": 1319,
+    "systemsOpened": 1,
+    "steps": 1
+  }
+]
