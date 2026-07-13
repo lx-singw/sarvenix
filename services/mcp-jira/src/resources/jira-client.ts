@@ -67,5 +67,11 @@ export async function callJiraAPI(
     );
   }
 
-  return response.json();
+  const text = await response.text();
+  if (!text) return {};
+  try {
+    return JSON.parse(text);
+  } catch (err: any) {
+    throw new Error(`Failed to parse Jira response as JSON: ${text.slice(0, 100)}`);
+  }
 }
