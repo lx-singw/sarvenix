@@ -20,15 +20,33 @@ export async function callJiraAPI(
   method = 'GET',
   body: any = null
 ): Promise<any> {
-  // Jira Cloud REST API URL structure for 3LO OAuth
   const safeEndpoint = assertSafeJiraEndpoint(endpoint);
-  if (!/^[A-Za-z0-9-]+$/.test(cloudId)) throw new Error('Invalid Jira cloud identifier.');
-  const url = `https://api.atlassian.com/ex/jira/${cloudId}/rest/api/3/${safeEndpoint}`;
+  
+  let url: string;
   const headers: Record<string, string> = {
-    Authorization: `Bearer ${accessToken}`,
     Accept: 'application/json',
     'User-Agent': 'Sarvenix-MCP-Jira',
   };
+
+  if (accessToken.startsWith('ATATT')) {
+    // Basic Auth with Atlassian API Token
+    const email = process.env.JIRA_USER_EMAIL || '';
+    if (!email) {
+      throw new Error('JIRA_USER_EMAIL must be set in env to use Atlassian API token.');
+    }
+    const siteUrl = (process.env.JIRA_SITE_URL || '').replace(/\/$/, '');
+    if (!siteUrl) {
+      throw new Error('JIRA_SITE_URL must be set in env to use Atlassian API token.');
+    }
+    url = `${siteUrl}/rest/api/3/${safeEndpoint}`;
+    const credentials = Buffer.from(`${email}:${accessToken}`).toString('base64');
+    headers['Authorization'] = `Basic ${credentials}`;
+  } else {
+    // 3LO OAuth token
+    if (!/^[A-Za-z0-9-]+$/.test(cloudId)) throw new Error('Invalid Jira cloud identifier.');
+    url = `https://api.atlassian.com/ex/jira/${cloudId}/rest/api/3/${safeEndpoint}`;
+    headers['Authorization'] = `Bearer ${accessToken}`;
+  }
 
   const options: RequestInit = {
     method,

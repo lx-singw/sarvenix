@@ -24,7 +24,22 @@ async function checkGitHub(): Promise<PreflightCheck> {
 
 async function checkJira(): Promise<PreflightCheck> {
   const project = process.env.SANDBOX_JIRA_PROJECT_KEY || '';
-  const response = await fetch(`https://api.atlassian.com/ex/jira/${process.env.JIRA_CLOUD_ID}/rest/api/3/project/${encodeURIComponent(project)}`, { headers: { Authorization: `Bearer ${process.env.JIRA_ACCESS_TOKEN}`, Accept: 'application/json' } });
+  const token = process.env.JIRA_ACCESS_TOKEN || '';
+  let url: string;
+  const headers: Record<string, string> = { Accept: 'application/json' };
+
+  if (token.startsWith('ATATT')) {
+    const email = process.env.JIRA_USER_EMAIL || '';
+    const siteUrl = (process.env.JIRA_SITE_URL || '').replace(/\/$/, '');
+    url = `${siteUrl}/rest/api/3/project/${encodeURIComponent(project)}`;
+    const credentials = Buffer.from(`${email}:${token}`).toString('base64');
+    headers['Authorization'] = `Basic ${credentials}`;
+  } else {
+    url = `https://api.atlassian.com/ex/jira/${process.env.JIRA_CLOUD_ID}/rest/api/3/project/${encodeURIComponent(project)}`;
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
+  const response = await fetch(url, { headers });
   return { id: 'jira-project', provider: 'jira', passed: response.ok, detail: response.ok ? 'Sandbox Jira project is reachable.' : `Jira project probe returned HTTP ${response.status}.` };
 }
 
