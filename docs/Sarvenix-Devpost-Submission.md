@@ -30,7 +30,7 @@ The proactive behavior is deliberately constrained. Sarvenix is read-only in ext
 - Slack Real-Time Search for live, requester-scoped workspace evidence
 - GitHub and Jira MCP services using read-only authentication and canonical source links
 - Neo4j decision graph for provenance, semantic relationships, contradictions, and resolution state
-- Claude-based extraction, synthesis, confidence reasoning, and an independent adversarial critic
+- Gemini-based extraction, synthesis, confidence reasoning, and an independent adversarial critic
 - TypeScript monorepo with shared contracts, bounded retries, structured redacted logging, and Block Kit contract tests
 
 The Ask pipeline treats every retrieved message, PR, and ticket as untrusted data. The model is explicitly prohibited from obeying instructions embedded in sources, inventing missing facts, or replacing canonical links. When a source fails, the answer remains usable but names the missing system and lowers confidence.
