@@ -18,7 +18,7 @@ Represents a discrete decision made by the organization, extracted from Slack co
 | Property | Type | Description |
 |---|---|---|
 | `id` | UUID | Primary key |
-| `summary` | string | Claude-generated one-line summary of the decision |
+| `summary` | string | Gemini-generated one-line summary of the decision |
 | `status` | enum | `active`, `superseded`, `rejected`, `closed` |
 | `confidence` | enum | `high`, `moderate`, `low` — how confidently this was extracted as a genuine decision vs. casual conversation |
 | `extracted_at` | timestamp | When Sarvenix ingested this |
@@ -64,7 +64,7 @@ A lightweight clustering node representing a recurring subject (e.g., "legacy da
 | Property | Type | Description |
 |---|---|---|
 | `id` | UUID | Primary key |
-| `label` | string | Claude-generated topic label |
+| `label` | string | Gemini-generated topic label |
 | `embedding` | vector(1536) | Semantic embedding for topic clustering |
 
 ---
@@ -108,7 +108,7 @@ A flat, append-only table — not part of the graph itself — recording every p
 | `id` | UUID | Primary key |
 | `candidate_contradiction_edge_id` | UUID | FK to the `CONTRADICTS` edge being evaluated |
 | `critic_verdict` | enum | `approved`, `rejected` |
-| `critic_reasoning` | text | Claude's stated reasoning for the verdict (for later human review/tuning) |
+| `critic_reasoning` | text | Gemini's stated reasoning for the verdict (for later human review/tuning) |
 | `posted` | boolean | Whether an alert was actually sent to Slack |
 | `human_reaction` | enum, nullable | `thumbs_up`, `thumbs_down`, `none` |
 | `created_at` | timestamp | |
@@ -128,7 +128,7 @@ Attached to every Ask Mode answer (not persisted long-term in MVP, but logged fo
 ## 6. Entity Extraction Pipeline (how raw events become graph data)
 
 1. Raw Slack message / GitHub event / Jira event ingested.
-2. Passed to Claude with an entity-extraction prompt tagging: is this a *decision*, what's the *rationale*, who's the *actor*, what *artifact* does it reference.
+2. Passed to Gemini with an entity-extraction prompt tagging: is this a *decision*, what's the *rationale*, who's the *actor*, what *artifact* does it reference.
 3. If classified as a decision with sufficient confidence, a `Decision` node is created or matched against an existing similar node (via embedding similarity, threshold configurable — default 0.85 cosine similarity for hackathon build).
 4. Relevant edges (`DISCUSSED_IN`, `RESOLVED_BY`, `REFERENCES`, `OWNED_BY`) are created based on extracted entities.
 5. If a new `Decision` node has high similarity to an existing node with `status: rejected/closed`, a candidate `CONTRADICTS` edge is created with `verification_status: pending` and queued for the adversarial verifier.

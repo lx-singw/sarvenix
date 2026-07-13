@@ -22,13 +22,13 @@ This document is the authoritative reference for every environment variable used
 
 ---
 
-## 3. Anthropic / Claude Configuration
+## 3. Google / Gemini Configuration
 
 | Variable | Required | Used by | Description | Where to obtain |
 |---|---|---|---|---|
-| `ANTHROPIC_API_KEY` | Yes | `apps/slack-app`, indirectly all reasoning paths | API key for Claude calls (synthesis, entity extraction, adversarial verification) | console.anthropic.com |
-| `CLAUDE_MODEL_SYNTHESIS` | No (default: `claude-sonnet-4-6`) | `apps/slack-app` — Ask Mode synthesis | Which model to use for the primary reasoning/synthesis step |
-| `CLAUDE_MODEL_CRITIC` | No (default: same as synthesis) | `apps/slack-app` — Serve Mode adversarial verifier | Can be set to a different model than synthesis if you want the critic pass to use a distinct model as an extra layer of independence |
+| `GEMINI_API_KEY` | Yes | `apps/slack-app`, indirectly all reasoning paths | API key for Gemini calls (synthesis, entity extraction, adversarial verification) | aistudio.google.com |
+| `GEMINI_MODEL_SYNTHESIS` | No (default: `gemini-3.5-flash`) | `apps/slack-app` — Ask Mode synthesis | Which model to use for the primary reasoning/synthesis step |
+| `GEMINI_MODEL_CRITIC` | No (default: same as synthesis) | `apps/slack-app` — Serve Mode adversarial verifier | Can be set to a different model than synthesis if you want the critic pass to use a distinct model as an extra layer of independence |
 
 ---
 
@@ -125,10 +125,10 @@ SLACK_APP_TOKEN=xapp-...
 SLACK_CLIENT_ID=
 SLACK_CLIENT_SECRET=
 
-# Anthropic
-ANTHROPIC_API_KEY=
-CLAUDE_MODEL_SYNTHESIS=claude-sonnet-4-6
-CLAUDE_MODEL_CRITIC=claude-sonnet-4-6
+# Google
+GEMINI_API_KEY=
+GEMINI_MODEL_SYNTHESIS=gemini-3.5-flash
+GEMINI_MODEL_CRITIC=gemini-3.5-flash
 
 # GitHub MCP
 GITHUB_APP_ID=

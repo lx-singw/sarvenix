@@ -8,7 +8,7 @@ This plan outlines the logic, database, and integration tasks that **Antigravity
 
 ### Phase 1: Gemini & RTS Integration
 - **Tasks**:
-  - Replace the Anthropic client placeholder with a Google Gemini API client wrapper.
+  - Replace the Google client placeholder with a Google Gemini API client wrapper.
   - Implement structured JSON formatting for entity extraction.
   - Configure the Real-Time Search (RTS) client to index and query Slack channel histories.
 

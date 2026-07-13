@@ -108,7 +108,7 @@ Joins a project mid-flight. Uses Ask Mode constantly in the first month to avoid
 2. System queries RTS for candidate Slack messages.
 3. System cross-references matches against the Knowledge Graph for linked artifacts.
 4. System calls relevant MCP tools (GitHub/Jira) for live detail on matched artifacts.
-5. Claude synthesizes a cited, confidence-scored answer.
+5. Gemini synthesizes a cited, confidence-scored answer.
 6. Answer posts in-thread with clickable citations.
 
 ### 7.2 Serve Mode flow

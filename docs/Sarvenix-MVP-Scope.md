@@ -25,7 +25,7 @@ Everything in scope exists to make that sentence true and trustworthy on stage. 
 - **Why in MVP:** fastest path to a working, demoable feature; reuses RTS infra needed everywhere else; lowest-risk feature to build first and validate the pipeline.
 
 ### 3.2 Ask Mode — cited cross-system synthesis
-- `@Sarvenix <question>` triggers RTS query → Knowledge Graph lookup → live MCP calls to GitHub/Jira → Claude synthesis.
+- `@Sarvenix <question>` triggers RTS query → Knowledge Graph lookup → live MCP calls to GitHub/Jira → Gemini synthesis.
 - Every claim in the answer is cited with a deep link back to its source (Slack message, PR comment, Jira ticket).
 - **Why in MVP:** this is the core value proposition and the most demoable "wow, it actually traced that" moment.
 
@@ -46,7 +46,7 @@ Everything in scope exists to make that sentence true and trustworthy on stage. 
 - **Why in MVP:** cheap to build alongside the reasoning engine, and the single biggest lever for "trustworthy, not just confident" — directly de-risks the demo.
 
 ### 3.6 Adversarial Verification Pass
-- Before any Serve Mode alert posts, a second, independently-scoped Claude "critic" pass tries to disprove it.
+- Before any Serve Mode alert posts, a second, independently-scoped Gemini "critic" pass tries to disprove it.
 - Only alerts that survive the critic pass are posted; rejected alerts are logged silently for tuning.
 - **Why in MVP:** protects the demo from the worst failure mode (confidently wrong, live, in front of judges) and is a genuine, demonstrable multi-agent pattern.
 
@@ -87,7 +87,7 @@ To keep scope honest, these are not "later" — they are deliberately not part o
 
 1. **RTS indexing + Context Summariser** — validates the ingestion pipeline works end-to-end before anything else is built on top of it.
 2. **Knowledge Graph schema + seed data** — the dependency every later feature needs.
-3. **Ask Mode synthesis** (GitHub + Jira MCP, no graph dependency yet — direct retrieval + Claude synthesis) — can be built in parallel with the graph.
+3. **Ask Mode synthesis** (GitHub + Jira MCP, no graph dependency yet — direct retrieval + Gemini synthesis) — can be built in parallel with the graph.
 4. **Confidence scoring** — layered into the Ask Mode reasoning step as soon as multiple sources are being cross-referenced.
 5. **Serve Mode contradiction detection** — depends on the graph being populated; build after step 2–3 are stable.
 6. **Adversarial verification pass** — wrap around Serve Mode alerts before they're ever demoed live; do not skip even under time pressure.

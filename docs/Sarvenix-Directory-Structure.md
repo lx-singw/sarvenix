@@ -69,7 +69,7 @@ apps/slack-app/
 │   ├── modes/
 │   │   ├── ask-mode/
 │   │   │   ├── index.ts              # orchestrates RTS query → graph lookup → MCP calls → synthesis
-│   │   │   ├── synthesis.ts          # Claude prompt + citation formatting
+│   │   │   ├── synthesis.ts          # Gemini prompt + citation formatting
 │   │   │   └── ask-mode.test.ts
 │   │   │
 │   │   └── serve-mode/
@@ -81,7 +81,7 @@ apps/slack-app/
 │   │
 │   ├── ingestion/
 │   │   ├── slack-ingest.ts           # normalizes Slack events into entities
-│   │   ├── entity-extraction.ts      # Claude-based entity/decision extraction
+│   │   ├── entity-extraction.ts      # Gemini-based entity/decision extraction
 │   │   └── ingestion.test.ts
 │   │
 │   ├── delivery/
@@ -91,7 +91,7 @@ apps/slack-app/
 │   │
 │   └── lib/
 │       ├── rts-client.ts             # Real-Time Search API wrapper
-│       ├── claude-client.ts          # Anthropic API wrapper
+│       ├── gemini-client.ts          # Gemini API wrapper
 │       └── logger.ts
 │
 ├── package.json
