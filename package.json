@@ -17,6 +17,14 @@
     "eval:generate": "ts-node scripts/generate-evaluation-corpus.ts",
     "eval:validate": "ts-node scripts/run-evaluation.ts",
     "benchmark": "ts-node scripts/run-benchmark.ts",
+    "live:preflight": "node --env-file-if-exists=/vercel/share/.env.project -r ts-node/register -e \"require('./scripts/live/preflight').runPreflight().then(r=>{console.log('Live preflight '+(r.passed?'passed':'failed')+' for '+r.runId+'.');if(!r.passed)process.exitCode=1}).catch(e=>{console.error(e.message);process.exitCode=1})\"",
+    "live:seed": "node --env-file-if-exists=/vercel/share/.env.project -r ts-node/register -e \"require('./scripts/live/seed').seedSandbox(process.env.SARVENIX_RUN_ID).then(m=>console.log('Seeded '+m.resources.length+' resources for '+m.runId)).catch(e=>{console.error(e.message);process.exitCode=1})\"",
+    "live:accept": "node --env-file-if-exists=/vercel/share/.env.project -r ts-node/register -e \"require('./scripts/live/accept').runAcceptance(process.env.SARVENIX_RUN_ID).then(r=>{console.log('Acceptance '+(r.passed?'passed':'failed'));if(!r.passed)process.exitCode=1}).catch(e=>{console.error(e.message);process.exitCode=1})\"",
+    "live:adversarial": "node --env-file-if-exists=/vercel/share/.env.project -r ts-node/register -e \"require('./scripts/live/adversarial').runAdversarial(process.env.SARVENIX_RUN_ID).then(r=>{console.log('Adversarial '+(r.passed?'passed':'failed'));if(!r.passed)process.exitCode=1}).catch(e=>{console.error(e.message);process.exitCode=1})\"",
+    "live:reset": "node --env-file-if-exists=/vercel/share/.env.project -r ts-node/register -e \"require('./scripts/live/reset').resetSandbox(process.env.SARVENIX_RUN_ID).then(m=>console.log('Cleanup verified='+m.cleanup.verified)).catch(e=>{console.error(e.message);process.exitCode=1})\"",
+    "live:all": "node --env-file-if-exists=/vercel/share/.env.project -r ts-node/register -e \"require('./scripts/live/all').runAll().then(id=>console.log('Live proof completed for '+id)).catch(e=>{console.error(e.message);process.exitCode=1})\"",
+    "evidence:capture": "ts-node scripts/live/capture-evidence.ts",
+    "competition:freeze": "ts-node scripts/live/freeze.ts",
     "quality": "npm run eval:validate && npm test -- --runInBand && npm run build && npm audit --omit=dev --audit-level=high"
   },
   "devDependencies": {

@@ -29,7 +29,25 @@ export function validateCorpus(corpus: Corpus): string[] {
   return errors;
 }
 
+export function validateObservations(corpus: Corpus, observations: EvaluationObservation[]): string[] {
+  const errors: string[] = [];
+  const expectedIds = new Set(corpus.scenarios.map(item => item.id));
+  const seen = new Set<string>();
+  for (const observation of observations) {
+    if (seen.has(observation.scenarioId)) errors.push(`Duplicate observation: ${observation.scenarioId}`);
+    seen.add(observation.scenarioId);
+    if (!expectedIds.has(observation.scenarioId)) errors.push(`Unknown scenario: ${observation.scenarioId}`);
+    if (!Number.isFinite(observation.latencyMs) || observation.latencyMs < 0) errors.push(`${observation.scenarioId} has invalid latency.`);
+    if (!Array.isArray(observation.citations) || !Array.isArray(observation.claims)) errors.push(`${observation.scenarioId} has malformed evidence arrays.`);
+    if (!observation.abstained && !observation.answer?.trim()) errors.push(`${observation.scenarioId} must include an answer or abstain.`);
+  }
+  for (const scenario of corpus.scenarios) if (!seen.has(scenario.id)) errors.push(`Missing observation: ${scenario.id}`);
+  return errors;
+}
+
 export function score(corpus: Corpus, observations: EvaluationObservation[]): EvaluationMetrics {
+  const validationErrors = validateObservations(corpus, observations);
+  if (validationErrors.length) throw new Error(`Evaluation observations are invalid:\n${validationErrors.join('\n')}`);
   const byId = new Map(observations.map(item => [item.scenarioId, item]));
   const joined = corpus.scenarios.flatMap(item => {
     const observation = byId.get(item.id);
@@ -78,6 +96,7 @@ const observations = JSON.parse(readFileSync(resolve(process.cwd(), observationP
 const metrics = score(corpus, observations);
 const reportDir = resolve(process.cwd(), 'reports/evaluation');
 mkdirSync(reportDir, { recursive: true });
-writeFileSync(resolve(reportDir, 'latest.json'), `${JSON.stringify(metrics, null, 2)}\n`);
-writeFileSync(resolve(reportDir, 'latest.md'), `# Sarvenix Evaluation\n\nCorpus: ${metrics.corpusVersion}\n\nScenarios measured: ${metrics.scenarioCount}\n\n- Citation precision: ${metrics.citationPrecision}\n- Claim coverage: ${metrics.claimCoverage}\n- Unsupported claim rate: ${metrics.unsupportedClaimRate}\n- Contradiction precision: ${metrics.contradictionPrecision}\n- Contradiction recall: ${metrics.contradictionRecall}\n- False alert rate: ${metrics.falseAlertRate}\n- Correct abstention: ${metrics.correctAbstentionRate}\n- Outage recovery: ${metrics.outageRecoveryRate}\n- Latency p50/p95: ${metrics.latencyP50Ms}ms / ${metrics.latencyP95Ms}ms\n`);
+const result = { ...metrics, generatedAt: new Date().toISOString(), methodology: 'labeled-corpus-v1', limitations: ['Results describe this fixed corpus and configured sandbox only.', 'Claim support labels require reviewer verification before publication.', 'These results are not a participant study or production SLA.'] };
+writeFileSync(resolve(reportDir, 'latest.json'), `${JSON.stringify(result, null, 2)}\n`);
+writeFileSync(resolve(reportDir, 'latest.md'), `# Sarvenix Evaluation\n\nCorpus: ${metrics.corpusVersion}\n\nScenarios measured: ${metrics.scenarioCount}\n\n- Citation precision: ${metrics.citationPrecision}\n- Claim coverage: ${metrics.claimCoverage}\n- Unsupported claim rate: ${metrics.unsupportedClaimRate}\n- Contradiction precision: ${metrics.contradictionPrecision}\n- Contradiction recall: ${metrics.contradictionRecall}\n- False alert rate: ${metrics.falseAlertRate}\n- Correct abstention: ${metrics.correctAbstentionRate}\n- Outage recovery: ${metrics.outageRecoveryRate}\n- Latency p50/p95: ${metrics.latencyP50Ms}ms / ${metrics.latencyP95Ms}ms\n\n## Limitations\n\n- Results describe this fixed corpus and configured sandbox only.\n- Claim support labels require reviewer verification before publication.\n- These results are not a participant study or production SLA.\n`);
 console.log(JSON.stringify(metrics, null, 2));

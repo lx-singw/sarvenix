@@ -1,5 +1,19 @@
 # Sarvenix Live Sandbox Acceptance
 
+## Automated command sequence
+
+All live commands are explicit, local-only, sandbox-guarded, and write redacted artifacts under `reports/`.
+
+1. Set `SARVENIX_SANDBOX_MODE=true` and run `npm run live:preflight`.
+2. Preserve the printed run ID as `SARVENIX_RUN_ID`.
+3. Run `npm run live:seed`, `npm run live:accept`, and `npm run live:adversarial`.
+4. Run evaluation and benchmark scoring only with complete reviewed observation files.
+5. Run `npm run live:reset` and verify the cleanup report.
+6. Set `SARVENIX_EVIDENCE_URL` to the approved preview and run `npm run evidence:capture`.
+7. Run `npm run competition:freeze` and the normal quality gate.
+
+`npm run live:all` combines preflight, seed, causal acceptance, adversarial acceptance, and ownership-safe cleanup. It stops before provisioning when Jira, GitHub, Slack, or graph readiness fails.
+
 ## Required isolated resources
 
 - Dedicated Slack workspace with judge, authorized, and restricted test users
