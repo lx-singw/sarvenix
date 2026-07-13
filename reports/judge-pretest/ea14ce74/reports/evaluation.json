@@ -1,0 +1,21 @@
+{
+  "corpusVersion": "1.0.0",
+  "scenarioCount": 104,
+  "citationPrecision": 1,
+  "claimCoverage": 1,
+  "unsupportedClaimRate": 0,
+  "contradictionPrecision": 1,
+  "contradictionRecall": 1,
+  "falseAlertRate": 0,
+  "correctAbstentionRate": 1,
+  "outageRecoveryRate": 1,
+  "latencyP50Ms": 1130,
+  "latencyP95Ms": 1477,
+  "generatedAt": "2026-07-13T05:19:10.549Z",
+  "methodology": "labeled-corpus-v1",
+  "limitations": [
+    "Results describe this fixed corpus and configured sandbox only.",
+    "Claim support labels require reviewer verification before publication.",
+    "These results are not a participant study or production SLA."
+  ]
+}

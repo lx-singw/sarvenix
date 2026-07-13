@@ -23,5 +23,16 @@ Thumbs.db
 # Turborepo
 .turbo/
 
-# Generated evaluation and benchmark reports
-reports/
+# Generated evaluation and benchmark reports (runtime-generated, excluded)
+reports/live/
+reports/benchmark/
+reports/evaluation/
+reports/freeze/
+
+# Evidence archive (process screenshots, excluded)
+reports/evidence/archive/
+reports/evidence/screenshots/
+
+# Judge pretest screenshots and reports are tracked (committed)
+!reports/judge-pretest/
+!reports/evidence/app-home.png
